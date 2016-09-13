@@ -38,3 +38,5 @@ results
 build
 
 node_modules
+
+.sonar
