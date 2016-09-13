@@ -1,31 +1,31 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html><head>
 
-  <script type="text/javascript" src="lib/jquery-latest.js"></script>
-  <script type="text/javascript" src="lib/jquery.balloon.min.js"></script>
-  <script type="text/javascript" src="lib/vkbeautify.js"></script>
+  <script type="text/javascript" src="../lib/jquery-latest.js"></script>
+  <script type="text/javascript" src="../lib/jquery.balloon.min.js"></script>
+  <script type="text/javascript" src="../lib/vkbeautify.js"></script>
   <script type="text/javascript" src="xmlUtils.js"></script>
   <script type="text/javascript" src="game.js"></script>
-  <script type="text/javascript" src="lib/jquery.clickout.js"></script>
+  <script type="text/javascript" src="../lib/jquery.clickout.js"></script>
   <script type="text/javascript" src="tour.js"></script>
-  <script type="text/javascript" src="lib/html2canvas.js"></script>
-  <script type="text/javascript" src="lib/canvg.js"></script>
-  <script type="text/javascript" src="lib/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="../lib/html2canvas.js"></script>
+  <script type="text/javascript" src="../lib/canvg.js"></script>
+  <script type="text/javascript" src="../lib/jquery-ui.min.js"></script>
  <!-- <script type="text/javascript" src="jquery.ui.touch-punch.js"></script> -->
-  <script type="text/javascript" src="lib/lz-string.min.js"></script>
-  <script type="text/javascript" src="lib/jquery.simulate.js"></script>
-  <script type="text/javascript" src="lib/jquery.simulate.ext.js"></script>
-  <script type="text/javascript" src="lib/jquery.simulate.drag-n-drop.js"></script>
+  <script type="text/javascript" src="../lib/lz-string.min.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.ext.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.drag-n-drop.js"></script>
 
-  <script type="text/javascript" src="feedbackagent/feedbackagent.js"></script>
-  <script type="text/javascript" src="feedbackagent/testxmi.js"></script>
-  <script type="text/javascript" src="feedbackagent/taffy.js"></script>
+  <script type="text/javascript" src="../feedbackagent/feedbackagent.js"></script>
+  <script type="text/javascript" src="../feedbackagent/testxmi.js"></script>
+  <script type="text/javascript" src="../feedbackagent/taffy.js"></script>
 
-  <link rel="stylesheet" href="ui/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="../ui/themes/smoothness/jquery-ui.css">
  <link rel="stylesheet" type="text/css" href="style.css">
   <link rel="stylesheet" type="text/css" href="ui-style.css">
 
-  <script type="text/javascript" src="lib/jquery.jsPlumb-1.7.2-min.js"></script>
+  <script type="text/javascript" src="../lib/jquery.jsPlumb-1.7.2-min.js"></script>
   <script src="toolbox.js"></script>
    <script src="diagramplayer.js"></script>
   <script type="text/javascript" src="lib/jszip.js"></script>
@@ -55,9 +55,9 @@
                 <td>
 
 
-                <img src="images/inspect.png" onclick='xmlexp.exportXML();initFeedback(encodeURIComponent(localStorage.XMIencoded));updateAvatar(sendEvaluation());updateProgress((sendEvalAsJson()).progress);' style="height: 50px; cursor: hand"><img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;<img src="images/question.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;
+                <img src="../images/inspect.png" onclick='xmlexp.exportXML();initFeedback(encodeURIComponent(localStorage.XMIencoded));updateAvatar(sendEvaluation());updateProgress((sendEvalAsJson()).progress);' style="height: 50px; cursor: hand"><img src="../images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;<img src="../images/question.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;
 
-                <img src="images/submit.png" style="border: 2px solid black; height: 50px; cursor: hand" onclick="$('#submitdialog').dialog({width: 450});$('#submitdialog').dialog('option','title','Submit assignment');screenShot();">&nbsp;&nbsp;<img src="images/send.png" style="border: 2px solid black; height: 50px; cursor: hand" title="submit bug" onclick="$('#bugdialog').dialog({width: 500,height: 400});$('#bugdialog').dialog('option','title','Submit Bug');"></td>
+                <img src="../images/submit.png" style="border: 2px solid black; height: 50px; cursor: hand" onclick="$('#submitdialog').dialog({width: 450});$('#submitdialog').dialog('option','title','Submit assignment');screenShot();">&nbsp;&nbsp;<img src="../images/send.png" style="border: 2px solid black; height: 50px; cursor: hand" title="submit bug" onclick="$('#bugdialog').dialog({width: 500,height: 400});$('#bugdialog').dialog('option','title','Submit Bug');"></td>
         </tr>
     </table>
 <!-- <div id="feedbackdialog" style="display: none"><p>Questions regarding interpretation of the text of the assignment should not be registered here.</p>My question is about:<br/><input type="radio" name="group1" value="syntax">UML syntax</br><input type="radio" name="group1" value="choosing">Choosing the right UML element (e.g. class, attribute, operation, association etc.)<br/><input type="radio" name="group1" value="naming">Naming of elements<br/><br><strong>Questiontext</strong><br/>I was busy with:<br/><textarea name="activity" rows=2 columns=60 style="width:400px"></textarea><br/>My goal was to:<br/><textarea name="goal" rows=2 columns=60 style="width:400px"></textarea><br/>My question is:<br/><textarea name="question" rows=4 columns=60 style="width:400px"></textarea><br/>My question relates to the following diagram area/element(optional):<textarea name="specific" rows=1 columns=60 style="width:400px"></textarea><br/><br/><button onclick="$('#feedbackdialog').dialog('close'); uiObserver.addLogEntry($('input[name=group1]:radio:checked').val(),$('textarea[name=specific]').val(),$('textarea[name=activity]').val(),$('textarea[name=goal]').val(),$('textarea[name=question]').val()); $('input[name=group1]:radio:checked').prop('checked',false); $('textarea[name=specific]').val('');$('textarea[name=activity]').val(''); $('textarea[name=goal]').val(''); $('textarea[name=question]').val('');" type="button">Register question</button></div> -->
@@ -67,7 +67,7 @@
     <tr>
         <td colspan=2>
            [1] This is how I feel because of the problem / question I face at the moment (move slider)<br/><br>
-            <img src="images/happy.png" style="width : 20px"><input type="range" style="width: 350px;" id="frustration"><img src="images/angry.png" style="width : 20px"><br/>
+            <img src="../images/happy.png" style="width : 20px"><input type="range" style="width: 350px;" id="frustration"><img src="../images/angry.png" style="width : 20px"><br/>
         </td>
     </tr>
     <tr>
@@ -86,7 +86,7 @@
 
 <div id="submitdialog" style="display: none"><p>1) Fill in the details below and click the submit button.</p>student id 1<br/><input type="text" id="studentid1"><br/>student id 2<br/><input type="text" id="studentid2"><br/><button id="subassignment" type="button">submit</button><br/><br/> when your file is submitted, a copy is being downloaded locally<br/></div>
 <div id="bugdialog" style="display: none">
-<iframe style="border:none; width:450px; height: 350;" src="uploads/Mail.aspx"></iframe>
+<iframe style="border:none; width:450px; height: 350;" src="Mail.html"></iframe>
 </div>
 
 <script>
@@ -168,7 +168,7 @@ function swapCanvas(){
 
     if ($("#task-screen").is(":visible")){
         $("#task-screen").toggle();
-        $('#task-button').attr('src','images/model.png')
+        $('#task-button').attr('src','../images/model.png')
     }
 
 }
@@ -185,12 +185,12 @@ function swapTask(){
     $("#key-hint").toggle();
     $("#task-screen").toggle();
     if ($("#task-screen").is(":visible")){
-        $('#task-button').attr('src','images/model.png')
+        $('#task-button').attr('src','../images/model.png')
         uiObserver.addLogEntry("Reading");
     }
     else{
         uiObserver.addLogEntry("Modeling");
-        $('#task-button').attr('src','images/doc.png');
+        $('#task-button').attr('src','../images/doc.png');
     }
 
 }
@@ -732,7 +732,7 @@ var connect;
 </script>
 <!-- <script type="text/javascript" src="draw.js"></script>-->
 <div id="dialog-new" style="display:hidden" title="Online UML Editor">
-    <p>Hi, welcome to the online UML editor<img width="80px" src="images/DaveAvatar.png" style="float: right;"></p>
+    <p>Hi, welcome to the online UML editor<img width="80px" src="../images/DaveAvatar.png" style="float: right;"></p>
     <hr/>
     <p>June 2015 - replay function trial</p>
     <p>2015/3/25 - possibility to submit a session and download it as a zip file. <br/> - added submission of typical questions (tool unrelated) that arrise during modeling

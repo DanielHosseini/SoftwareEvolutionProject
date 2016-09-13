@@ -18,7 +18,7 @@ function Toolbox(arr, clonemode, divelement) {
     this.cloneMode=clonemode;
     this.divelement=divelement;
 	this.show();
-    
+
 	//console.log(this);
 }
 
@@ -44,9 +44,9 @@ Toolbox.prototype.show = function(){
         var h = $('#'+element).children().last().outerHeight(true); //get height of last child
         $('#'+element).append(new HTMLNode('div','infobox','infobox'));
         $('#infobox').append('<h1></h1><p></p>');
-        $('#infobox').append('<img id="avatar" width="100px" src="images/DaveAvatar.png" style="margin-top: 120px;">');
+        $('#infobox').append('<img id="avatar" width="100px" src="../images/DaveAvatar.png" style="margin-top: 120px;">');
         $('#'+element).children().last().css('top',t+h+"px"); //place new element after last
-       
+
 	}
 };
 
@@ -55,15 +55,15 @@ function updatePosition(element){
                 if($(element).position().top + $(element).height() > $('#diagram-canvas').height()+$('#diagram-canvas').position().top){
                     $(element).css('top',$('#diagram-canvas').height()+$('#diagram-canvas').position().top - $(element).height());
                 }
-                
+
                 if($(element).position().left + $(element).width() > $('#diagram-canvas').width()+$('#diagram-canvas').position().left){
                     $(element).css('left',$('#diagram-canvas').width()+$('#diagram-canvas').position().left - $(element).width());
                 }
-                
+
                 if($(element).position().top  < $('#diagram-canvas').position().top){
                     $(element).css('top',$('#diagram-canvas').position().top);
                 }
-                
+
                 if($(element).position().left  < $('#diagram-canvas').position().left){
                     $(element).css('left',$('#diagram-canvas').position().left);
                 }
@@ -74,7 +74,7 @@ Toolbox.prototype.initTools = function(){
     tb=toolbox;
     $(".class").draggable();
     $(".package").draggable();
-    
+
     $(".package").on('dragstart', function (event) {
        if ($(this).parent().attr('id')=='toolbox'){
             var tmp_x = $(this).position().left;
@@ -103,7 +103,7 @@ Toolbox.prototype.initTools = function(){
                               if ( $(ui.draggable).parent().children().length != 0){
                                console.log($(ui.draggable).parent());
                                  //   jsPlumb.recalculateOffsets($(ui.draggable).parent());
-                             
+
                               }
                             if(lastparent != $(this).attr('id') && $(ui.draggable).parent().length != 0 ){
                                 if(typeof $('#'+lastparent).attr('class') == 'undefined'){
@@ -114,24 +114,24 @@ Toolbox.prototype.initTools = function(){
                                     $(ui.draggable).css("left",$(ui.draggable).position().left + $('#'+lastparent).position().left - $(this).position().left+ 'px');
                                 }
                             }
-                              
+
                               // fix for dispositioniong after drop on package
                              // j=jsPlumb.connect({source:$(ui.draggable).attr('id'), target:$(ui.draggable).attr('id'), paintStyle:{lineWidth:15,strokeStyle:'rgb(243,230,18)'}});
                              // setTimeout('jsPlumb.detach(j);', 1);
 
-                             
+
                                jsPlumb.revalidate($(ui.draggable).attr('id'));
                           }
             });
-                     
+
             tmp.observer.addLogEntry('CREATE','PACKAGE', $(this).attr('id'), 'Package', 'Diagram' ); //event logger CREATE <OBT> <OBID> <OBN> <RECN>
 
             toolbox.initTools();
        }
-                     
+
             uiObserver.addLogEntry('MOVE FROM','PACKAGE', $(this).attr('id'), $($(this).children("h1")[0]).text(), $(this).position().left+';'+$(this).position().top); //event logger
    });
-    
+
     $(".package").on('dragstop', function (event) {
                    //xmlexp.exportXML();
                    //cvsexp.exportCSV();
@@ -139,7 +139,7 @@ Toolbox.prototype.initTools = function(){
                    updatePosition(this);
                    uiObserver.addLogEntry('MOVE TO','PACKAGE', $(this).attr('id'), $($(this).children("h1")[0]).text(), $(this).position().left+';'+$(this).position().top); //event logger <DT> MOVE <OBT><OBID> <OBN> <COOR1> <COOR2>
     });
-    
+
     $(".class").on('dragstart', function (event) {
                    event.stopImmediatePropagation();
        if ($(this).parent().attr('id')=='toolbox'){
@@ -148,7 +148,7 @@ Toolbox.prototype.initTools = function(){
             $(this).find('ul').addClass('connectedSortable');
             $(this).attr('class','class');
             $(this).detach().appendTo('#diagram-canvas');
-                   
+
             jsPlumb.draggable(this);
             jsPlumbHelper.initEndpoints("#000000", false) ;
             jsPlumbHelper.initTargets();
@@ -158,19 +158,19 @@ Toolbox.prototype.initTools = function(){
         }
                    uiObserver.addLogEntry('MOVE FROM','CLASS', $(this).attr('id'), $(this).find("h1").text(), $(this).position().left+';'+$(this).position().top); //event logger
     });
-    
+
     $(".class").on('dragstop', function (event) {
                    //xmlexp.exportXML();
                   // cvsexp.exportCSV();
                    updatePosition(this);
                    event.stopImmediatePropagation();
                    uiObserver.addLogEntry('MOVE TO','CLASS', $(this).attr('id'), $(this).find("h1").text(), $(this).position().left+';'+$(this).position().top); //event logger <DT> MOVE <OBT><OBID> <OBN> <COOR1> <COOR2>
-                   
-                   
+
+
     });
-    
-    
-    
+
+
+
     $(".toolboxAttribute").sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false,
@@ -183,7 +183,7 @@ Toolbox.prototype.initTools = function(){
             }
         }
     }).disableSelection();
-    
+
     $(".toolboxOperation").sortable({
         connectWith: ".connectedSortable",
         dropOnEmpty: false,
@@ -196,7 +196,7 @@ Toolbox.prototype.initTools = function(){
             }
         }
     }).disableSelection();
-    
+
     $(".connectedSortable").sortable({
          connectWith: ".connectedSortable",
          dropOnEmpty: true,
@@ -206,7 +206,7 @@ Toolbox.prototype.initTools = function(){
              if (className.indexOf('operation') != -1 && classNameList.indexOf('attribute-list') != -1) {
                  $(this).parent().find('.operation-list').append(ui.item);
                                      $(ui.item).showBalloon({contents:"operations are placed in the lower part of a class element",classname:"help-balloon",css:{backgroundColor:"yellow"}});
-                                     
+
                  u=ui.item;
                                      tt=u;
                  setTimeout("$(u).hideBalloon();console.log('time');", 3000);
@@ -219,7 +219,7 @@ Toolbox.prototype.initTools = function(){
              }
             // console.log('added '+className.split(" ",1)+' to: '+$(this).parent().find("h1").text()); //event logger
              uiObserver.addLogEntry('ADD', className.split(" ",1), 'NULL' , ui.item.text(), ui.sender.parent().attr('id'), $(this).parent().attr('id')); //event logger
-                                     
+
             jsPlumb.repaintEverything();
          }
      }).disableSelection();
@@ -263,7 +263,7 @@ UMLElement.prototype.getNode = function(element){
 
 UMLElement.prototype.initEvents = function(e){
     var active_element =  this;
-    
+
     var nameDblClick = function(e) {
         if($(this).parent().parent().attr('id')!="toolbox"){ //kan netter denk ik
                 if ($('.edittext')){
@@ -278,7 +278,7 @@ UMLElement.prototype.initEvents = function(e){
                 p.children('.edittext').focus();
                 p.children('.edittext').on("keypress blur", blurClick);
         }
-        
+
     };
 
     var blurClick = function(e) {
@@ -298,29 +298,29 @@ UMLElement.prototype.initEvents = function(e){
                     $(this).replaceWith(node);
                 }
             }
-            
+
             var tmpw;
-            
+
             if($(node).css('font-weight')=="bold")
                 tmpw = ( parseInt( $(node).css('font-size') ) * $(node).text().length ) / 1.6;
             else
                 tmpw = ( parseInt( $(node).css('font-size') ) * $(node).text().length ) / 1.9;
-            
+
             if( tmpw > $(node).parents('.class').width()){
                 $(node).parents('.class').width(tmpw + 10);
                 jsPlumb.repaintEverything();  //cleanup , should not be here I think?
             }
-            
-            
-            
+
+
+
             $(node).on("dblclick", nameDblClick);
         }
-        
+
         var element_type = ($(node).attr('class')).split(" ",1);
         element_type=element_type.toString();
         if (element_type == "heading")
             element_type = "Class";
-        
+
         if($(node).text() != $(prev_node).text() && $(prev_node).text()!="" ){
             active_element.observer.addLogEntry('SET',(element_type).toUpperCase(),$(node).attr('id'),element_type,$(node).text()); //event logger
            // console.log('name of '+element_type+' changed to '+node.text());//event logger
@@ -328,13 +328,13 @@ UMLElement.prototype.initEvents = function(e){
         if($(node).text() != "" && $(prev_node).text()=="" ){
             active_element.observer.addLogEntry('SET',(element_type).toUpperCase(),$(node).attr('id'),$(node).attr('id'),$(prev_node).text(),$(node).text());//event logger
         }
-        
+
     };
-    
+
     var nameClick = function(e) {
         console.log('click op iets');
     };
-    
+
     $(e).on("dblclick", nameDblClick);
     $(e).on("click", nameClick);
 };
@@ -371,23 +371,23 @@ function Class(name) {
     $(this.node).append(new HTMLNode('hr'));
     $(this.node).append(new HTMLNode('ul',null,'operation-list'));
     $(this.node).children().last().append(new HTMLNode('li',null,'operation dummy','dummy-operation'));
-    
+
     //events
-    
+
     $(this.node).on("click",function(e){
-                    
+
                         $(".selected").removeClass('selected');
                         $(this).addClass('selected');
                        e.stopPropagation();
-                    
+
                     console.log('classclick');
                 });
-    
+
     $(this.node).hover(function(){$(this).find('.ep').show()});
-    
+
     $(this.node).mouseleave(function(){$(this).find('.ep').hide()});
-    
-   
+
+
 }
 
 Class.prototype = Object.create(ConnectableUMLElement.prototype);
@@ -406,18 +406,18 @@ function Package(name) {
     this.initEvents($(this.node).children().last()); //make name editable
     $(this.node).append(new HTMLNode('div',null,'content',null));
 
-    
+
     //events
-    
+
     $(this.node).on("click",function(){
                     $(".selected").removeClass('selected');
                     $(this).addClass('selected');
                    // $('#infobox').text($(this).find('h1').text());
                     console.log('packageclick');
                     });
-    
+
    // $(this.node).hover(function(){$(this).find('.ep').show()});
-    
+
    // $(this.node).mouseleave(function(){$(this).find('.ep').hide()});
 }
 
@@ -430,15 +430,15 @@ function Attribute(name) {
 	this.name = name;
     this.node = new HTMLNode('ul',null,'toolboxAttribute')
     $(this.node).append(new HTMLNode('li',null,'attribute',name));
-    
+
     $(this.node).find('li').on("click",function(e){
-                   
+
                         $(".selected").removeClass('selected');
                         $(this).addClass('selected');
                         e.stopPropagation();
-                    
+
     });
-    
+
     this.initEvents($(this.node).children().last());
 }
 
@@ -450,13 +450,13 @@ function Operation(name) {
 	this.name = name;
     this.node = new HTMLNode('ul',null,'toolboxOperation')
     $(this.node).append(new HTMLNode('li',null,'operation',name));
-    
+
     $(this.node).find('li').on("click",function(e){
-                               
+
                                $(".selected").removeClass('selected');
                                $(this).addClass('selected');
                                e.stopPropagation();
-                               
+
                                });
     this.initEvents($(this.node).children().last());
 }
@@ -512,26 +512,26 @@ function jsPlumbHelper(){
             c.setPaintStyle({dashstyle: "0 0", strokeStyle:"#000000", lineWidth:2});
             c.setHoverPaintStyle({dashstyle: "0 0", strokeStyle:"#42a62c", lineWidth:2});
             jsPlumbHelper.changeEndShape(c);
-                
+
             }
         e.preventDefault();
     });
     jsPlumb.bind("connection", function(info) {
                  uiObserver.addLogEntry('CREATE','ASSOCIATION', 'NULL', info.sourceId, info.targetId) ;
                  });
-    
+
     jsPlumb.bind("click", function(c, e) {
 
         if (e.altKey || e.keyCode == 18) {
             e.preventDefault();
             uiObserver.addLogEntry('REMOVE','ASSOCIATION', 'NULL', c.sourceId, c.targetId) ;
             jsPlumb.detach(c);
-            
+
         }
     });
-    
+
     jsPlumb.bind("dblclick", function(c, e) {
-        
+
             connector = c;
             if (connector.getOverlay("label") === null){
                 connector.addOverlay(["Label", {label: "label",id: "label",cssClass: "connectionLabel"}]);
@@ -554,7 +554,7 @@ function jsPlumbHelper(){
             });
 
             e.preventDefault();
-        
+
     });
 
 }
@@ -640,6 +640,3 @@ jsPlumbHelper.prototype.changeEndShape = function(c,type) {
    // if (connector.getOverlay('directedAssociation')) //event logger
        // console.log('changed to directed association from: '+connector.sourceId +'to '+connector.targetId); //event logger
 };
-
-
-
