@@ -39,4 +39,4 @@ build
 
 node_modules
 
-/.sonar
+.sonar/
