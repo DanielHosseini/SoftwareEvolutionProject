@@ -1,3 +1,5 @@
+<!-- The toolbar in the top of the page.
+We decided to include all elements that are not the ToolBox, or Drawing Canvas -->
 <div ng-controller="ToolBarController">
     <span ng-click='openAbout()' >help/about</span>
     <span ng-click='explainWorkflow()'>explain workflow</span>
@@ -18,5 +20,4 @@
     <div title="submit" ng-click="submit()"></div>
     <div title="Send bug" ng-click="sendBug()"></div>
     <div title="Key hints" ng-click="toggleHints()"></div>
-
 </div>
