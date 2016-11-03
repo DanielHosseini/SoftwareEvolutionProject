@@ -1,0 +1,746 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+  <script type="text/javascript" src="../lib/jquery-latest.js"></script>
+  <script type="text/javascript" src="../lib/jquery.balloon.min.js"></script>
+  <script type="text/javascript" src="../lib/vkbeautify.js"></script>
+  <script type="text/javascript" src="xmlUtils.js"></script>
+  <script type="text/javascript" src="game.js"></script>
+  <script type="text/javascript" src="../lib/jquery.clickout.js"></script>
+  <script type="text/javascript" src="tour.js"></script>
+  <script type="text/javascript" src="../lib/html2canvas.js"></script>
+  <script type="text/javascript" src="../lib/canvg.js"></script>
+  <script type="text/javascript" src="../lib/jquery-ui.min.js"></script>
+ <!-- <script type="text/javascript" src="jquery.ui.touch-punch.js"></script> -->
+  <script type="text/javascript" src="../lib/lz-string.min.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.ext.js"></script>
+  <script type="text/javascript" src="../lib/jquery.simulate.drag-n-drop.js"></script>
+
+  <script type="text/javascript" src="../feedbackagent/feedbackagent.js"></script>
+  <script type="text/javascript" src="../feedbackagent/testxmi.js"></script>
+  <script type="text/javascript" src="../feedbackagent/taffy.js"></script>
+
+  <link rel="stylesheet" href="../ui/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="ui-style.css">
+
+  <script type="text/javascript" src="../lib/jquery.jsPlumb-1.7.2-min.js"></script>
+  <script src="toolbox.js"></script>
+   <script src="diagramplayer.js"></script>
+  <script type="text/javascript" src="lib/jszip.js"></script>
+  <script type="text/javascript" src="lib/FileSaver.js"></script>
+  <script type="text/javascript" src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
+  <title>WebUML - an Online UML Editor</title>
+
+
+</head><body>
+<div id="top_menu">
+    <span id="about" onclick='$( "#about-dialog" ).dialog("open");' >help/about</span>
+    <span id="workflow" onclick='$("#dialog-new").dialog({width:"40%"});'>explain workflow</span>
+    <span id="close-toolbox" onclick='$( "#toolbox" ).toggle();' >show/hide toolbox</span>
+ <!--   <span id="close-pen" onclick='$( "#overlay" ).toggle();' >show/hide pen</span> -->
+    <span id="clear" onclick='if(confirm("sure you want to clear?")){jsPlumb.detachEveryConnection();$("#diagram-canvas").find(".class, .package").remove();uiObserver.addLogEntry("CLEARALL");}'>clear diagram</span>
+    <span id="close-toolbox" onclick='$("#citedialog").dialog("open");' >cite/research</span>
+    <span id="cite" onclick='showTour();' >show tour</span>
+    <div id="save-all" title="Save this session in the browser's memory" onclick='xmlexp.exportXML();cvsexp.exportCSV();alert("session saved");$(this).css("background","cover url(floppy-red.png)");'></div>
+    <div id="load-xmi" title="Load your local XMI file"></div><input style="visibility: hidden" type="file" id="files" name="files" accept=".xmi, .xml"/>
+    <!--<span id="clear" onclick='if(back==true){back=false;$(this).css("font-weight","normal");$(this).css("color","black");}else{back=true;$(this).css("color","red");$(this).css("font-weight","bold");};'>secure back button</span>-->
+</div>
+    <table>
+        <tr>
+        <!--- <td><div id="replay"><img src="images/repeat.png" onclick="replaySession();" style="cursor: hand;height:30px"></div><button onclick="$.getScript('instructor.js');$('#clear').click();">exercise 1</button></td>
+        --->
+            <td><!-- <strong><a target="_blank" href="ClassDiagramModelingwithWebUML.pdf">Instructions for Makerere students</a></strong>&nbsp;&nbsp; --></td><td><H1><span style="color:red">Please use the latest Google Chrome browser only!</span><br/>WebUML - an Online UML Editor &copy Dave Stikkolorum 2014-2016</H1></td>
+                <td>
+
+
+                <img src="../images/inspect.png" onclick='xmlexp.exportXML();initFeedback(encodeURIComponent(localStorage.XMIencoded));updateAvatar(sendEvaluation());updateProgress((sendEvalAsJson()).progress);' style="height: 50px; cursor: hand"><img src="../images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;<img src="../images/question.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">&nbsp;&nbsp;
+
+                <img src="../images/submit.png" style="border: 2px solid black; height: 50px; cursor: hand" onclick="$('#submitdialog').dialog({width: 450});$('#submitdialog').dialog('option','title','Submit assignment');screenShot();">&nbsp;&nbsp;<img src="../images/send.png" style="border: 2px solid black; height: 50px; cursor: hand" title="submit bug" onclick="$('#bugdialog').dialog({width: 500,height: 400});$('#bugdialog').dialog('option','title','Submit Bug');"></td>
+        </tr>
+    </table>
+<!-- <div id="feedbackdialog" style="display: none"><p>Questions regarding interpretation of the text of the assignment should not be registered here.</p>My question is about:<br/><input type="radio" name="group1" value="syntax">UML syntax</br><input type="radio" name="group1" value="choosing">Choosing the right UML element (e.g. class, attribute, operation, association etc.)<br/><input type="radio" name="group1" value="naming">Naming of elements<br/><br><strong>Questiontext</strong><br/>I was busy with:<br/><textarea name="activity" rows=2 columns=60 style="width:400px"></textarea><br/>My goal was to:<br/><textarea name="goal" rows=2 columns=60 style="width:400px"></textarea><br/>My question is:<br/><textarea name="question" rows=4 columns=60 style="width:400px"></textarea><br/>My question relates to the following diagram area/element(optional):<textarea name="specific" rows=1 columns=60 style="width:400px"></textarea><br/><br/><button onclick="$('#feedbackdialog').dialog('close'); uiObserver.addLogEntry($('input[name=group1]:radio:checked').val(),$('textarea[name=specific]').val(),$('textarea[name=activity]').val(),$('textarea[name=goal]').val(),$('textarea[name=question]').val()); $('input[name=group1]:radio:checked').prop('checked',false); $('textarea[name=specific]').val('');$('textarea[name=activity]').val(''); $('textarea[name=goal]').val(''); $('textarea[name=question]').val('');" type="button">Register question</button></div> -->
+
+<div id="feedbackdialog" style="display: none"><p>Questions regarding interpretation of the text of the assignment should not be registered here.</p><br/>
+    <table>
+    <tr>
+        <td colspan=2>
+           [1] This is how I feel because of the problem / question I face at the moment (move slider)<br/><br>
+            <img src="../images/happy.png" style="width : 20px"><input type="range" style="width: 350px;" id="frustration"><img src="../images/angry.png" style="width : 20px"><br/>
+        </td>
+    </tr>
+    <tr>
+        <td>
+           [2] My question is:<br/>
+            <textarea name="question" rows=4 columns=60 style="width:400px"></textarea><br/>
+        </td>
+        <td>
+           [3] My question relates to the following diagram area/element(optional):<br/>
+            <textarea name="specific" rows=4 columns=60 style="width:400px"></textarea>
+        </td>
+    </tr>
+    </table>
+   <button onclick="$('#feedbackdialog').dialog('close'); uiObserver.addLogEntry($('#frustration').val(),$('textarea[name=specific]').val(),$('textarea[name=question]').val()); $('textarea[name=specific]').val(''); $('textarea[name=question]').val('');$('#frustration').val(50)" type="button">Register question</button>
+</div>
+
+<div id="submitdialog" style="display: none"><p>1) Fill in the details below and click the submit button.</p>student id 1<br/><input type="text" id="studentid1"><br/>student id 2<br/><input type="text" id="studentid2"><br/><button id="subassignment" type="button">submit</button><br/><br/> when your file is submitted, a copy is being downloaded locally<br/></div>
+<div id="bugdialog" style="display: none">
+<iframe style="border:none; width:450px; height: 350;" src="Mail.html"></iframe>
+</div>
+
+<script>
+
+    function updateAvatar(message){
+        $('#avatar').showBalloon({contents:message});
+    }
+
+    function updateProgress(progress){
+       $( "#progressbar" ).progressbar({value: progress });
+    }
+
+    function replaySession(){
+        xmlexp.exportXML();
+        cvsexp.exportCSV();
+        jsPlumb.detachEveryConnection();
+        $("#diagram-canvas").find(".class, .package").remove();
+        uiObserver.addLogEntry("CLEARALL");
+        dp = new DiagramPlayer("#diagram-canvas", LZString.decompress(localStorage.LOG) );
+        dp.play(200);
+    }
+
+
+
+
+    function sendfile(){
+      //  xmlhttp=new XMLHttpRequest();
+      //  xmlhttp.open("post","uploads/Default.aspx",true);
+      //  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      //  xmlhttp.send("test=dave");
+    }
+
+    function showfeedbackdialog(){
+       $('#feedbackdialog').dialog({width: "80%", height: 350});
+       $('#feedbackdialog').dialog( "option", "dialogClass", "fb-dialog" );
+       $('#feedbackdialog').dialog( "option", "position", { my: "bottom", at: "bottom", of: window } );
+       $('#feedbackdialog').dialog('option','title','Register your question');
+    }
+
+    //document.domain="models-db.com";
+
+    //xmlhttp=new XMLHttpRequest();
+   // xmlhttp.open("GET","post.asp",true);
+  //  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+   // xmlhttp.send();
+
+
+    function S_GET(id){
+        var a = new RegExp(id+"=([^&#=]*)");
+        if (window.location.search!=""){
+            console.log(decodeURIComponent(a.exec(window.location.search)[1]));
+            return decodeURIComponent(a.exec(window.location.search)[1]);
+            }
+    }
+
+
+
+
+function swapCanvas(){
+
+    $('#diagram-canvas').append($('body').children('svg'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_endpoint'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_overlay'));
+
+    $("#diagram-canvas").toggle();
+    $("#key-hint").toggle();
+
+    if ($("#task-screen").is(":hidden")){
+        $("#screenshot-canvas").toggle();
+    }
+
+
+    if($('#swap').text()=="view screenshots"){
+        $('#swap').text("view model");
+    }
+    else{
+        $('#swap').text("view screenshots");
+    }
+
+    if ($("#task-screen").is(":visible")){
+        $("#task-screen").toggle();
+        $('#task-button').attr('src','../images/model.png')
+    }
+
+}
+
+function swapTask(){
+
+    $('#diagram-canvas').append($('body').children('svg'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_endpoint'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_overlay'));
+
+    $("#diagram-canvas").toggle();
+
+
+    $("#key-hint").toggle();
+    $("#task-screen").toggle();
+    if ($("#task-screen").is(":visible")){
+        $('#task-button').attr('src','../images/model.png')
+        uiObserver.addLogEntry("Reading");
+    }
+    else{
+        uiObserver.addLogEntry("Modeling");
+        $('#task-button').attr('src','../images/doc.png');
+    }
+
+}
+
+function timer(){
+    setInterval( "$('#take').click();" , 300000);
+}
+
+function screenShot(){
+    if($('#diagram-canvas').children().length ==0)
+        return;
+
+    $('#diagram-canvas').append($('body').children('svg'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_endpoint'));
+    $('#diagram-canvas').append($('body').children('._jsPlumb_overlay'));
+
+    var timestamp = Date.now();
+
+    html2canvas($('#diagram-canvas'), {
+                onrendered: function(canvas) {
+
+                $(canvas).css('height','100px');
+                    $(canvas).attr('id','cv'+timestamp);$('#screenshot-canvas').append(canvas);
+                    svg=($('#diagram-canvas').find('svg').clone());
+                    sv=svg;
+                    if(svg.length!=0){
+                        $(svg).removeAttr('width height');
+
+                        for(var i=0; i<svg.length; i++){
+
+                        var ox= parseInt($(svg[i]).css('left'), 10);
+                        var oy= parseInt($(svg[i]).css('top'), 10);
+
+
+                        sv=$(svg[i]).prop('outerHTML');
+                        var id='cv'+timestamp;
+
+
+                        canvg(id, sv, {offsetX: ox-$('#diagram-canvas').position().left ,offsetY: oy-$('#diagram-canvas').position().top,ignoreClear: true, ignoreMouse: true});
+                        }
+                    }
+                    var id='cv'+timestamp;
+                    var canvas = document.getElementById(id);
+
+                    var ctx = canvas.getContext("2d");
+                    ctx.font = "italic 14px/2 Unknown Font, sans-serif";
+                    ctx.fillStyle = "blue";
+                  //  studString = $('#studentid1').val()+"-"+$('#studentid2').val();
+
+                   // ctx.fillText(studString, 20,parseInt($(canvas).attr('height')-30));
+
+                //+(new Date(timestamp)).toString()
+                    console.log("making screenshot");
+                    var theImage = canvas.toDataURL('image/png');
+
+                    $(canvas).click( function(){
+                                    window.open(theImage);
+                                    //canvas.save();
+                                    });
+
+                }
+            });
+
+
+}
+
+
+
+
+    var back = true;
+
+ $(window).bind("beforeunload", function(e) {
+        if(back == true)
+            return "Are you sure you want to leave the editor? Did you save everything?";
+        else
+            return;
+    });
+
+    var t1;
+    var g1;
+//var editables = ".heading, .attribute, .operation";
+var connect;
+
+    jsPlumb.ready(function() {
+
+
+
+
+                  $('#subassignment').click(function (){
+                                       uiObserver.addLogEntry("Submitted Assignment");
+                                       xmlexp.exportXML();
+                                       cvsexp.exportCSV();
+
+                                       var zip = new JSZip();
+                                       //$('#studentid1').val()+'-'+$('#studentid2')
+                                       //zip.file("log.csv",LZString.decompress(localStorage.LOG));
+                                      // zip.file("model.xmi",localStorage.XMIencoded);
+                                       zip.file($('#studentid1').val()+'-'+$('#studentid2').val()+"-LOG.csv",LZString.decompress(localStorage.LOG));
+                                       zip.file($('#studentid1').val()+'-'+$('#studentid2').val()+"-model.xmi",localStorage.XMIencoded);
+
+
+
+
+                                       //$($('#screenshot-canvas').children().last()[0]).css("width","200mm");
+                                       var s_shot = $('#screenshot-canvas').children().last()[0];
+                                     //add student numbers to image
+                                        ctx = s_shot.getContext("2d");
+                                        ctx.font = "italic 14px/2 Unknown Font, sans-serif";
+                                        ctx.fillStyle = "blue";
+
+                                        var timestamp = Date.now();
+                                        studString = $('#studentid1').val()+"-"+$('#studentid2').val()+"-"+(new Date(timestamp)).toString();
+                                        ctx.fillText(studString, 20,parseInt($(s_shot).attr('height')-30));
+                                    //----
+                                       //var s_shot_image = s_shot.toDataURL('application/pdf');
+                                       var s_shot_image = s_shot.toDataURL('img/jpg');
+                                       var pdf = new jsPDF('l','','a4');
+                                       var imgratio = $('#diagram-canvas').width()/290;
+                                       var imgheight = $('#diagram-canvas').height()/imgratio;
+                                       pdf.addImage(s_shot, 'PNG', 0, 0, 290, imgheight);
+
+
+                                     // pdf.save("download.pdf");
+
+                                     //  zip.file($('#studentid1').val()+'-'+$('#studentid2').val()+"-image.pdf", s_shot_image.substr(s_shot_image.indexOf(',')+1), {base64: true});
+                                       zip.file($('#studentid1').val()+'-'+$('#studentid2').val()+"-image.pdf", pdf.output('datauristring').substr(pdf.output('datauristring').indexOf(',')+1), {base64: true});
+                                       var content = zip.generate({type:"blob"});
+                                           // var fd = new FormData();
+                                         //   fd.append('file',content,'test.zip');
+                                        //    fd.append('filename',"test.zip");
+                                       // see FileSaver.js
+                                       saveAs(content, $('#studentid1').val()+'-'+$('#studentid2').val()+'-'+Date.now()+".zip");
+                                            xmlhttp=new XMLHttpRequest();
+                                            xmlhttp.open("post","uploads/Default.aspx?filename="+$('#studentid1').val()+'-'+$('#studentid2').val()+'-'+Date.now()+".zip",true);
+                                            //xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                                           // xmlhttp.setRequestHeader("Content-type","multipart/form-data");
+                                            xmlhttp.send(content);
+                                            xmlhttp.onreadystatechange=function()
+                                            {
+
+                                            if (xmlhttp.readyState==4 && xmlhttp.status==200){
+                                                    $("#submitdialog").append('<span style="color:red">Your assignment has been uploaded</span>');
+                                            }
+                                            if (xmlhttp.readyState==4 && xmlhttp.status!=200){
+                                                    $("#submitdialog").append('<span style="color:red">Something went wrong, please email your zip file to umlwebeditor@gmail.com or try again</span>');
+                                            }
+                                            }
+
+                  });
+
+
+                  var sv;
+
+                 jsPlumbHelper = new jsPlumbHelper();
+                  $('#dialog-new').hide();
+                 $('body').append(new HTMLRootNode('div','toolbox'));
+                 $('#toolbox').addClass("do-not-print");
+
+                 //  t1 = new Toolbox([ new Class("Class"),new Attribute("Attribute"),new Operation("Operation()"),new Package("Package")]);
+
+
+
+                  /*$('body').append(new HTMLRootNode('div','overlay'));
+                  $('#overlay').append('<canvas id="overlay-canvas"></canvas>');
+                  var docHeight = $(document).height();
+                  var docWidth = $(document).width();
+                  $("#overlay-canvas").attr('height',docHeight);
+                  $("#overlay-canvas").attr('width',docWidth);
+                  $("#overlay").height(docHeight);
+                  $("#overlay").hide();*/
+
+                  $('body').append(new HTMLRootNode('div','diagram-canvas'));
+
+                  $('#diagram-canvas').append('<div id="progressbar"></div>');
+                  $( "#progressbar" ).progressbar({value: 0 });
+                  $('#progressbar').css({width: "100%", position: "relative", top: "96%", height: "10px" });
+                  $('#progressbar').children().css('background','lightblue' );
+
+                  /*$('#diagram-canvas').append('<div id="slider"></div>');
+                  $( "#slider" ).slider();
+                  $('#slider').css({width: "100%", position: "relative", top: "92%", height: "10px" });*/
+
+                  $('body').append(new HTMLRootNode('div','screenshot-canvas'));
+                  //$('#screenshot-canvas').append("<canvas id='screens'></canvas>");
+                  $('#screenshot-canvas').toggle();
+
+                  $('body').append(new HTMLRootNode('div','task-screen'));
+                  $('#task-screen').append('<div style="width: 100%;"><object data="task.pdf" type="application/pdf" style="width: 100%;height: 100%;">alt : <a href="task.pdf">test.pdf</a></object></div>');
+                  $('#task-screen').toggle();
+
+
+
+                  /* idea for a slider
+                   $('body').append((new HTMLNode('div','slider')));
+                  $( "#slider" ).slider({
+                                        slide: function (event,ui){ $('#diagram-canvas').children().animate({ 'zoom': (1 + (ui.value*0.01)) }, 1);
+                                        }
+                  }).css("width","200px");
+                   */
+
+
+
+                  $('#top_menu').append((new CSVExporter('LOG')).getNode());
+                  $('#top_menu').append((new XMLExporter('Export to XMI')).getNode());
+                  $('#top_menu').append((new XMLImporter('Import XMI')).getNode());
+                  $('#top_menu').addClass("do-not-print");
+
+
+                  //$('#top_menu').append('<button onclick="swapCanvas();" id="swap" class="menu_button">view screenshots</button>');
+                 // $('#top_menu').append('<button onclick="screenShot();" id="take" style="background: yellow;float:right"><img style="height:15px" src="camera-icon.png"></button>');
+                  $('#take').balloon({contents:"take screenshot", position: "bottom", css: {opacity: "1"} });
+               //   $('#top_menu').append('<button onclick="timer();$(this).css(\'background\',\'red\')" style="background: lightblue;float:right"><img style="height:15px" src="timer.png"></button>');
+
+
+
+                  if(S_GET('mode')=="game"){
+
+                  //----- game part
+
+                  //maybe place game code somwhere else?
+
+
+                  $('body').append(new HTMLRootNode('div','game'));
+
+                  $('body').append(new HTMLRootNode('div','question'));
+
+                  $('#game').addClass("do-not-print");
+                  $('#question').addClass("do-not-print");
+
+                  t1 = new Toolbox([], false,'toolbox');
+
+                  g1 = new Game("question",t1);
+
+
+                  g1.loadGame("game.xml", 'game'); // also loads toolbox
+
+                 // t1 = new Toolbox(g1.getTools(), false,'toolbox');
+
+
+                  //----- game part
+                  }
+
+                  else{
+                  t1 = new Toolbox([ new Class("Class"),new Attribute("Attribute"),new Operation("Operation()"),new Package("Package")], true,'toolbox');
+                  $('#toolbox').css("height","80%"); //fix me
+                  $('#diagram-canvas').css("height","80%"); //fix me
+                  }
+
+                  if(window.navigator.platform=="MacIntel"){
+                      $('body').append(new HTMLNode('div','key-hint',null,'<h3>Mac Key Hints - [open/close]</h3><ul><li>click - select classes/attr./oper.</li><li>del(fn+back) - delete selected item</li><li>ALT-click - delete association</li><li>cmd + left-click - change association direction</li><li>right-click - change type of  association</li><li>right-click + cmd - change to dependency</li><li>double-click on association- add/edit label</li><li>SHIFT+click on association- add/edit multiplicity</li></ul>'));
+
+                  }
+                  if((window.navigator.platform).indexOf("Linux")>-1 && (window.navigator.platform).indexOf("arm")>-1){
+                        $('body').append(new HTMLNode('div','key-hint',null,'Adroid Tablet support is coming soon ..'));
+                  }
+
+                  if(window.navigator.platform=="Win32" || window.navigator.platform=="Linux x86_64" || window.navigator.platform=="Linux i686"){
+                  $('body').append(new HTMLNode('div','key-hint',null,'Pc Key Hints - [open/close]<ul><li>click - select classes/attr./oper.</li><li>del - delete selected item</li><li>ALT-click - delete association</li><li>ctrl + left-click - change association direction</li><li>right-click - change type of  association</li><li>ctrl + right-click - change to dependency</li><li>double-click on association - add/edit label</li><li>SHIFT+click on association - add/edit multiplicity</li></ul>'));
+                  }
+
+
+                  $('#key-hint').find('ul').hide();
+                  $('#key-hint').click(function(){
+                                       if($('#key-hint').find('ul').is(':visible'))
+                                       $('#key-hint').find('ul').slideUp();
+                                       else
+                                       $('#key-hint').find('ul').slideDown();
+                                       });
+
+
+                  t1.initTools();
+
+                  $('<div id="about-dialog" title="About UML WebEditor"><p autofocus><ul><li>drag elements to diagram-draw area</li><li>assiociation are drawn from the upper right corner of a class</li></ul></p><p>This WebEditor was developed for research at Leiden University, Leiden, The Netherlands.<br/><br/> &copy; Dave Stikkolorum 2014<br/><a target="_blank" href="http://www.liacs.nl/~drstikko">http://www.liacs.nl/~drstikko</a></p></div>').appendTo('body');
+
+
+                jsPlumb.bind("click", function(c, e) {
+                    if(e.metaKey && window.navigator.platform=="MacIntel" || e.ctrlKey && window.navigator.platform=="Win32"){
+                        var newc = jsPlumb.connect({source:c.targetId, target:c.sourceId});
+                        newc.addOverlay(["Arrow", {
+                                                   label: "Arrow",
+                                                   foldback: 0.1,
+                                                   id: "directedAssociation",
+                                                   location: 1
+                                                   }]);
+                        jsPlumb.detach(c);
+                    }
+                    //if(e.altKey){
+                    //    connector = jsPlumb.connect({source:c.targetId, target:c.sourceId});
+                    //    connector.setHoverPaintStyle({dashstyle: "2 4", strokeStyle:"#42a62c", lineWidth:2});
+                    //}
+
+                });
+
+                jsPlumb.bind("click", function(c, e) {
+                               if(e.shiftKey){
+
+                                     connector = c;
+                                     if (connector.getOverlay("m_r") === null){
+                                     connector.addOverlay(["Label", {label: "*",id: "m_r", location:0.94, cssClass: "connectionLabel"}]);
+                                     }
+
+                                     if (connector.getOverlay("m_l") === null){
+                                     connector.addOverlay(["Label", {label: "*",id: "m_l", location:0.06, cssClass: "connectionLabel"}]);
+                                     }
+
+                                     name = connector.getOverlay("m_r").getLabel();
+                                     $elm = connector.getOverlay("m_r");
+                                     $elm.hide();
+
+                                     name2 = connector.getOverlay("m_l").getLabel();
+                                     $elm2 = connector.getOverlay("m_l");
+                                     $elm2.hide();
+
+                                     var theelm = $elm.getElement();
+                                     var par = theelm.parentElement;
+                                     $(par).append("<input id=\"label-edit\" type=\"text\" size=\"10\" value=\"" + name + "\">");
+                                     $("#label-edit").css({position: 'absolute', top: $(theelm).css("top"), left: $(theelm).css("left")});
+                                     //$("#label-edit").focus();
+                                     $("#label-edit").on("keypress blur", function(e) {
+                                                         if (e.keyCode == 13 || !e.keyCode) {
+                                                         connector.getOverlay("m_r").setLabel($(this).val());
+                                                         $elm.show();
+
+                                                         $("#label-edit").remove();
+                                                         }
+                                                         });
+
+                                     var theelm2 = $elm2.getElement();
+                                     var par2 = theelm2.parentElement;
+                                     $(par2).append("<input id=\"label-edit2\" type=\"text\" size=\"10\" value=\"" + name2 + "\">");
+                                     $("#label-edit2").css({position: 'absolute', top: $(theelm2).css("top"), left: $(theelm2).css("left")});
+                                     $("#label-edit2").focus();
+                                     $("#label-edit2").on("keypress blur", function(e) {
+                                                         if (e.keyCode == 13 || !e.keyCode) {
+                                                         connector.getOverlay("m_l").setLabel($(this).val());
+                                                         $elm2.show();
+                                                         $('#label-edit').focus();
+                                                         $("#label-edit2").remove();
+                                                         }
+                                                         });
+
+
+
+
+                                     e.preventDefault();
+
+                               }
+
+                             });
+
+
+
+
+                  $( "#about-dialog" ).dialog({modal:true, width: 500, autoFocus: false});
+                  $( "#about-dialog" ).dialog("close");
+
+
+
+
+                //to toolbox.js??
+                $('body').keyup(function(e){
+                                   console.log(e.keyCode);
+                   if ( (e.keyCode==4 || e.keyCode==46) && $('.edittext').length==0){
+
+                       //$('.selected').remove();
+                                var element_type = ($('.selected').attr('class')).split(" ",1);
+                                element_type=element_type.toString();
+                                console.log(element_type);
+                                if (element_type == "heading")
+                                    element_type = "Class";
+
+                                if (element_type != "attribute" && element_type != "operation")
+                                    uiObserver.addLogEntry('REMOVE',(element_type).toUpperCase(),$('.selected').attr('id'),$('.selected').find("h1").text());
+                                else
+                                    uiObserver.addLogEntry('REMOVE',(element_type).toUpperCase(),$('.selected').attr('id'),$('.selected').parent().parent().find("h1").text());
+
+                                jsPlumb.detachAllConnections($('.selected'));
+                                jsPlumb.detachAllConnections($('.selected').children('.class'));
+                                $('.selected').hide("slow", function(){ $(this).remove(); })
+                            }
+                });
+
+
+                 /* document.body.addEventListener('touchstart', function(e){
+                                                 alert(e.changedTouches[0].pageX) // alert pageX coordinate of touch point
+                                                 }, false)*/
+                  $('#toolbox').click(function(e){
+                                  $('.selected').removeClass('selected');
+                                  });
+                  $('#diagram-canvas').click(function(e){
+                                             $('.selected').removeClass('selected');
+                                             $('.help-balloon').remove();
+                                             });
+
+
+                 if (S_GET('mode')=='xmi_ref'){
+                        window.addEventListener("message", function(e) {
+                        console.log(e.data);
+                        XMLImporter.prototype.importXML(decodeURIComponent(e.data).replace(/\+/g, " ") );
+                        });
+                 }
+
+                  function confirmDialog (message) {
+                    var defer = $.Deferred();
+                    $('<div>'+message+'</div>').dialog({
+                            autoOpen: true,
+                            close: function () {
+                                $(this).dialog('destroy');
+                            },
+                            position: {my: "center", at: "center", of: window},
+                            title: 'Confirmation needed',
+                            buttons: {
+                                "Yes": function() {
+                                    defer.resolve("yes"); //on Yes click, end deferred state successfully (done)
+                                    $( this ).dialog( "close" );
+                                },
+                                "No": function() {
+                                    defer.resolve("no");
+                                    $( this ).dialog( "close" );
+                                }
+                            }
+                        });
+                    return defer.promise(); //important to return the defer promise
+                }
+
+
+                 if(typeof localStorage.XMIencoded !='undefined' && S_GET('mode')!='xmi_ref'){
+
+                     confirmDialog("Continue form last session?").then(function (answer) {//done will run if button is clicked
+                         if (answer=='yes'){
+
+                                if (localStorage.XMIencoded!="" && typeof(localStorage.XMIencoded)!="undefined"){
+                                    //alert(localStorage.xmi);
+                                    XMLImporter.prototype.importXML(decodeURIComponent(localStorage.XMIencoded).replace(/\+/g, " ") );
+                                    // localStorage.xmi="";
+                                    }
+                                if (localStorage.LOG!="" && typeof(localStorage.LOG)!="undefined"){
+                                        uiObserver.log = LZString.decompress(localStorage.LOG);
+                                    }
+                          }
+                          else{
+                                if(typeof localStorage.XMIencoded !='undefined')
+                                    delete localStorage.XMIencoded;
+                                if(typeof localStorage.LOG !='undefined')
+                                    delete localStorage.LOG;
+                          }
+                     });
+
+                  }
+
+                  var version = 2;
+
+                  if (typeof localStorage.info != 'undefined'){
+
+                  if ( isNaN(Number(localStorage.info)) ) {
+                  localStorage.info = 0;
+                  }
+
+
+                  if( Number(localStorage.info) < version ){
+                    $('#dialog-new').dialog({width:"40%"});
+                    localStorage.info = version;
+                    }
+
+
+                    }else{
+                    localStorage.info = version;
+                    }
+
+
+
+                  //-------- load local file
+                  function handleFileSelect(evt) {
+                  var files = evt.target.files[0]; // FileList object
+                  var reader = new FileReader();
+
+                  // Closure to capture the file information.
+                  reader.onload = (function(theFile) {
+
+                       return function(e) {
+                            XMLImporter.prototype.importXML(e.target.result);
+                       };
+                       })(files);
+
+                  // Read in the image file as a data URL.
+                  reader.readAsText(files);
+                  }
+
+                   document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+                  //-------- end local file
+
+
+
+               //   $.get("model1.txt", function(respons) {
+
+                      //  XMLImporter.prototype.importXML( respons );
+                        //console.log(response);
+
+                //  });
+
+                $('#load-xmi').click(function() {
+                    $('#files').click();
+                });
+
+                $(document).tooltip();
+
+                var page = "cite.html";
+
+                var $citedialog = $('<div id="citedialog"></div>').html('<iframe style="border: 0px; " src="' + page + '" width="100%" height="100%"></iframe>').dialog({
+                   autoOpen: false,
+                   modal: true,
+                   height: 625,
+                   width: 500,
+                   title: "Citation and research papers"
+                });
+                $citedialog.dialog().css('background','white');
+
+
+
+
+                  $('#avatar').showBalloon({contents:"Connect elements by dragging their right corner to another element. You can find out more by clicking on 'keyhints'", classname: "message", css: {width: "180px", opacity: "1"}});
+                setInterval( "xmlexp.exportXML();cvsexp.exportCSV();" , 60000);
+               // setInterval(function(){ $('#avatar').showBalloon({contents:"Don't forget to register your question it will help us to understand your design", classname: "message", css: {width: "180px"}}); $('#avatar').effect("pulsate"); $('.message, #question-button').effect("highlight", {duration: 15000}); }, 300000);
+                setTimeout(function(){$('#avatar').showBalloon({contents:"Connect elements by dragging their right corner to another element. You can find out more by clicking on 'keyhints'", classname: "message", css: {width: "180px"}});}, 450000);
+
+
+    });
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63366353-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!-- <script type="text/javascript" src="draw.js"></script>-->
+<div id="dialog-new" style="display:hidden" title="Online UML Editor">
+    <p>Hi, welcome to the online UML editor<img width="80px" src="../images/DaveAvatar.png" style="float: right;"></p>
+    <hr/>
+    <p>June 2015 - replay function trial</p>
+    <p>2015/3/25 - possibility to submit a session and download it as a zip file. <br/> - added submission of typical questions (tool unrelated) that arrise during modeling
+    <br/> - added bug filing button</p>
+    <p>Older than 2015/3/25 - New workflow: start diagramming - save your work with the save button on the left menu - export you xmi and log on the right menu</p>
+    <p>You can continue working on your diagram if you open the web page again by <strong>confirming</strong>the continue question</p>
+    <p>You can start a new diagram session by opening the web page again by <strong>canceling</strong> the continue question</p>
+    <p>don't ignore the popup messages, read them carefuly</p>
+    <p class="warning">Known Bugs : some drawing of associations seems to go wrong, still after moving the classes / packages, they restore</p>
+</div>
+</body></html>

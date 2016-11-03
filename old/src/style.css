@@ -1,0 +1,278 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    position: fixed;
+    width: 99%;
+    height: 100%;
+
+}
+
+
+
+body H1{
+    font-size: 1.2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#diagram-canvas, #screenshot-canvas, #task-screen{
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid black;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    height: 60%;
+    border-radius: 3px;
+    padding: 4px;
+    
+}
+
+.warning{
+    color: red;
+}
+
+.message{
+    word-wrap: break-word;
+}
+
+.message a{
+    color: blue;
+    cursor:pointer;
+    cursor: hand;
+}
+
+#screenshot-canvas, #task-screen{
+    border: 1px solid blue;
+    height: 80%;
+}
+
+#diagram-canvas .attribute, #diagram-canvas .operation{
+    border: none;
+}
+
+.fb-dialog{
+    z-index: 100000;
+}
+
+#overlay {
+    height: 60%;
+    margin: 0 auto;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 5000;
+    margin-top: 30px;
+}
+
+#overlay-canvas{
+    display: -ms-flexbox;
+    display: -webkit-box;
+    cursor: url('pencil.png'), auto;
+}
+
+#toolbox{
+    font-family: Arial, Helvetica, sans-serif;
+	width: 200px;
+	height: 60%;
+	border: 1px solid black;
+    padding: 4px;
+    margin-right: 10px;
+    float: left;
+    background: #F0F0E3;
+    border-radius: 3px;
+}
+
+#toolbox * {
+ //   margin-bottom: 5px;
+}
+
+ul{
+    padding: 0 0 0 0px;
+    margin: 2px 0 3px 0;
+}
+
+#toolbox .title{
+    text-shadow : 2px 2px 2px rgba(70, 114, 148, 0.71);
+    text-align: left;
+    font-size: 1em;	
+    font-family: Tahoma, Geneva, sans-serif;
+}
+
+#toolbox .seperator{
+    border: 1px solid black;
+    border-top-style: double;
+    border-bottom-style: double;
+    border-left: none;
+    border-right: none;
+    height: 2px;
+    margin-bottom: 10px;
+}
+
+.toolboxAttribute{
+    position: absolute;
+}
+
+.toolboxOperation{
+    position: absolute;
+}
+
+#game{
+    margin-top: 4px;
+    margin-right: 10px;
+    width: 200px;
+    border: 2px dashed red;
+    height: 25%;
+    padding: 4px;
+    float: left;
+}
+
+select {
+    width: 180px;
+}
+
+#question{
+    border: 2px dashed red;
+    margin-top: 4px;
+    height: 25%;
+    padding: 5px;
+    display: -ms-flexbox;
+    display: -webkit-box;
+}
+
+.question-title{
+    color: blue;
+    font-size: 1.6em;
+    display: inline;
+    vertical-align: text-bottom;
+}
+
+.question-text{
+    font-size: 1.4em;
+    display: inline-block;
+}
+
+.question-hint{
+    width: 30px;
+    height: 30px;
+  //  float: right;
+
+}
+
+
+
+.class {
+    width: 125px;
+    //padding:1em;
+    position:absolute;
+    border: 1px solid black;
+    z-index:4;
+
+    border:1px solid #000000;
+    box-shadow: 2px 2px 19px #e0e0e0;
+    -o-box-shadow: 2px 2px 19px #e0e0e0;
+    -webkit-box-shadow: 2px 2px 19px #e0e0e0;
+    -moz-box-shadow: 2px 2px 19px #e0e0e0;
+    opacity:0.8;
+    filter:alpha(opacity=80);
+    cursor:move;
+    
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.class hr{
+    color: #000;
+    background-color: #000;	
+    height: 1px;	
+    border: 0px;	
+    margin: 1px 0 1px 0;
+}
+
+.class H1{
+    text-align: center;
+    font-size: 1em;	
+    padding: 0em 1em 0em 1em;	
+    margin: 1px 0 0 0;
+    cursor: pointer;
+}
+
+.package H1{
+    text-align: center;
+    font-size: 1em;
+    margin: 0;
+    border-left: 1px solid black;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    height: 10%;
+}
+
+
+.package {
+    width: 125px;
+    height: 80px;
+    position:absolute;
+    border: none;
+    z-index:0;
+    cursor:move;
+    margin-bottom: 5px;
+}
+
+.class H1{
+    border-left: none;
+    border-top: none;
+    border-right: none;
+}
+
+.ui-resizable {
+ position: absolute;
+}
+
+.content {
+    border: 1px solid;
+    border-top: none;
+    height: 78%;
+}
+
+.top_left {
+    border: 1px solid;
+    border-bottom: none;
+    height: 12%;
+    width: 40%;
+    margin: 0;
+}
+
+.ep {
+    float: right;
+    width: 1em;
+    height: 1em;
+    cursor: pointer;
+}
+
+li.selected {
+    background: lightblue;
+    box-shadow: none;
+}
+
+.attribute, .operation{
+    list-style: none;
+    padding: 4px;
+    border: 1px solid gray;
+    width: 7.3em;
+    border-radius: 3px;
+    cursor:move;
+}
+
+
+.connectionLabel {
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+
+.dummy{
+    height: 0px;
+    visibility: hidden;
+}
