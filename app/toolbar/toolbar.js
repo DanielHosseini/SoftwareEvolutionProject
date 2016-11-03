@@ -2,11 +2,11 @@
 
 angular.module('myApp.toolBar', ['ngRoute'])
 
-//HOW WE DO DIS
+//Don't really need routing do we since it is not separate pages
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
+  $routeProvider.when('/toolBar', {
+    templateUrl: 'toolbar/toolbar.html',
+    controller: 'ToolBarController'
   });
 }])
 
