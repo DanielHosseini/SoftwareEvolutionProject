@@ -21,7 +21,7 @@ body H1{
     height: 60%;
     border-radius: 3px;
     padding: 4px;
-
+    
 }
 
 .warning{
@@ -94,7 +94,7 @@ ul{
 #toolbox .title{
     text-shadow : 2px 2px 2px rgba(70, 114, 148, 0.71);
     text-align: left;
-    font-size: 1em;
+    font-size: 1em;	
     font-family: Tahoma, Geneva, sans-serif;
 }
 
@@ -175,7 +175,7 @@ select {
     opacity:0.8;
     filter:alpha(opacity=80);
     cursor:move;
-
+    
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -186,16 +186,16 @@ select {
 
 .class hr{
     color: #000;
-    background-color: #000;
-    height: 1px;
-    border: 0px;
+    background-color: #000;	
+    height: 1px;	
+    border: 0px;	
     margin: 1px 0 1px 0;
 }
 
 .class H1{
     text-align: center;
-    font-size: 1em;
-    padding: 0em 1em 0em 1em;
+    font-size: 1em;	
+    padding: 0em 1em 0em 1em;	
     margin: 1px 0 0 0;
     cursor: pointer;
 }
