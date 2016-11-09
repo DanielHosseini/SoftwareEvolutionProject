@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp')
+var myApp = angular.module('myApp')
 .controller('ClassController', function ClassController($scope) {
 
     $scope.name = "class";
@@ -36,7 +36,7 @@ angular.module('myApp')
             $scope.operations.splice(index, 1);
         }
     }
-    $scope.upatePosition = function(position){
+    $scope.updatePosition = function(position){
         $scope.position = position;
     }
 });
