@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', []);
+var myApp = angular.module('myApp');
 myApp.factory('observerService', function() {
     var log = "";
 
