@@ -37,6 +37,6 @@ logs
 results
 build
 
-node_modules
+node_modules/
 
 /.sonar/
