@@ -17,4 +17,4 @@ describe('ClassController', function() {
             expect($scope.name).toEqual('main');
         });
     });
-}); 
+});

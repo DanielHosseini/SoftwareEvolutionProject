@@ -1,5 +1,5 @@
 'use strict';
-angular.module('myApp', [])
+angular.module('myApp')
 .controller('ClassController', function ClassController($scope) {
 
     $scope.name = "class";
