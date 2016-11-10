@@ -39,4 +39,9 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-});
+}
+.directive('classDirective', function(){
+    return {
+        templateUrl: 'class.html'
+    };
+}));
