@@ -1,8 +1,9 @@
 <div ng-controller="ClassController">
-    <h1 class="heading">Class</h1>
+    <h1 class="heading" ng-model='name'>{{name}}</h1>
     <hr>
-    <ul class="attribute-list">
-    </ul>
-    <ul class="operation-list">
+    <div class="attribute-list" ng-model='attributes'>
+    </div>
+    <div class="operation-list" ng-model='operations'>
+    </div>
     </ul>
 </div>
