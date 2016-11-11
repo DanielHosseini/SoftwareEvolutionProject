@@ -45,3 +45,4 @@ var myApp = angular.module('myApp')
         templateUrl: 'class.html'
     };
 }));
+
