@@ -3,7 +3,7 @@
 var myApp = angular.module('myApp')
 .controller('OperationController', function OperationController($scope) {
 
-   $scope.name = "Operation";
+   $scope.name = "Operation()";
     $scope.position = null;
     $scope.init = function(position){
         $scope.position = position;
