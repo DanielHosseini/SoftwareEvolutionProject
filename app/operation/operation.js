@@ -14,4 +14,3 @@ angular.module('myApp.operation', ['ngRoute'])
         $scope.position = position;
     }
 }]);
-}]);
