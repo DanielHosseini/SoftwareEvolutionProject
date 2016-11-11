@@ -1,7 +1,8 @@
 'use strict';
-angular.module('myApp.operation', ['ngRoute'])
-.controller('OperationController', [function OperationController($scope) {
 //Implement Methods
+var myApp = angular.module('myApp')
+.controller('OperationController', function OperationController($scope) {
+
    $scope.name = "Operation";
     $scope.position = null;
     $scope.init = function(position){
@@ -13,4 +14,4 @@ angular.module('myApp.operation', ['ngRoute'])
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-}]);
+});
