@@ -1,5 +1,16 @@
 'use strict';
-angular.module('myApp.attribute', ['ngRoute'])
-.controller('AttributeController', [function() {
-//Implement Methods
-}]);
+var myApp = angular.module('myApp')
+.controller('AttributeController', function AttributeController($scope) {
+
+    $scope.name = "Attribute";
+    $scope.position = null;
+    $scope.init = function(position){
+        $scope.position = position;
+    }
+    $scope.setName = function(name){
+        $scope.name = name;
+    }
+    $scope.updatePosition = function(position){
+        $scope.position = position;
+    }
+});

@@ -1,7 +1,9 @@
 <div ng-controller="toolboxController">
     <h1 class="title">UML Elements</h1>
     <hr class="seperator">
-    <ul ng-model="Class"></ul>
+    <div ng-controller="ClassController">
+        <div class-directive></div>
+    </div>
 
     <ul ng-model="Attribute"></ul>
     <ul ng-model="Operation"></ul>
