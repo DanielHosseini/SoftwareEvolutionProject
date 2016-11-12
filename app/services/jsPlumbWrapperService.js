@@ -64,7 +64,6 @@ myApp.factory('jsPlumbWrapperService', ['observerService', function(observerServ
 
     });
 
-    return {
       initTargets = function() {
             jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
                 dropOptions: { hoverClass: "dragHover" },
@@ -140,5 +139,4 @@ myApp.factory('jsPlumbWrapperService', ['observerService', function(observerServ
                 }]);
             }
         }
-    }
 }]);
