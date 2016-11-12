@@ -12,7 +12,7 @@ module.exports = function(config) {
       'components/**/*.js',
       'view*/**/*.js',
       'services/*.js',
-      'operation/*.js'
+      'operation/*.js',
       'class/*.js',
       'attribute/*.js'
     ],
