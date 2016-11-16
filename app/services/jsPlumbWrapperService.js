@@ -63,15 +63,15 @@ myApp.factory('jsPlumbWrapperService', ['observerService', function(observerServ
         e.preventDefault();
 
     });
-
-      initTargets = function() {
+    return {
+      initTargets: function() {
             jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
                 dropOptions: { hoverClass: "dragHover" },
                 anchor: "Continuous"
             });
         },
 
-        initEndpoints = function(nextColour, curved) {
+        initEndpoints: function(nextColour, curved) {
             angular.element(".ep").each(function(i, e) {
                 var p = angular.element(e).parent();
                 if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
@@ -86,7 +86,7 @@ myApp.factory('jsPlumbWrapperService', ['observerService', function(observerServ
             });
         },
 
-        changeEndShape = function(c, type) {
+        changeEndShape: function(c, type) {
           // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
             connector = c;
             if (connector.getOverlay("directedAssociation") || type == "aggregate") {
@@ -139,4 +139,5 @@ myApp.factory('jsPlumbWrapperService', ['observerService', function(observerServ
                 }]);
             }
         }
+    }
 }]);
