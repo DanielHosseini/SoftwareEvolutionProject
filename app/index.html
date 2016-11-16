@@ -24,10 +24,12 @@
             <class-directive></class-directive>
         </div>
 
-        <ul ng-model="Attribute"></ul>
-        <ul ng-model="Operation"></ul>
+        <div ng-controller="AttributeController" class="toolboxAttribute">
+            <attribute-directive></attribute-directive>
+        </div>
+        <ul ng-controller="Operation" class="toolboxOperation"></ul>
         <ul ng-model="Package"></ul>
-        <div class="infobox" style="top: 415.438px;">
+        <div id="infobox" class="infobox" style="top: 415.438px;">
             <h1></h1>
             <p></p>
             <div class="message" style="min-width: 20px; padding: 5px; border-radius: 6px; border: 1px solid rgb(119, 119, 119); box-shadow: rgb(85, 85, 85) 4px 4px 4px; color: rgb(102, 102, 102); background-color: rgb(239, 239, 239); opacity: 1; z-index: 32767; text-align: left; width: 180px; visibility: visible; position: absolute; top: 435.234px; left: 7px; display: block;">
@@ -48,6 +50,7 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
   <script src="class/class.js"></script>
+  <script src="attribute/attribute.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
