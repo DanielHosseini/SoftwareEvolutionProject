@@ -73,4 +73,21 @@ describe('ClassController', function() {
             expect($scope.position.y).toEqual(10);
         })
     })
+
+    describe('DiagramService.addClassy', function(){
+      it('adds a class object to the global variable'), function(){
+        var $scope = {}
+        var controller = $controller('ClassController', {$scope: $scope});
+        DiagramService.addClassy($scope)
+        expect(DiagramService.getClassy().length > 1);
+      }
+    })
+    describe('DiagramService.addClassAgain', function(){
+      it('adds a class object to the global variable'), function(){
+        var $scope = {}
+        var controller = $controller('ClassController', {$scope: $scope});
+        DiagramService.addClassy($scope)
+        expect(DiagramService.getClassy().length > 1);
+      }
+    })
 });
