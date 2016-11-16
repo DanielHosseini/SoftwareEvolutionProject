@@ -30,12 +30,55 @@ body H1{
 
 .message{
     word-wrap: break-word;
+    min-width: 20px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid rgb(119, 119, 119);
+    box-shadow: rgb(85, 85, 85) 4px 4px 4px;
+    color: rgb(102, 102, 102);
+    background-color: rgb(239, 239, 239);
+    opacity: 1;
+    z-index: 32767;
+    text-align: left;
+    width: 180px;
+    visibility: visible;
+    position: absolute;
+    left: 7px;
+    display: block;
+}
+
+.speechBubble{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border-width: 12px 7px 0px;
+    border-style: solid;
+    border-color: rgb(119, 119, 119) transparent transparent;
+    border-image: initial;
+    top: 142px;
+    left: 88px;
+}
+
+.speechBubblePoint{
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border-width: 10px 6px 0px;
+    border-style: solid;
+    border-color: rgb(239, 239, 239) transparent transparent;
+    border-image: initial;
+    top: 142px;
+    left: 89px;
 }
 
 .message a{
     color: blue;
     cursor:pointer;
     cursor: hand;
+}
+
+#avatar{
+    margin-top: 150px;
 }
 
 #screenshot-canvas, #task-screen{
@@ -73,7 +116,7 @@ body H1{
 #toolbox{
     font-family: Arial, Helvetica, sans-serif;
 	width: 200px;
-	height: 60%;
+	height: 80%;
 	border: 1px solid black;
     padding: 4px;
     margin-right: 10px;
