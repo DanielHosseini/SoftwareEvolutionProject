@@ -42,6 +42,6 @@ var myApp = angular.module('myApp')
 })
 .directive('classDirective', function(){
     return {
-        templateUrl: 'class.html'
+        templateUrl: 'class/class.html'
     };
 });
