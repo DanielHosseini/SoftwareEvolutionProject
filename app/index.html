@@ -20,7 +20,7 @@
     <div id="toolbox" class="do-not-print">
         <h1 class="title">UML Elements</h1>
         <hr class="seperator">
-        <div ng-controller="ClassController">
+        <div ng-controller="ClassController" class="toolboxClass">
             <class-directive></class-directive>
         </div>
 
@@ -30,7 +30,9 @@
         <div ng-controller="OperationController" class="toolboxOperation">
             <operation-directive></operation-directive>
         </div>
-        <ul ng-model="Package"></ul>
+        <div ng-controller="PackageController" class="toolboxPackage">
+            <package-directive></package-directive>
+        </div>
         <div id="infobox" class="infobox" style="top: 415.438px;">
             <h1></h1>
             <p></p>
@@ -54,6 +56,7 @@
   <script src="class/class.js"></script>
   <script src="attribute/attribute.js"></script>
   <script src="operation/operation.js"></script>
+  <script src="package/package.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>

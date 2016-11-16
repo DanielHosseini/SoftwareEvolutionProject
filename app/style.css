@@ -161,14 +161,16 @@ select {
 }
 
 
-
+.toolboxClass {
+    position: absolute;
+    top: 170.4375px;
+}
 .class {
     width: 125px;
     //padding:1em;
     position:absolute;
     border: 1px solid black;
     z-index:4;
-    top: 170.4375px;
 
     border:1px solid #000000;
     box-shadow: 2px 2px 19px #e0e0e0;
@@ -213,7 +215,10 @@ select {
     height: 10%;
 }
 
-
+.toolboxPackage {
+    position: absolute;
+    top: 290.4375px;
+}
 .package {
     width: 125px;
     height: 80px;
