@@ -27,7 +27,9 @@
         <div ng-controller="AttributeController" class="toolboxAttribute">
             <attribute-directive></attribute-directive>
         </div>
-        <ul ng-controller="Operation" class="toolboxOperation"></ul>
+        <div ng-controller="OperationController" class="toolboxOperation">
+            <operation-directive></operation-directive>
+        </div>
         <ul ng-model="Package"></ul>
         <div id="infobox" class="infobox" style="top: 415.438px;">
             <h1></h1>
@@ -51,6 +53,7 @@
   <script src="app.js"></script>
   <script src="class/class.js"></script>
   <script src="attribute/attribute.js"></script>
+  <script src="operation/operation.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
