@@ -30,8 +30,7 @@ describe('PackageController', function() {
             var $scope = {};
             var controller = $controller('PackageController', {$scope: $scope});
             $scope.addClass('class1');
-            var length = $scope.getClasses().length;
-            expect(length).toEqual(1);
+            expect($scope.classes.length).toEqual(1);
         });
         it('removes a class from the list, should return length of 0', function(){
             var $scope = {};
