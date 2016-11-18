@@ -17,10 +17,16 @@ var myApp = angular.module('myApp')
     $scope.getClasses = function(){
         return $scope.classes;
     }
+    $scope.deleteClass = function(class){
+        var index = $scope.classes.indexOf(class);
+        if(index > -1){
+            $scope.classes.splice(index, 1);
+        }
+    }
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-    
+
 }).directive('packageDirective', function(){
     return {
         templateUrl: 'package/package.html'
