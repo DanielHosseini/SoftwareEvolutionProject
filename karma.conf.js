@@ -14,7 +14,8 @@ module.exports = function(config) {
       'services/*.js',
       'operation/*.js',
       'class/*.js',
-      'attribute/*.js'
+      'attribute/*.js',
+      'association/*.js'
     ],
 
     autoWatch: true,
