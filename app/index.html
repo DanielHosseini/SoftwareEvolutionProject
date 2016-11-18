@@ -20,17 +20,17 @@
     <div id="toolbox" class="do-not-print">
         <h1 class="title">UML Elements</h1>
         <hr class="seperator">
-        <div ng-controller="ClassController" class="toolboxClass">
+        <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
             <class-directive></class-directive>
         </div>
 
-        <div ng-controller="AttributeController" class="toolboxAttribute">
+        <div plumb-menu-item ng-controller="AttributeController" class="toolboxAttribute">
             <attribute-directive></attribute-directive>
         </div>
-        <div ng-controller="OperationController" class="toolboxOperation">
+        <div plumb-menu-item ng-controller="OperationController" class="toolboxOperation">
             <operation-directive></operation-directive>
         </div>
-        <div ng-controller="PackageController" class="toolboxPackage">
+        <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
             <package-directive></package-directive>
         </div>
         <div id="infobox" class="infobox" style="top: 415.438px;">
@@ -53,10 +53,12 @@
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
+  <script src="lib/jsPlumb-2.2.3-min.js"></script>
   <script src="class/class.js"></script>
   <script src="attribute/attribute.js"></script>
   <script src="operation/operation.js"></script>
   <script src="package/package.js"></script>
+  <script src="wrapper/jsPlumbWrapperController.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
