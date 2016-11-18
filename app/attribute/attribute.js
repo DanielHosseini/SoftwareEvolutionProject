@@ -13,4 +13,8 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
+}).directive('attributeDirective', function(){
+    return {
+        templateUrl: 'attribute/attribute.html'
+    };
 });

@@ -2,7 +2,7 @@
 var myApp = angular.module('myApp')
 .controller('ClassController', function ClassController($scope) {
 
-    $scope.name = "class";
+    $scope.name = "Class";
     $scope.attributes = [];
     $scope.operations = [];
     $scope.position = null;
@@ -42,6 +42,6 @@ var myApp = angular.module('myApp')
 })
 .directive('classDirective', function(){
     return {
-        templateUrl: 'class.html'
+        templateUrl: 'class/class.html'
     };
 });

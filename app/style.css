@@ -1,19 +1,18 @@
-body{
+body {
     font-family: Arial, Helvetica, sans-serif;
     position: fixed;
     width: 99%;
     height: 100%;
-
 }
 
-
-
-body H1{
+body H1 {
     font-size: 1.2em;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#diagram-canvas, #screenshot-canvas, #task-screen{
+#diagram-canvas,
+#screenshot-canvas,
+#task-screen {
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid black;
     display: -ms-flexbox;
@@ -21,33 +20,81 @@ body H1{
     height: 60%;
     border-radius: 3px;
     padding: 4px;
-    
 }
 
-.warning{
+#infobox {
+    top: 415.438px;
+}
+
+.warning {
     color: red;
 }
 
-.message{
+.message {
     word-wrap: break-word;
+    min-width: 20px;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid rgb(119, 119, 119);
+    box-shadow: rgb(85, 85, 85) 4px 4px 4px;
+    color: rgb(102, 102, 102);
+    background-color: rgb(239, 239, 239);
+    opacity: 1;
+    z-index: 32767;
+    text-align: left;
+    width: 180px;
+    visibility: visible;
+    position: absolute;
+    left: 7px;
+    display: block;
 }
 
-.message a{
+.speechBubble {
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border-width: 12px 7px 0px;
+    border-style: solid;
+    border-color: rgb(119, 119, 119) transparent transparent;
+    border-image: initial;
+    top: 142px;
+    left: 88px;
+}
+
+.speechBubblePoint {
+    position: absolute;
+    height: 0px;
+    width: 0px;
+    border-width: 10px 6px 0px;
+    border-style: solid;
+    border-color: rgb(239, 239, 239) transparent transparent;
+    border-image: initial;
+    top: 142px;
+    left: 89px;
+}
+
+.message a {
     color: blue;
-    cursor:pointer;
+    cursor: pointer;
     cursor: hand;
 }
 
-#screenshot-canvas, #task-screen{
+#avatar {
+    margin-top: 150px;
+}
+
+#screenshot-canvas,
+#task-screen {
     border: 1px solid blue;
     height: 80%;
 }
 
-#diagram-canvas .attribute, #diagram-canvas .operation{
+#diagram-canvas .attribute,
+#diagram-canvas .operation {
     border: none;
 }
 
-.fb-dialog{
+.fb-dialog {
     z-index: 100000;
 }
 
@@ -64,17 +111,17 @@ body H1{
     margin-top: 30px;
 }
 
-#overlay-canvas{
+#overlay-canvas {
     display: -ms-flexbox;
     display: -webkit-box;
     cursor: url('pencil.png'), auto;
 }
 
-#toolbox{
+#toolbox {
     font-family: Arial, Helvetica, sans-serif;
-	width: 200px;
-	height: 60%;
-	border: 1px solid black;
+    width: 200px;
+    height: 80%;
+    border: 1px solid black;
     padding: 4px;
     margin-right: 10px;
     float: left;
@@ -83,22 +130,22 @@ body H1{
 }
 
 #toolbox * {
- //   margin-bottom: 5px;
+    //   margin-bottom: 5px;
 }
 
-ul{
+ul {
     padding: 0 0 0 0px;
     margin: 2px 0 3px 0;
 }
 
-#toolbox .title{
-    text-shadow : 2px 2px 2px rgba(70, 114, 148, 0.71);
+#toolbox .title {
+    text-shadow: 2px 2px 2px rgba(70, 114, 148, 0.71);
     text-align: left;
-    font-size: 1em;	
+    font-size: 1em;
     font-family: Tahoma, Geneva, sans-serif;
 }
 
-#toolbox .seperator{
+#toolbox .seperator {
     border: 1px solid black;
     border-top-style: double;
     border-bottom-style: double;
@@ -108,15 +155,17 @@ ul{
     margin-bottom: 10px;
 }
 
-.toolboxAttribute{
+.toolboxAttribute {
     position: absolute;
+    top: 224.4375px;
 }
 
-.toolboxOperation{
+.toolboxOperation {
     position: absolute;
+    top: 257.4375px;
 }
 
-#game{
+#game {
     margin-top: 4px;
     margin-right: 10px;
     width: 200px;
@@ -130,7 +179,7 @@ select {
     width: 180px;
 }
 
-#question{
+#question {
     border: 2px dashed red;
     margin-top: 4px;
     height: 25%;
@@ -139,43 +188,43 @@ select {
     display: -webkit-box;
 }
 
-.question-title{
+.question-title {
     color: blue;
     font-size: 1.6em;
     display: inline;
     vertical-align: text-bottom;
 }
 
-.question-text{
+.question-text {
     font-size: 1.4em;
     display: inline-block;
 }
 
-.question-hint{
+.question-hint {
     width: 30px;
     height: 30px;
-  //  float: right;
-
+    //  float: right;
 }
 
-
+.toolboxClass {
+    position: absolute;
+    top: 170.4375px;
+}
 
 .class {
     width: 125px;
     //padding:1em;
-    position:absolute;
+    position: absolute;
     border: 1px solid black;
-    z-index:4;
-
-    border:1px solid #000000;
+    z-index: 4;
+    border: 1px solid #000000;
     box-shadow: 2px 2px 19px #e0e0e0;
     -o-box-shadow: 2px 2px 19px #e0e0e0;
     -webkit-box-shadow: 2px 2px 19px #e0e0e0;
     -moz-box-shadow: 2px 2px 19px #e0e0e0;
-    opacity:0.8;
-    filter:alpha(opacity=80);
-    cursor:move;
-    
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    cursor: move;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
@@ -184,23 +233,23 @@ select {
     user-select: none;
 }
 
-.class hr{
+.class hr {
     color: #000;
-    background-color: #000;	
-    height: 1px;	
-    border: 0px;	
+    background-color: #000;
+    height: 1px;
+    border: 0px;
     margin: 1px 0 1px 0;
 }
 
-.class H1{
+.class H1 {
     text-align: center;
-    font-size: 1em;	
-    padding: 0em 1em 0em 1em;	
+    font-size: 1em;
+    padding: 0em 1em 0em 1em;
     margin: 1px 0 0 0;
     cursor: pointer;
 }
 
-.package H1{
+.package H1 {
     text-align: center;
     font-size: 1em;
     margin: 0;
@@ -210,25 +259,29 @@ select {
     height: 10%;
 }
 
+.toolboxPackage {
+    position: absolute;
+    top: 290.4375px;
+}
 
 .package {
     width: 125px;
     height: 80px;
-    position:absolute;
+    position: absolute;
     border: none;
-    z-index:0;
-    cursor:move;
+    z-index: 0;
+    cursor: move;
     margin-bottom: 5px;
 }
 
-.class H1{
+.class H1 {
     border-left: none;
     border-top: none;
     border-right: none;
 }
 
 .ui-resizable {
- position: absolute;
+    position: absolute;
 }
 
 .content {
@@ -257,22 +310,22 @@ li.selected {
     box-shadow: none;
 }
 
-.attribute, .operation{
+.attribute,
+.operation {
     list-style: none;
     padding: 4px;
     border: 1px solid gray;
     width: 7.3em;
     border-radius: 3px;
-    cursor:move;
+    cursor: move;
 }
-
 
 .connectionLabel {
     font-family: Arial, Helvetica, sans-serif;
     font-style: italic;
 }
 
-.dummy{
+.dummy {
     height: 0px;
     visibility: hidden;
 }
