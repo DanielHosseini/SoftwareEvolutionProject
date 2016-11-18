@@ -1,6 +1,6 @@
 'use strict';
 var myApp = angular.module('myApp')
-.controller('ClassController', ['$scope', 'DiagramService',function($scope,DiagramService) {
+.controller('ClassController', ['$scope', function($scope) {
 
     $scope.name = "Class";
     $scope.attributes = [];
@@ -39,8 +39,6 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-
-DiagramService.addClassy($scope)
 
 }])
 .directive('classDirective', function(){

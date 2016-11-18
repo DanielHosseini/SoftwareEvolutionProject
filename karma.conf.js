@@ -14,6 +14,8 @@ module.exports = function(config) {
       'services/*.js',
       'operation/*.js',
       'class/*.js',
+      'association/*.js',
+      'package/*.js',
       'attribute/*.js'
     ],
 
