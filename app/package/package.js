@@ -11,14 +11,14 @@ var myApp = angular.module('myApp')
     $scope.setName = function(name){
         $scope.name = name;
     }
-    $scope.addClass = function(class){
-        $scope.classes.push(class);
+    $scope.addClass = function(classs){
+        $scope.classes.push(classs);
     }
     $scope.getClasses = function(){
         return $scope.classes;
     }
-    $scope.deleteClass = function(class){
-        var index = $scope.classes.indexOf(class);
+    $scope.deleteClass = function(classs){
+        var index = $scope.classes.indexOf(classs);
         if(index > -1){
             $scope.classes.splice(index, 1);
         }
@@ -26,8 +26,8 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-
-}).directive('packageDirective', function(){
+})
+.directive('packageDirective', function(){
     return {
         templateUrl: 'package/package.html'
     };
