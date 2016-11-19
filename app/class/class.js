@@ -1,8 +1,8 @@
 'use strict';
 var myApp = angular.module('myApp')
-.controller('ClassController', function ClassController($scope) {
+.controller('ClassController', ['$scope', function($scope) {
 
-    $scope.name = "class";
+    $scope.name = "Class";
     $scope.attributes = [];
     $scope.operations = [];
     $scope.position = null;
@@ -39,9 +39,10 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-})
+
+}])
 .directive('classDirective', function(){
     return {
-        templateUrl: 'class.html'
+        templateUrl: 'class/class.html'
     };
 });
