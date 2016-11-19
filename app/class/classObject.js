@@ -1,13 +1,18 @@
 'use strict';
 var myApp = angular.module('myApp');
-myApp.factory('classObject', function() {
+myApp.factory('classObject', ['idGenerator', function(idGenerator) {
 
     // Instantiate the class object
     var classObject = function(name) {
+        this.id = idGenerator.getNewId();
         this.name = name;
         this.attributes = [];
         this.operations = [];
         this.position = null;
+    };
+
+    classObject.prototype.getId = function() {
+        return this.id;
     };
 
     classObject.prototype.setName = function(name) {
@@ -53,4 +58,4 @@ myApp.factory('classObject', function() {
     };
 
     return classObject;
-});
+}]);
