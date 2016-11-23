@@ -177,9 +177,34 @@ myApp.directive('plumbMenuItem', function() {
 		link: function (scope, element, attrs) {
 			//console.log("Add plumbing for the 'menu-item' element");
 			// jsPlumb uses the containment from the underlying library, in our case that is jQuery.
+
+
 			jsPlumb.draggable(element, {
                 stop: function(event, ui){
-                    console.log("dropped")
+                    console.log("dropped" element.getClasses)
+                    droppedEl = angular.element(ui.draggable)
+
+                    if (droppedEl.hasClass('toolboxClass')) {
+                      
+                    }
+
+                    if (droppedEl.hasClass('toolboxPackage')) {
+
+                    }
+
+                    if(droppedEl.hasClass('toolboxAttribute')){
+
+                    }
+
+                    if (droppedEl.hasClass('toolboxOperation')) {
+
+                    }
+
+
+
+                    }
+
+
                 },
 				containment: false
 			});
