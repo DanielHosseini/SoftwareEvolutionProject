@@ -21,37 +21,40 @@
 </head>
 
 <body>
-    <div droppable  class="drop-container" id="wrapper">
-    <div id="toolbox" class="do-not-print">
-        <h1 class="title">UML Elements</h1>
-        <hr class="seperator">
-        <div plumb-menu-item  ng-controller="ClassController" class="toolboxClass">
-            <class-directive></class-directive>
-        </div>
-        <div plumb-menu-item ng-controller="AttributeController" class="toolboxAttribute">
-            <attribute-directive></attribute-directive>
-        </div>
-        <div plumb-menu-item ng-controller="OperationController" class="toolboxOperation">
-            <operation-directive></operation-directive>
-        </div>
-        <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
-            <package-directive></package-directive>
-        </div>
-        <div id="infobox">
-            <h1></h1>
-            <p></p>
-            <div class="message">
-                Connect elements by dragging their right corner to another element. You can find out more by clicking on 'keyhints'
-                <div class="speechBubble">
+    <div ng-controller="jsPlumbWrapperController">
+        <div id="wrapper">
+            <div id="toolbox">
+                <h1 class="title">UML Elements</h1>
+                <hr class="seperator">
+                <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
+                    <class-directive></class-directive>
                 </div>
-                <div class="speechBubblePoint">
+                <div plumb-menu-item ng-controller="AttributeController" class="toolboxAttribute">
+                    <attribute-directive></attribute-directive>
+                </div>
+                <div plumb-menu-item ng-controller="OperationController" class="toolboxOperation">
+                    <operation-directive></operation-directive>
+                </div>
+                <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
+                    <package-directive></package-directive>
+                </div>
+                <div id="infobox">
+                    <h1></h1>
+                    <p></p>
+                    <div class="message">
+                        Connect elements by dragging their right corner to another element. You can find out more by clicking on 'keyhints'
+                        <div class="speechBubble">
+                        </div>
+                        <div class="speechBubblePoint">
+                        </div>
+                    </div>
+                    <img id="avatar" width="100px" src="../images/DaveAvatar.png">
                 </div>
             </div>
-            <img id="avatar" width="100px" src="../images/DaveAvatar.png">
-        </div>
-    </div>
-      <div  id="diagram-canvas"></div>
-</div>
+              <div  id="diagram-canvas"></div>
+
+          </div>
+  </div>
 
     <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

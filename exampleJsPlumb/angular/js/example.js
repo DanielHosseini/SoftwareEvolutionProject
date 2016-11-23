@@ -17,13 +17,13 @@ myApp.controller('PlumbCtrl', function($scope) {
 	$scope.library = [];
 
 	// library_uuid is a unique identifier per module type in the library
-	$scope.library_uuid = 0; 
+	$scope.library_uuid = 0;
 
 	// state is [identifier, x position, y position, title, description]
 	$scope.schema = [];
 
 	// schema_uuid should always yield a unique identifier, can never be decreased
-	$scope.schema_uuid = 0; 
+	$scope.schema_uuid = 0;
 
 	// todo: find out how to go back and forth between css and angular
 	$scope.library_topleft = {
@@ -43,12 +43,12 @@ myApp.controller('PlumbCtrl', function($scope) {
 		jsPlumb.detachEveryConnection();
 		$scope.schema = [];
 		$scope.library = [];
-		$scope.addModuleToLibrary("Class", "Aggregates an incoming sequences of values and returns the sum", 
-				$scope.library_topleft.x+$scope.library_topleft.margin, 
+		$scope.addModuleToLibrary("Class", "Aggregates an incoming sequences of values and returns the sum",
+				$scope.library_topleft.x+$scope.library_topleft.margin,
 				$scope.library_topleft.y+$scope.library_topleft.margin);
-		$scope.addModuleToLibrary("Operation", "Hooks up to hardware camera and sends out an image at 20 Hz", 
-				$scope.library_topleft.x+$scope.library_topleft.margin, 
-				$scope.library_topleft.y+$scope.library_topleft.margin+$scope.library_topleft.item_height);	
+		$scope.addModuleToLibrary("Operation", "Hooks up to hardware camera and sends out an image at 20 Hz",
+				$scope.library_topleft.x+$scope.library_topleft.margin,
+				$scope.library_topleft.y+$scope.library_topleft.margin+$scope.library_topleft.item_height);
 	};
 
 	// add a module to the library
@@ -101,7 +101,7 @@ myApp.controller('PlumbCtrl', function($scope) {
 
 myApp.directive('postRender', [ '$timeout', function($timeout) {
 	var def = {
-			restrict : 'A', 
+			restrict : 'A',
 			terminal : true,
 			transclude : true,
 			link : function(scope, element, attrs) {
@@ -113,8 +113,8 @@ myApp.directive('postRender', [ '$timeout', function($timeout) {
 
 
 //directives link user interactions with $scope behaviours
-//now we extend html with <div plumb-item>, we can define a template <> to replace it with "proper" html, or we can 
-//replace it with something more sophisticated, e.g. setting jsPlumb arguments and attach it to a double-click 
+//now we extend html with <div plumb-item>, we can define a template <> to replace it with "proper" html, or we can
+//replace it with something more sophisticated, e.g. setting jsPlumb arguments and attach it to a double-click
 //event
 myApp.directive('plumbItem', function() {
 	return {
@@ -137,7 +137,7 @@ myApp.directive('plumbItem', function() {
 				$(this).remove();
 				// stop event propagation, so it does not directly generate a new state
 				e.stopPropagation();
-				//we need the scope of the parent, here assuming <plumb-item> is part of the <plumbApp>			
+				//we need the scope of the parent, here assuming <plumb-item> is part of the <plumbApp>
 				scope.$parent.removeState(attrs.identifier);
 				scope.$parent.$digest();
 			});
@@ -174,11 +174,11 @@ myApp.directive('plumbConnect', function() {
 			jsPlumb.makeSource(element, {
 				parent: $(element).parent(),
 //				anchor: 'Continuous',
-				paintStyle:{ 
+				paintStyle:{
 					strokeStyle:"#225588",
 					fillStyle:"transparent",
 					radius:7,
-					lineWidth:2 
+					lineWidth:2
 				},
 			});
 		}
@@ -189,6 +189,7 @@ myApp.directive('droppable', function($compile) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs){
+            console.log("droppable", element);
 			console.log("Make this element droppable");
 
 			element.droppable({
@@ -199,7 +200,7 @@ myApp.directive('droppable', function($compile) {
 					dragEl = angular.element(ui.draggable),
 					dropEl = angular.element(this);
 
-					// if dragged item has class menu-item and dropped div has class drop-container, add module 
+					// if dragged item has class menu-item and dropped div has class drop-container, add module
 					if (dragEl.hasClass('menu-item') && dropEl.hasClass('drop-container')) {
 						console.log("Drag event on " + dragIndex);
 						var x = event.pageX - scope.module_css.width / 2;
@@ -229,4 +230,3 @@ myApp.directive('draggable', function() {
 		}
 	};
 });
-

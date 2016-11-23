@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp');
 
 //TODO: Fix observerService
-myApp.controller('jsPlumbWrapperController', function() {
+myApp.controller('jsPlumbWrapperController', function($scope) {
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
         HoverPaintStyle: { strokeStyle: "#42a62c", lineWidth: 2 }
@@ -140,6 +140,16 @@ myApp.controller('jsPlumbWrapperController', function() {
             }]);
         }
     }
+    $scope.init = function() {
+		jsPlumb.bind("ready", function() {
+			console.log("Set up jsPlumb listeners (should be only done once)");
+			jsPlumb.bind("connection", function (info) {
+				$scope.$apply(function () {
+					console.log("Possibility to push connection into array");
+				});
+			});
+		});
+	}
 
 });
 
@@ -166,10 +176,12 @@ myApp.directive('plumbMenuItem', function() {
 		controller: 'jsPlumbWrapperController',
 		link: function (scope, element, attrs) {
 			//console.log("Add plumbing for the 'menu-item' element");
-
 			// jsPlumb uses the containment from the underlying library, in our case that is jQuery.
 			jsPlumb.draggable(element, {
-				containment: element.parent().parent()
+                stop: function(event, ui){
+                    
+                },
+				containment: false
 			});
 		}
 	};
@@ -200,21 +212,6 @@ myApp.directive('droppable', function($compile) {
 
 					scope.$apply();
 				}
-			});
-		}
-	};
-});
-
-myApp.directive('draggable', function() {
-	return {
-		// A = attribute, E = Element, C = Class and M = HTML Comment
-		restrict:'A',
-		//The link function is responsible for registering DOM listeners as well as updating the DOM.
-		link: function(scope, element, attrs) {
-			//console.log("Let draggable item snap back to previous position");
-			element.draggable({
-				// let it go back to its original position
-				revert:true,
 			});
 		}
 	};
