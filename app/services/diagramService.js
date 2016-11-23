@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.service('diagramService', function() {
+myApp.service('diagramService', ['classObject', function(classObject) {
     var DiagramService = {};
     var classes = [];
     var associations = [];
@@ -41,5 +41,24 @@ myApp.service('diagramService', function() {
         return packages;
     }
 
+    DiagramService.addElement = function(element, position) {
+        console.log("diagramService classes length", DiagramService.getClasses().length);
+        console.log("diagramService packages length", DiagramService.getPackages().length);
+
+        if (element.hasClass('toolboxClass')) {
+            DiagramService.addClass(new classObject('class1'));
+            console.log("diagramService classes length", DiagramService.getClasses().length);
+        }
+
+        if (element.hasClass('toolboxPackage')) {
+            DiagramService.addPackage(new classObject('package1'));
+            console.log("diagramService packages length", DiagramService.getPackages().length);
+        }
+
+        if (element.hasClass('toolboxAttribute')) {}
+
+        if (element.hasClass('toolboxOperation')) {}
+    }
+
     return DiagramService
-});
+}]);

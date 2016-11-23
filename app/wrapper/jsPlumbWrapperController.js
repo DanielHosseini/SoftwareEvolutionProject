@@ -174,7 +174,7 @@ myApp.directive('plumbItem', function() {
     };
 });
 
-myApp.directive('plumbMenuItem', ['diagramService', 'classObject', function(diagramService, classObject) {
+myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -192,7 +192,8 @@ myApp.directive('plumbMenuItem', ['diagramService', 'classObject', function(diag
                     // TODO move this code to the canvas controller
                     /*
                       TODO:
-                      - Paint in canvas (Visual)
+
+                      - Add id to dropped elements then pass it to the canvas controller
                       - Refactor code to canvasController:
 
                       CanvasController has injected diagramService
@@ -208,29 +209,15 @@ myApp.directive('plumbMenuItem', ['diagramService', 'classObject', function(diag
                       controller.update()
                     }
 
-                    //In a controller far, far away
+                    //In the canvas controller far, far away
+                    - Check where it's dropped, if outside canvas then put it in the canvas at the nearest edge
+                    - Paint in canvas (Visual)
                     fun update(){
                     service.updateSoemthing()
                     }
                     */
                     droppedEl = angular.element(event.el);
-
-                    console.log("diagramService classes length", diagramService.getClasses().length);
-                    console.log("diagramService packages length", diagramService.getPackages().length);
-
-                    if (droppedEl.hasClass('toolboxClass')) {
-                        diagramService.addClass(new classObject('class1'));
-                        console.log("diagramService classes length", diagramService.getClasses().length);
-                    }
-
-                    if (droppedEl.hasClass('toolboxPackage')) {
-                        diagramService.addPackage(new classObject('class1'));
-                        console.log("diagramService packages length", diagramService.getPackages().length);
-                    }
-
-                    if (droppedEl.hasClass('toolboxAttribute')) {}
-
-                    if (droppedEl.hasClass('toolboxOperation')) {}
+                    diagramService.addElement(droppedEl, event.pos);
                 },
                 containment: false
             });

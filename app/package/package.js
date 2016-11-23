@@ -1,6 +1,6 @@
 'use strict';
-var myApp = angular.module('myApp')
-.controller('PackageController', function PackageController($scope) {
+var myApp = angular.module('myApp');
+myApp.controller('PackageController', ['$scope', function($scope) {
 
 	$scope.name = "Package";
 	$scope.classes = [];
@@ -26,7 +26,7 @@ var myApp = angular.module('myApp')
     $scope.updatePosition = function(position){
         $scope.position = position;
     }
-})
+}])
 .directive('packageDirective', function(){
     return {
         templateUrl: 'package/package.html'

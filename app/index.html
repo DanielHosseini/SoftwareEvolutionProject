@@ -51,7 +51,9 @@
                     <img id="avatar" width="100px" src="../images/DaveAvatar.png">
                 </div>
             </div>
-              <div  id="diagram-canvas"></div>
+              <div  id="diagram-canvas" ng-controller="canvasController">
+                  
+              </div>
 
           </div>
   </div>
@@ -69,7 +71,8 @@
     <script src="services/diagramService.js"></script>
     <script src="attribute/attribute.js"></script>
     <script src="operation/operation.js"></script>
-    <script src="package/package.js"></script>
+    <script src="package/packageObject.js"></script>
+    <script src="canvas/canvasController.js"></script>
     <script src="wrapper/jsPlumbWrapperController.js"></script>
     <script src="components/version/version.js"></script>
     <script src="components/version/version-directive.js"></script>
