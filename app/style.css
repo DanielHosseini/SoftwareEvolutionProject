@@ -312,6 +312,10 @@ select {
     width: 1em;
     height: 1em;
     cursor: pointer;
+    opacity: 0;
+}
+.ep:hover{
+    opacity: 100;
 }
 
 li.selected {
