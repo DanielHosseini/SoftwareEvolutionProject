@@ -1,44 +1,52 @@
 var myApp = angular.module('myApp');
 myApp.service('diagramService', ['classObject', function(classObject) {
-    var DiagramService = {};
-    var classes = [];
-    var associations = [];
-    var packages = [];
+    var DiagramService = this;
+    DiagramService.diagram = {
+        'classCount':0,
+        'classes': [],
+        'associations': [],
+        'packages': []
+    };
+    // var DiagramService = {classes:[],associations:[],packages:[]};
+    // DiagramService.diagram.classes = [];
+    // DiagramService.diagram.associations = [];
+    // DiagramService.diagram.packages = [];
 
     DiagramService.addClass = function(item) {
-        classes.push(item);
+        DiagramService.diagram.classes.push(item);
+        DiagramService.diagram.classCount = DiagramService.diagram.classCount + 1;
     }
 
     DiagramService.removeClass = function(item) {
-        classes.splice(classes.indexOf(item), 1)
+        DiagramService.diagram.classes.splice(DiagramService.diagram.classes.indexOf(item), 1)
     }
 
     DiagramService.getClasses = function() {
-        return classes;
+        return DiagramService.diagram.classes;
     }
 
     DiagramService.addAssociation = function(item) {
-        associations.push(item);
+        DiagramService.diagram.associations.push(item);
     }
 
     DiagramService.removeAssociation = function(item) {
-        associations.splice(associations.indexOf(item), 1);
+        DiagramService.diagram.associations.splice(DiagramService.diagram.associations.indexOf(item), 1);
     }
 
     DiagramService.getAssociations = function() {
-        return associations;
+        return DiagramService.diagram.associations;
     }
 
     DiagramService.addPackage = function(item) {
-        packages.push(item);
+        DiagramService.diagram.packages.push(item);
     }
 
     DiagramService.removePackage = function(item) {
-        packages.splice(packages.indexOf(item), 1);
+        DiagramService.diagram.packages.splice(DiagramService.diagram.packages.indexOf(item), 1);
     }
 
     DiagramService.getPackages = function() {
-        return packages;
+        return DiagramService.diagram.packages;
     }
 
     DiagramService.addElement = function(element, position) {
@@ -59,6 +67,4 @@ myApp.service('diagramService', ['classObject', function(classObject) {
 
         if (element.hasClass('toolboxOperation')) {}
     }
-
-    return DiagramService
 }]);

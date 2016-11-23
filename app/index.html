@@ -51,8 +51,9 @@
                     <img id="avatar" width="100px" src="../images/DaveAvatar.png">
                 </div>
             </div>
-              <div  id="diagram-canvas" ng-controller="canvasController">
-                  
+              <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
+              <input type="text" ng-model="diagram.classCount"/>
+                <p>{{diagram.classCount}}</p>
               </div>
 
           </div>
@@ -68,6 +69,7 @@
     <script src="class/class.js"></script>
     <script src="services/idGenerator.js"></script>
     <script src="class/classObject.js"></script>
+    <script src="package/package.js"></script>
     <script src="services/diagramService.js"></script>
     <script src="attribute/attribute.js"></script>
     <script src="operation/operation.js"></script>

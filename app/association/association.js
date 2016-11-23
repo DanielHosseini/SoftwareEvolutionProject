@@ -1,6 +1,6 @@
 'use strict';
-var myApp = angular.module('myApp')
-.controller('AssociationController', function AssociationController($scope) {
+var myApp = angular.module('myApp');
+myApp.controller('AssociationController', function ($scope) {
 
     $scope.name = "Association";
     $scope.direction = "Undirected";//Undirected - Directed

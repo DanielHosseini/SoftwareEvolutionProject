@@ -1,7 +1,7 @@
 'use strict';
 //Implement Methods
-var myApp = angular.module('myApp')
-.controller('OperationController', function OperationController($scope) {
+var myApp = angular.module('myApp');
+myApp.controller('OperationController', function ($scope) {
 
     $scope.name = "Operation()";
     $scope.position = null;

@@ -189,16 +189,10 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                     console.log("dropped", element[0].style)
                     element[0].style.cssText = "";
 
-                    // TODO move this code to the canvas controller
                     /*
                       TODO:
 
                       - Add id to dropped elements then pass it to the canvas controller
-                      - Refactor code to canvasController:
-
-                      CanvasController has injected diagramService
-                      CanvasController is injected in THISFIEL
-                      CanvasController HERE says diagramService.doStuff
 
                     Handle events in this file, in the event say through canvasController
                     to do stuff with diagramService

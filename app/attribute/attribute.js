@@ -1,6 +1,6 @@
 'use strict';
-var myApp = angular.module('myApp')
-.controller('AttributeController', function AttributeController($scope) {
+var myApp = angular.module('myApp');
+myApp.controller('AttributeController', function ($scope) {
 
     $scope.name = "Attribute";
     $scope.position = null;
