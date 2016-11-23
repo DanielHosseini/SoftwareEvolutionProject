@@ -178,8 +178,15 @@ myApp.directive('plumbMenuItem', function() {
 			//console.log("Add plumbing for the 'menu-item' element");
 			// jsPlumb uses the containment from the underlying library, in our case that is jQuery.
 			jsPlumb.draggable(element, {
+                xpos: 0,
+                ypos: 0,
+                start: function(event){
+                    console.log("start", event)
+                },
                 stop: function(event, ui){
-                    console.log("dropped")
+                    console.log("dropped", element[0].style)
+                    element[0].style.cssText= "";
+
                 },
 				containment: false
 			});
