@@ -10,6 +10,11 @@ body H1 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#wrapper{
+    height: 100%;
+    width: auto;
+    margin: auto;
+}
 
 #diagram-canvas,
 #screenshot-canvas,
