@@ -188,8 +188,31 @@ myApp.directive('plumbMenuItem', ['diagramService', 'classObject', function(diag
                 stop: function(event, ui) {
                     console.log("dropped", element[0].style)
                     element[0].style.cssText = "";
-                    
+
                     // TODO move this code to the canvas controller
+                    /*
+                      TODO:
+                      - Paint in canvas (Visual)
+                      - Refactor code to canvasController:
+
+                      CanvasController has injected diagramService
+                      CanvasController is injected in THISFIEL
+                      CanvasController HERE says diagramService.doStuff
+
+                    Handle events in this file, in the event say through canvasController
+                    to do stuff with diagramService
+
+
+                    func(event){
+                      ...
+                      controller.update()
+                    }
+
+                    //In a controller far, far away
+                    fun update(){
+                    service.updateSoemthing()
+                    }
+                    */
                     droppedEl = angular.element(event.el);
 
                     console.log("diagramService classes length", diagramService.getClasses().length);
