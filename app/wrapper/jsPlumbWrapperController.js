@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp');
 
 //TODO: Fix observerService
-myApp.controller('jsPlumbWrapperController', function($scope) {
+myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
         HoverPaintStyle: { strokeStyle: "#42a62c", lineWidth: 2 }
@@ -32,7 +32,7 @@ myApp.controller('jsPlumbWrapperController', function($scope) {
     });
 
     jsPlumb.bind("click", function(c, e) {
-
+        console.log("clicked");
         if (e.altKey || e.keyCode == 18) {
             e.preventDefault();
             //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
@@ -66,148 +66,145 @@ myApp.controller('jsPlumbWrapperController', function($scope) {
 
     });
     initTargets = function() {
-        jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
-            dropOptions: { hoverClass: "dragHover" },
-            anchor: "Continuous"
-        });
-    },
+            jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
+                dropOptions: { hoverClass: "dragHover" },
+                anchor: "Continuous"
+            });
+        };
 
-    initEndpoints = function(nextColour, curved) {
-        angular.element(".ep").each(function(i, e) {
-            var p = angular.element(e).parent();
-            if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
-                jsPlumb.makeSource(angular.element(e), {
-                    parent: p,
-                    anchor: "Continuous",
-                    connector: ["StateMachine", { curviness: (curved ? 30.0 : 0.01), margin: 1.0 }],
-                    connectorStyle: { strokeStyle: nextColour, lineWidth: 2, outlineWidth: 6, outlineColor: 'transparent' }, // Strokestyle: color,
-                    maxConnections: -1 //, uniqueEndpoint: true
-                });
+        initEndpoints = function(nextColour, curved) {
+            angular.element(".ep").each(function(i, e) {
+                var p = angular.element(e).parent();
+                if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
+                    jsPlumb.makeSource(angular.element(e), {
+                        parent: p,
+                        anchor: "Continuous",
+                        connector: ["StateMachine", { curviness: (curved ? 30.0 : 0.01), margin: 1.0 }],
+                        connectorStyle: { strokeStyle: nextColour, lineWidth: 2, outlineWidth: 6, outlineColor: 'transparent' }, // Strokestyle: color,
+                        maxConnections: -1 //, uniqueEndpoint: true
+                    });
+                }
+            });
+        };
+
+        changeEndShape = function(c, type) {
+            // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
+            connector = c;
+            if (connector.getOverlay("directedAssociation") || type == "aggregate") {
+                // if it is an directed association
+                connector.removeOverlay("directedAssociation");
+                // add an aggregation
+                connector.addOverlay(["Arrow", {
+                    label: "Arrow",
+                    cssClass: "diamond",
+                    foldback: 2.0,
+                    paintStyle: { fillStyle: "white" },
+                    id: "aggregation",
+                    location: 1
+                }]);
+            } else if (connector.getOverlay("aggregation") || type == "composite") {
+                // if it is an aggregation
+                connector.removeOverlay("aggregation");
+                // add a composition
+                connector.addOverlay(["Arrow", {
+                    label: "Arrow",
+                    cssClass: "diamond",
+                    foldback: 2.0,
+                    id: "composition",
+                    location: 1
+                }]);
+            } else if (connector.getOverlay("composition") || type == "inheritance") {
+                // if it is an inheritance
+                connector.removeOverlay("composition");
+                // add a composition
+                connector.addOverlay(["Arrow", {
+                    label: "Arrow",
+                    cssClass: "diamond",
+                    foldback: 1.0,
+                    id: "inheritance",
+                    location: 1,
+                    paintStyle: { fillStyle: "white" }
+                }]);
+
+            } else if (connector.getOverlay("inheritance" || type == "directed")) {
+                // if it is an inheritance
+                connector.removeOverlay("inheritance");
+            } else {
+                // if it is currently an undirected association (no arrow label)
+                // add a directed association (black solid triangle arrow)
+                connector.addOverlay(["Arrow", {
+                    label: "Arrow",
+                    foldback: 0.1,
+                    id: "directedAssociation",
+                    location: 1
+                }]);
             }
-        });
-    },
-
-    changeEndShape = function(c, type) {
-      // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
-        connector = c;
-        if (connector.getOverlay("directedAssociation") || type == "aggregate") {
-            // if it is an directed association
-            connector.removeOverlay("directedAssociation");
-            // add an aggregation
-            connector.addOverlay(["Arrow", {
-                label: "Arrow",
-                cssClass: "diamond",
-                foldback: 2.0,
-                paintStyle: { fillStyle: "white" },
-                id: "aggregation",
-                location: 1
-            }]);
-        } else if (connector.getOverlay("aggregation") || type == "composite") {
-            // if it is an aggregation
-            connector.removeOverlay("aggregation");
-            // add a composition
-            connector.addOverlay(["Arrow", {
-                label: "Arrow",
-                cssClass: "diamond",
-                foldback: 2.0,
-                id: "composition",
-                location: 1
-            }]);
-        } else if (connector.getOverlay("composition") || type == "inheritance") {
-            // if it is an inheritance
-            connector.removeOverlay("composition");
-            // add a composition
-            connector.addOverlay(["Arrow", {
-                label: "Arrow",
-                cssClass: "diamond",
-                foldback: 1.0,
-                id: "inheritance",
-                location: 1,
-                paintStyle: { fillStyle: "white" }
-            }]);
-
-        } else if (connector.getOverlay("inheritance" || type == "directed")) {
-            // if it is an inheritance
-            connector.removeOverlay("inheritance");
-        } else {
-            // if it is currently an undirected association (no arrow label)
-            // add a directed association (black solid triangle arrow)
-            connector.addOverlay(["Arrow", {
-                label: "Arrow",
-                foldback: 0.1,
-                id: "directedAssociation",
-                location: 1
-            }]);
-        }
-    }
+        };
     $scope.init = function() {
-		jsPlumb.bind("ready", function() {
-			console.log("Set up jsPlumb listeners (should be only done once)");
-			jsPlumb.bind("connection", function (info) {
-				$scope.$apply(function () {
-					console.log("Possibility to push connection into array");
-				});
-			});
-		});
-	}
+        jsPlumb.bind("ready", function() {
+            console.log("Set up jsPlumb listeners (should be only done once)");
+            jsPlumb.bind("connection", function(info) {
+                $scope.$apply(function() {
+                    console.log("Possibility to push connection into array");
+                });
+            });
+        });
+    };
 
-});
+    $scope.plumbMenuItemDropped = function() {
+
+    };
+
+}]);
 
 myApp.directive('plumbItem', function() {
-	return {
-		replace: true,
-		controller: 'jsPlumbWrapperController',
-		link: function (scope, element, attrs) {
-			//console.log("Add plumbing for the 'item' element");
+    return {
+        replace: true,
+        controller: 'jsPlumbWrapperController',
+        link: function(scope, element, attrs) {
+            //console.log("Add plumbing for the 'item' element");
 
-			jsPlumb.makeTarget(element, {
-				anchor: 'Continuous',
-			});
-			jsPlumb.draggable(element, {
-				containment: 'parent'
-			});
-		}
-	};
+            jsPlumb.makeTarget(element, {
+                anchor: 'Continuous',
+            });
+            jsPlumb.draggable(element, {
+                containment: 'parent'
+            });
+        }
+    };
 });
 
-myApp.directive('plumbMenuItem', function() {
-	return {
-		replace: true,
-		controller: 'jsPlumbWrapperController',
-		link: function (scope, element, attrs) {
-			//console.log("Add plumbing for the 'menu-item' element");
-			// jsPlumb uses the containment from the underlying library, in our case that is jQuery.
+myApp.directive('plumbMenuItem', ['diagramService', 'classObject', function(diagramService, classObject) {
+    return {
+        replace: true,
+        controller: 'jsPlumbWrapperController',
+        link: function(scope, element, attrs) {
+            jsPlumb.draggable(element, {
+                    stop: function(event, ui) {
+                        // TODO move this code to the canvas controller
+                        droppedEl = angular.element(event.el);
 
+                        console.log("diagramService classes length", diagramService.getClasses().length);
+                        console.log("diagramService packages length", diagramService.getPackages().length);
 
-			jsPlumb.draggable(element, {
-                stop: function(event, ui){
-                    console.log("dropped" element.getClasses)
-                    droppedEl = angular.element(ui.draggable)
+                        if (droppedEl.hasClass('toolboxClass')) {
+                            diagramService.addClass(new classObject('class1'));
+                            console.log("diagramService classes length", diagramService.getClasses().length);
+                        }
 
-                    if (droppedEl.hasClass('toolboxClass')) {
-                      
+                        if (droppedEl.hasClass('toolboxPackage')) {
+                            diagramService.addPackage(new classObject('class1'));
+                            console.log("diagramService packages length", diagramService.getPackages().length);
+                        }
+
+                        if (droppedEl.hasClass('toolboxAttribute')) {
+                        }
+
+                        if (droppedEl.hasClass('toolboxOperation')) {
+                        }
                     }
-
-                    if (droppedEl.hasClass('toolboxPackage')) {
-
-                    }
-
-                    if(droppedEl.hasClass('toolboxAttribute')){
-
-                    }
-
-                    if (droppedEl.hasClass('toolboxOperation')) {
-
-                    }
-
-
-
-                    }
-
-
-                },
-				containment: false
-			});
-		}
-	};
-});
+                , containment: false
+            });
+        }
+    };
+}]);
