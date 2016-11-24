@@ -7,10 +7,15 @@ myApp.service('diagramService', ['classObject', function(classObject) {
         'associations': [],
         'packages': []
     };
+    var callbacks = [];
     // var DiagramService = {classes:[],associations:[],packages:[]};
     // DiagramService.diagram.classes = [];
     // DiagramService.diagram.associations = [];
     // DiagramService.diagram.packages = [];
+
+    this.addObserver = function(callback){
+        callbacks.push(callback);
+    }
 
     DiagramService.addClass = function(item) {
         DiagramService.diagram.classes.push(item);
@@ -66,5 +71,8 @@ myApp.service('diagramService', ['classObject', function(classObject) {
         if (element.hasClass('toolboxAttribute')) {}
 
         if (element.hasClass('toolboxOperation')) {}
+        angular.forEach(callbacks, function(callback){
+            callback();
+        });
     }
 }]);

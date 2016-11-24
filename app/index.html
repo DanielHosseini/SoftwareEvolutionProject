@@ -52,8 +52,9 @@
                 </div>
             </div>
               <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
-              <input type="text" ng-model="diagram.classCount"/>
-                <p>{{diagram.classCount}}</p>
+                  <div plumb-item class="item" ng-repeat="clas in classes">
+                        <p>{{clas.name}}</p>
+          		</div>
               </div>
 
           </div>

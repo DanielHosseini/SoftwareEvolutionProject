@@ -3,10 +3,13 @@ var myApp = angular.module('myApp');
 myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
 
 	$scope.diagram = diagramService.diagram;
-	
+
     $scope.classes = $scope.diagram.classes;
     $scope.associations = diagramService.associations;
     $scope.packages = diagramService.packages;
+    diagramService.addObserver(function(){
+        $scope.$apply();
+    })
 }])
 .directive('canvasClassesDirective', function(){
     return {
