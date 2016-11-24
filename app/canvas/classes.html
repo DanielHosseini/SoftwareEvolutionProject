@@ -1,14 +1,13 @@
 <div ng-controller="canvasController">
-hi
-<div ng-repeat="class in classes" item="class">
+<div ng-repeat="clas in classes">
     <div class="class ui-draggable ui-draggable-handle">
         <div class="ep" id="jsPlumb_1_12">➜</div>
-        <h1 class="heading">{{item.name}}</h1>
+        <h1 class="heading">{{clas.name}}</h1>
         <hr>
-        <div class="attribute dummy">{{item.attributes}}
+        <div class="attribute dummy">{{clas.attributes}}
         </div>
         <hr>
-        <div class="operation dummy">{{item.operations}}
+        <div class="operation dummy">{{clas.operations}}
         </div>
         </ul>
     </div>
