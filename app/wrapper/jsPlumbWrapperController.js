@@ -8,6 +8,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
     });
 
     jsPlumb.bind("contextmenu", function(c, e) {
+        console.log("contextmenu");
         if ((e.metaKey && window.navigator.platform == "MacIntel" || e.ctrlKey && window.navigator.platform == "Win32") && c.getOverlay("directedAssociation")) {
             c.removeOverlay("directedAssociation");
             c.addOverlay(["Arrow", {
@@ -41,6 +42,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
     });
 
     jsPlumb.bind("dblclick", function(c, e) {
+        console.log("dblclick");
         connector = c;
         if (connector.getOverlay("label") === null) {
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
@@ -150,11 +152,6 @@ myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
             });
         });
     };
-
-    $scope.plumbMenuItemDropped = function() {
-
-    };
-
 }]);
 
 myApp.directive('plumbItem', function() {
@@ -162,12 +159,16 @@ myApp.directive('plumbItem', function() {
         replace: true,
         controller: 'jsPlumbWrapperController',
         link: function(scope, element, attrs) {
-            //console.log("Add plumbing for the 'item' element");
-
             jsPlumb.makeTarget(element, {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
+                start: function(event) {
+                    console.log("start", event);
+                },
+                stop: function(event, ui) {
+                    console.log("dropped", event)
+                },
                 containment: 'parent'
             });
         }
@@ -183,11 +184,19 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                 xpos: 0,
                 ypos: 0,
                 start: function(event) {
-                    console.log("start", event)
+                    console.log("start", event);
                 },
                 stop: function(event, ui) {
-                    console.log("dropped", element[0].style)
+                    console.log("dropped", event);
                     element[0].style.cssText = "";
+
+                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvasLeft = canvas.prop('offsetLeft');
+                    var canvasTop = canvas.prop('offsetTop');
+                    console.log("canvas pos", canvas.prop('offsetTop'));
+
+                    var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
+                    var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
 
                     /*
                       TODO:
@@ -211,7 +220,7 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                     }
                     */
                     droppedEl = angular.element(event.el);
-                    diagramService.addElement(droppedEl, event.pos);
+                    diagramService.addElement(droppedEl, [elementLeft, elementTop]);
                 },
                 containment: false
             });
