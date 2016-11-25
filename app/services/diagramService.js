@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.service('diagramService', ['classObject', function(classObject) {
+myApp.service('diagramService', ['classObject', 'packageObject', function(classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
         'classCount':0,
@@ -67,7 +67,7 @@ myApp.service('diagramService', ['classObject', function(classObject) {
         }
 
         if (element.hasClass('toolboxPackage')) {
-            DiagramService.addPackage(new classObject('package1'));
+            DiagramService.addPackage(new packageObject('package'));
             console.log("diagramService packages length", DiagramService.getPackages().length);
         }
 
