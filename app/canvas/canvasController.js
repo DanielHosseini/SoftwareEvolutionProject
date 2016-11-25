@@ -3,10 +3,9 @@ var myApp = angular.module('myApp');
 myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
 
 	$scope.diagram = diagramService.diagram;
-
+    $scope.packages = $scope.diagram.packages;
     $scope.classes = $scope.diagram.classes;
     $scope.associations = diagramService.associations;
-    $scope.packages = diagramService.packages;
     diagramService.addObserver(function(){
         $scope.$apply();
     })
@@ -16,4 +15,11 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
     	replace: true,
         templateUrl: 'canvas/classes.html'
     };
-});
+})
+
+.directive('canvasPackagesDirective', function(){
+    return {
+        replace: true,
+        templateUrl: 'canvas/packages.html'
+    };
+})

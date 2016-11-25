@@ -5,6 +5,7 @@ myApp.service('diagramService', ['classObject', function(classObject) {
         'classCount':0,
         'classes': [],
         'associations': [],
+        'packageCount': 0,
         'packages': []
     };
     var callbacks = [];
@@ -44,6 +45,8 @@ myApp.service('diagramService', ['classObject', function(classObject) {
 
     DiagramService.addPackage = function(item) {
         DiagramService.diagram.packages.push(item);
+        DiagramService.diagram.packageCount = DiagramService.diagram.packageCount + 1;
+
     }
 
     DiagramService.removePackage = function(item) {
