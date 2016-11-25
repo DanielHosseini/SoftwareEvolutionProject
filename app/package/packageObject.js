@@ -3,11 +3,11 @@ var myApp = angular.module('myApp');
 myApp.factory('packageObject', ['idGenerator', function(idGenerator) {
 
     // Instantiate the package object
-    var packageObject = function(name) {
+    var packageObject = function(name, position) {
         this.id = idGenerator.getNewId();
         this.name = name;
         this.classes = [];
-        this.position = null;
+        this.position = position;
     };
 
     packageObject.prototype.getId = function() {

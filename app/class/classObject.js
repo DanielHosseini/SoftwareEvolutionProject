@@ -3,12 +3,12 @@ var myApp = angular.module('myApp');
 myApp.factory('classObject', ['idGenerator', function(idGenerator) {
 
     // Instantiate the class object
-    var classObject = function(name) {
+    var classObject = function(name, position) {
         this.id = idGenerator.getNewId();
         this.name = name;
         this.attributes = [];
         this.operations = [];
-        this.position = null;
+        this.position = position;
     };
 
     classObject.prototype.getId = function() {

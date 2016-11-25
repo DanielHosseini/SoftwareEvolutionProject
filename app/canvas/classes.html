@@ -1,15 +1,15 @@
 <div ng-controller="canvasController">
-<div ng-repeat="class in classes">
-    <div class="class ui-draggable ui-draggable-handle">
-        <div class="ep" id="jsPlumb_1_12">➜</div>
-        <h1 class="heading">{{class.name}}</h1>
-        <hr>
-        <div class="attribute dummy">{{class.attributes}}
+    <div ng-repeat="class in classes">
+        <div class="class ui-draggable ui-draggable-handle" style="position:absolute;left:{{class.position[0]}}px;top:{{class.position[1]}}px;">
+            <div class="ep" id="jsPlumb_1_12">➜</div>
+            <h1 class="heading">{{class.name}}</h1>
+            <hr>
+            <div class="attribute dummy">{{class.attributes}}
+            </div>
+            <hr>
+            <div class="operation dummy">{{class.operations}}
+            </div>
+            </ul>
         </div>
-        <hr>
-        <div class="operation dummy">{{class.operations}}
-        </div>
-        </ul>
     </div>
-</div>
 </div>

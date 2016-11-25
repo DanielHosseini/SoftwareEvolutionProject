@@ -58,16 +58,16 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     }
 
     DiagramService.addElement = function(element, position) {
-        console.log("diagramService classes length", DiagramService.getClasses().length);
-        console.log("diagramService packages length", DiagramService.getPackages().length);
+        //console.log("diagramService classes length", DiagramService.getClasses().length);
+        //console.log("diagramService packages length", DiagramService.getPackages().length);
 
         if (element.hasClass('toolboxClass')) {
-            DiagramService.addClass(new classObject('class1'));
-            console.log("diagramService classes length", DiagramService.getClasses().length);
+            DiagramService.addClass(new classObject('Class', position));
+            console.log("diagramService last class length", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
         }
 
         if (element.hasClass('toolboxPackage')) {
-            DiagramService.addPackage(new packageObject('package'));
+            DiagramService.addPackage(new packageObject('Package', position));
             console.log("diagramService packages length", DiagramService.getPackages().length);
         }
 
