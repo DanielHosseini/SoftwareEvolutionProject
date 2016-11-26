@@ -8,6 +8,7 @@ myApp.factory('packageObject', ['idGenerator', function(idGenerator) {
         this.name = name;
         this.classes = [];
         this.position = position;
+        this.editMode = false;
     };
 
     packageObject.prototype.getId = function() {
@@ -20,6 +21,14 @@ myApp.factory('packageObject', ['idGenerator', function(idGenerator) {
 
     packageObject.prototype.getName = function() {
         return this.name;
+    };
+
+    packageObject.prototype.startEditName = function() {
+        this.editMode = true;
+    };
+
+    packageObject.prototype.stopEditName = function() {
+        this.editMode = false;
     };
 
     packageObject.prototype.addClass = function(classs) {

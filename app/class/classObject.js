@@ -9,6 +9,7 @@ myApp.factory('classObject', ['idGenerator', function(idGenerator) {
         this.attributes = [];
         this.operations = [];
         this.position = position;
+        this.editMode = false;
     };
 
     classObject.prototype.getId = function() {
@@ -21,6 +22,14 @@ myApp.factory('classObject', ['idGenerator', function(idGenerator) {
 
     classObject.prototype.getName = function() {
         return this.name;
+    };
+
+    classObject.prototype.startEditName = function() {
+        this.editMode = true;
+    };
+
+    classObject.prototype.stopEditName = function() {
+        this.editMode = false;
     };
 
     classObject.prototype.addAttribute = function(attribute) {
