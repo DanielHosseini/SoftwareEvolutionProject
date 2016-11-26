@@ -41,7 +41,7 @@
                 <div id="infobox">
                     <h1></h1>
                     <p></p>
-                    <div class="message">
+                    <div class="message" ng-click="printClasses()">
                         Connect elements by dragging their right corner to another element. You can find out more by clicking on 'keyhints'
                         <div class="speechBubble">
                         </div>
@@ -52,7 +52,7 @@
                 </div>
             </div>
               <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
-                <div plumb-item>
+                <div>
                       <canvas-classes-directive></canvas-classes-directive>
                       <canvas-packages-directive></canvas-packages-directive>
 

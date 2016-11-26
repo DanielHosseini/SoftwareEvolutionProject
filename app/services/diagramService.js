@@ -2,7 +2,7 @@ var myApp = angular.module('myApp');
 myApp.service('diagramService', ['classObject', 'packageObject', function(classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
-        'classCount':0,
+        'classCount': 0,
         'classes': [],
         'associations': [],
         'packageCount': 0,
@@ -14,7 +14,7 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     // DiagramService.diagram.associations = [];
     // DiagramService.diagram.packages = [];
 
-    this.addObserver = function(callback){
+    this.addObserver = function(callback) {
         callbacks.push(callback);
     }
 
@@ -30,6 +30,14 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     DiagramService.getClasses = function() {
         return DiagramService.diagram.classes;
     }
+
+    DiagramService.findById = function(array, id) {
+        for (var element in array) {
+            if (array[element].getId().toString() === id) {
+                return array[element];
+            }
+        }
+    };
 
     DiagramService.addAssociation = function(item) {
         DiagramService.diagram.associations.push(item);
@@ -58,9 +66,6 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     }
 
     DiagramService.addElement = function(element, position) {
-        //console.log("diagramService classes length", DiagramService.getClasses().length);
-        //console.log("diagramService packages length", DiagramService.getPackages().length);
-
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
             console.log("diagramService last class position", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
@@ -74,7 +79,22 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         if (element.hasClass('toolboxAttribute')) {}
 
         if (element.hasClass('toolboxOperation')) {}
-        angular.forEach(callbacks, function(callback){
+
+        angular.forEach(callbacks, function(callback) {
+            callback();
+        });
+    }
+
+    DiagramService.updateElementPosition = function(element, elementId, position) {
+        if (element.hasClass('class')) {
+            DiagramService.findById(DiagramService.getClasses(), elementId).updatePosition(position);
+        }
+
+        if (element.hasClass('package')) {
+            DiagramService.findById(DiagramService.getPackages(), elementId).updatePosition(position);
+        }
+
+        angular.forEach(callbacks, function(callback) {
             callback();
         });
     }

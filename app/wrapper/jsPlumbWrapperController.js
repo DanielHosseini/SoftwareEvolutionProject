@@ -1,7 +1,10 @@
 var myApp = angular.module('myApp');
 
 //TODO: Fix observerService
-myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
+myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope, diagramService) {
+    $scope.printClasses = function() {
+        console.log(diagramService.getPackages());
+    };
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
         HoverPaintStyle: { strokeStyle: "#42a62c", lineWidth: 2 }
@@ -154,7 +157,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', function($scope) {
     };
 }]);
 
-myApp.directive('plumbItem', function() {
+myApp.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -164,16 +167,28 @@ myApp.directive('plumbItem', function() {
             });
             jsPlumb.draggable(element, {
                 start: function(event) {
-                    console.log("start", event);
+                    //console.log("start drag", event);
+                    //console.log("draggind element", diagramService.getClasses());
                 },
                 stop: function(event, ui) {
-                    console.log("dropped", event)
+                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvasLeft = canvas.prop('offsetLeft');
+                    var canvasTop = canvas.prop('offsetTop');
+
+                    var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
+                    var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
+
+                    droppedEl = angular.element(event.el);
+                    var elementId = event.el.attributes['data-id'].value;
+                    diagramService.updateElementPosition(droppedEl, elementId, [elementLeft, elementTop]);
+
+                    //console.log("dropping element", diagramService.getClasses());
                 },
-                containment: 'parent'
+                containment: false
             });
         }
     };
-});
+}]);
 
 myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
     return {
@@ -181,19 +196,16 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
         controller: 'jsPlumbWrapperController',
         link: function(scope, element, attrs) {
             jsPlumb.draggable(element, {
-                xpos: 0,
-                ypos: 0,
                 start: function(event) {
-                    console.log("start", event);
+                    //console.log("start", event);
                 },
                 stop: function(event, ui) {
-                    console.log("dropped", event);
+                    //console.log("dropped", event);
                     element[0].style.cssText = "";
 
                     var canvas = angular.element(document.getElementById('diagram-canvas'));
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
-                    console.log("canvas pos", canvas.prop('offsetTop'));
 
                     var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
                     var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
