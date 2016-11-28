@@ -23,6 +23,7 @@
     background: #F0F0E3;
     margin-left: -8px;
     margin-right: -8px;
+    position: relative;
 }
 
 #replay{
@@ -68,15 +69,16 @@
     background-size: cover;
     cursor: pointer;
 }
-    
-#about, #workflow, #close-toolbox, #close-pen, #clear{
+
+#about, #workflow, #close-toolbox, #close-pen, #clear, #cite, #show{
     font-size: 0.8em;
     font-family: Arial, Helvetica, sans-serif;
     float: left;
     margin-right: 10px;
 }
 
-#about:hover,#workflow:hover, #close-toolbox:hover, #close-pen:hover , #clear:hover{
+#about:hover,#workflow:hover, #close-toolbox:hover, #close-pen:hover , #clear:hover,
+#cite:hover, #show:hover{
     color: red;
     cursor: pointer;
 }

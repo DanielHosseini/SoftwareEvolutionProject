@@ -21,26 +21,29 @@
 </head>
 
 <body>
-    <div ng-controller="jsPlumbWrapperController">
+    <div style="position: relative" ng-controller="AppController">
+        <div ng-show="show" class="tooltip-menu">This is the menu-bar.</div>
+        <div ng-show="show" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
+        <div ng-show="show" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
+
         <div id="top_menu" class="do_not_print">
             <span id="about" onclick="$( &quot;#about-dialog&quot; ).dialog(&quot;open&quot;);">help/about</span>
             <span id="workflow" onclick="$(&quot;#dialog-new&quot;).dialog({width:&quot;40%&quot;});">explain workflow</span>
             <span id="close-toolbox" onclick="$( &quot;#toolbox&quot; ).toggle();">show/hide toolbox</span>
             <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>
 
-            <span id="close-toolbox" onclick="$(&quot;#citedialog&quot;).dialog(&quot;open&quot;);">cite/research</span>
-            <span id="cite" onclick="showTour();">show tour</span>
+            <span id="cite" onclick="$(&quot;#citedialog&quot;).dialog(&quot;open&quot;);">cite/research</span>
+            <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" onclick="xmlexp.exportXML();cvsexp.exportCSV();alert(&quot;session saved&quot;);$(this).css(&quot;background&quot;,&quot;cover url(floppy-red.png)&quot;);"></div>
             <div id="load-xmi" title="Load your local XMI file"></div>
             <button class="menu_button">LOG</button>
             <button class="menu_button">Export to XMI</button>
             <button class="menu_button">Import XMI</button>
-
         </div>
         <table>
             <tbody>
                 <tr>
-                    
+
                     <td></td>
                     <td>
                         <h1>
@@ -64,7 +67,7 @@
                 </tr>
             </tbody>
         </table>
-
+        <div ng-controller="jsPlumbWrapperController">
             <div id="toolbox">
                 <h1 class="title">UML Elements</h1>
                 <hr class="seperator">
@@ -101,7 +104,9 @@
                 </div>
               </div>
 
+
           </div>
+    </div>
 
     <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
