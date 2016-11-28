@@ -6,7 +6,7 @@ var myApp = angular.module('myApp', [
   'myApp.version',
 ]);
 
-myApp.controller('AppController', ['$scope', function($scope){
+myApp.controller('AppController', ['$scope', 'diagramService', function($scope, diagramService){
     $scope.tour = false;
     $scope.workflow = false;
     $scope.about = false;
@@ -32,5 +32,9 @@ myApp.controller('AppController', ['$scope', function($scope){
     $scope.showToolbox = function(){
         console.log("clicked")
         $scope.toolbox=!$scope.toolbox;
+    }
+
+    $scope.clear  = function(){
+        diagramService.clearAll();
     }
 }]);

@@ -20,7 +20,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         $scope.editNameKeyPressed = function(clickedElement, $event) {
             if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
                 if (clickedElement.getName() !== '') {
-                    clickedElement.stopEditName(); 
+                    clickedElement.stopEditName();
                 } else {
                     alert("Do not leave the name blank! - Angry Dave");
                 };
