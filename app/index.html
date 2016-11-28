@@ -25,7 +25,7 @@
         <div ng-show="workflow" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
             <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
                 <span id="ui-id-18">Online UML Editor</span>
-                <button id="workflow-close" ng-click="showWorkflow()">Close
+                <button class="close" ng-click="showWorkflow()">Close
                 </button>
             </div>
             <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
@@ -41,12 +41,33 @@
                 <p class="warning">Known Bugs : some drawing of associations seems to go wrong, still after moving the classes / packages, they restore</p>
             </div>
         </div>
+        <div ng-show="about" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
+            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+                <span id="ui-id-2">About UML WebEditor</span>
+                <button class="close" ng-click="showAbout()">Close
+                </button>
+            </div>
+            <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
+                <p autofocus="">
+                </p>
+                <ul>
+                    <li>drag elements to diagram-draw area</li>
+                    <li>assiociation are drawn from the upper right corner of a class</li>
+                </ul>
+                <p>
+                </p>
+                <p>This WebEditor was developed for research at Leiden University, Leiden, The Netherlands.<br>
+                    <br> © Dave Stikkolorum 2014<br>
+                    <a target="_blank" href="http://www.liacs.nl/~drstikko">http://www.liacs.nl/~drstikko</a>
+                </p>
+            </div>
+        </div>
         <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
         <div ng-show="tour" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
         <div ng-show="tour" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
 
         <div id="top_menu" class="do_not_print">
-            <span id="about" onclick="$( &quot;#about-dialog&quot; ).dialog(&quot;open&quot;);">help/about</span>
+            <span id="about" ng-click="showAbout()">help/about</span>
             <span id="workflow" ng-click="showWorkflow()">explain workflow</span>
             <span id="close-toolbox" ng-click="showToolbox()">show/hide toolbox</span>
             <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>

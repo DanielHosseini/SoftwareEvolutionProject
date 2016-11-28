@@ -78,7 +78,7 @@ div#diagram-canvas{
     cursor: hand;
 }
 
-#workflow-close{
+.close{
     cursor: pointer;
     cursor: hand;
     float: right;
