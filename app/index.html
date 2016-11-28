@@ -23,6 +23,48 @@
 <body>
     <div ng-controller="jsPlumbWrapperController">
         <div id="wrapper">
+        <div id="top_menu" class="do_not_print">
+            <span id="about" onclick="$( &quot;#about-dialog&quot; ).dialog(&quot;open&quot;);">help/about</span>
+            <span id="workflow" onclick="$(&quot;#dialog-new&quot;).dialog({width:&quot;40%&quot;});">explain workflow</span>
+            <span id="close-toolbox" onclick="$( &quot;#toolbox&quot; ).toggle();">show/hide toolbox</span>
+            <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>
+            <span id="close-toolbox" onclick="$(&quot;#citedialog&quot;).dialog(&quot;open&quot;);">cite/research</span>
+            <span id="cite" onclick="showTour();">show tour</span>
+            <div id="save-all" title="Save this session in the browser's memory" onclick="xmlexp.exportXML();cvsexp.exportCSV();alert(&quot;session saved&quot;);$(this).css(&quot;background&quot;,&quot;cover url(floppy-red.png)&quot;);"></div>
+            <div id="load-xmi" title="Load your local XMI file"></div>
+            <button class="menu_button">LOG</button>
+            <button class="menu_button">Export to XMI</button>
+            <button class="menu_button">Import XMI</button>
+
+        </div>
+        <table>
+            <tbody>
+                <tr>
+                    
+                    <td></td>
+                    <td>
+                        <h1>
+                            <span style="color:red">Please use the latest Google Chrome browser only!</span>
+                            <br>
+                            WebUML - an Online UML Editor © Dave Stikkolorum 2014-2016
+                        </h1>
+                    </td>
+                    <td>
+                        <div id="helpblock" style="display: none;">
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h1.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h1</a>
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h2.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h2</a>
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h3.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h3</a>
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h4.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h4</a>
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h5.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h5</a>
+                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h6.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h6</a>
+              </div>
+              <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
+              <img src="images/note.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
             <div id="toolbox">
                 <h1 class="title">UML Elements</h1>
                 <hr class="seperator">
