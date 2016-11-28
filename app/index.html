@@ -48,7 +48,7 @@
         <div id="top_menu" class="do_not_print">
             <span id="about" onclick="$( &quot;#about-dialog&quot; ).dialog(&quot;open&quot;);">help/about</span>
             <span id="workflow" ng-click="showWorkflow()">explain workflow</span>
-            <span id="close-toolbox" onclick="$( &quot;#toolbox&quot; ).toggle();">show/hide toolbox</span>
+            <span id="close-toolbox" ng-click="showToolbox()">show/hide toolbox</span>
             <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>
 
             <span id="cite" onclick="$(&quot;#citedialog&quot;).dialog(&quot;open&quot;);">cite/research</span>
@@ -81,7 +81,7 @@
             </tbody>
         </table>
         <div ng-controller="jsPlumbWrapperController">
-            <div id="toolbox">
+            <div ng-show="toolbox" id="toolbox">
                 <h1 class="title">UML Elements</h1>
                 <hr class="seperator">
                 <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">

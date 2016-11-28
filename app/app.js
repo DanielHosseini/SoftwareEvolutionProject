@@ -9,6 +9,7 @@ var myApp = angular.module('myApp', [
 myApp.controller('AppController', ['$scope', function($scope){
     $scope.tour = false;
     $scope.workflow = false;
+    $scope.toolbox = true;
     $scope.showTour = function(){
         console.log("clicked")
         $scope.tour=!$scope.tour;
@@ -16,5 +17,10 @@ myApp.controller('AppController', ['$scope', function($scope){
     $scope.showWorkflow = function(){
         console.log("clicked")
         $scope.workflow=!$scope.workflow;
+    }
+
+    $scope.showToolbox = function(){
+        console.log("clicked")
+        $scope.toolbox=!$scope.toolbox;
     }
 }]);
