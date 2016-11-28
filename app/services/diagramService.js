@@ -18,6 +18,16 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         callbacks.push(callback);
     }
 
+    DiagramService.clearAll = function(){
+        DiagramService.diagram = {
+            'classCount': 0,
+            'classes': [],
+            'associations': [],
+            'packageCount': 0,
+            'packages': []
+        };
+    }
+
     DiagramService.addClass = function(item) {
         DiagramService.diagram.classes.push(item);
         DiagramService.diagram.classCount = DiagramService.diagram.classCount + 1;

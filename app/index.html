@@ -62,6 +62,16 @@
                 </p>
             </div>
         </div>
+        <div ng-show="cite" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
+            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+                <span id="ui-id-5">Citation and research papers</span>
+                <button class="close" ng-click="showCite()">Close
+                </button>
+            </div>
+            <div id="citedialog" class="ui-dialog-content ui-widget-content" style="display: block; background: white; width: auto; min-height: 0px; max-height: none; height: 557px;">
+                <iframe style="border: 0px; " src="cite.html" width="100%" height="100%"></iframe>
+            </div>
+        </div>
         <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
         <div ng-show="tour" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
         <div ng-show="tour" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
@@ -72,7 +82,7 @@
             <span id="close-toolbox" ng-click="showToolbox()">show/hide toolbox</span>
             <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>
 
-            <span id="cite" onclick="$(&quot;#citedialog&quot;).dialog(&quot;open&quot;);">cite/research</span>
+            <span id="cite" ng-click="showCite()">cite/research</span>
             <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" onclick="xmlexp.exportXML();cvsexp.exportCSV();alert(&quot;session saved&quot;);$(this).css(&quot;background&quot;,&quot;cover url(floppy-red.png)&quot;);"></div>
             <div id="load-xmi" title="Load your local XMI file"></div>

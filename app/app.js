@@ -10,6 +10,7 @@ myApp.controller('AppController', ['$scope', function($scope){
     $scope.tour = false;
     $scope.workflow = false;
     $scope.about = false;
+    $scope.cite = false;
     $scope.toolbox = true;
     $scope.showTour = function(){
         console.log("clicked")
@@ -22,6 +23,10 @@ myApp.controller('AppController', ['$scope', function($scope){
     $scope.showAbout = function(){
         console.log("clicked")
         $scope.about=!$scope.about;
+    }
+    $scope.showCite = function(){
+        console.log("clicked")
+        $scope.cite=!$scope.cite;
     }
 
     $scope.showToolbox = function(){
