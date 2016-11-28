@@ -22,13 +22,32 @@
 
 <body>
     <div style="position: relative" ng-controller="AppController">
-        <div ng-show="show" class="tooltip-menu">This is the menu-bar.</div>
-        <div ng-show="show" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
-        <div ng-show="show" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
+        <div ng-show="workflow" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
+            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+                <span id="ui-id-18">Online UML Editor</span>
+                <button id="workflow-close" ng-click="showWorkflow()">Close
+                </button>
+            </div>
+            <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
+                <p>Hi, welcome to the online UML editor<img width="80px" src="images/DaveAvatar.png" style="float: right;"></p>
+                <hr>
+                <p>June 2015 - replay function trial</p>
+                <p>2015/3/25 - possibility to submit a session and download it as a zip file. <br> - added submission of typical questions (tool unrelated) that arrise during modeling
+                <br> - added bug filing button</p>
+                <p>Older than 2015/3/25 - New workflow: start diagramming - save your work with the save button on the left menu - export you xmi and log on the right menu</p>
+                <p>You can continue working on your diagram if you open the web page again by <strong>confirming</strong>the continue question</p>
+                <p>You can start a new diagram session by opening the web page again by <strong>canceling</strong> the continue question</p>
+                <p>don't ignore the popup messages, read them carefuly</p>
+                <p class="warning">Known Bugs : some drawing of associations seems to go wrong, still after moving the classes / packages, they restore</p>
+            </div>
+        </div>
+        <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
+        <div ng-show="tour" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
+        <div ng-show="tour" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
 
         <div id="top_menu" class="do_not_print">
             <span id="about" onclick="$( &quot;#about-dialog&quot; ).dialog(&quot;open&quot;);">help/about</span>
-            <span id="workflow" onclick="$(&quot;#dialog-new&quot;).dialog({width:&quot;40%&quot;});">explain workflow</span>
+            <span id="workflow" ng-click="showWorkflow()">explain workflow</span>
             <span id="close-toolbox" onclick="$( &quot;#toolbox&quot; ).toggle();">show/hide toolbox</span>
             <span id="clear" onclick="if(confirm(&quot;sure you want to clear?&quot;)){jsPlumb.detachEveryConnection();$(&quot;#diagram-canvas&quot;).find(&quot;.class, .package&quot;).remove();uiObserver.addLogEntry(&quot;CLEARALL&quot;);}">clear diagram</span>
 
@@ -54,12 +73,6 @@
                     </td>
                     <td>
                         <div id="helpblock" style="display: none;">
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h1.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h1</a>
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h2.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h2</a>
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h3.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h3</a>
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h4.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h4</a>
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h5.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h5</a>
-                <a onclick="updateAvatar($.ajax({type: &quot;GET&quot;, url: &quot;h6.txt&quot;, async: false}).responseText);" style="height: 50px; cursor: hand">h6</a>
               </div>
               <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
               <img src="images/note.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">

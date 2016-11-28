@@ -78,6 +78,12 @@ div#diagram-canvas{
     cursor: hand;
 }
 
+#workflow-close{
+    cursor: pointer;
+    cursor: hand;
+    float: right;
+}
+
 .warning {
     color: red;
 }

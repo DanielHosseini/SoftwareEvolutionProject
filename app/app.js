@@ -7,9 +7,14 @@ var myApp = angular.module('myApp', [
 ]);
 
 myApp.controller('AppController', ['$scope', function($scope){
-    $scope.show = false;
+    $scope.tour = false;
+    $scope.workflow = false;
     $scope.showTour = function(){
         console.log("clicked")
-        $scope.show=!$scope.show;
+        $scope.tour=!$scope.tour;
+    }
+    $scope.showWorkflow = function(){
+        console.log("clicked")
+        $scope.workflow=!$scope.workflow;
     }
 }]);
