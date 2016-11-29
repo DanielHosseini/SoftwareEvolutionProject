@@ -57,6 +57,7 @@ body H1 {
 #diagram-canvas,
 #screenshot-canvas,
 #task-screen {
+    position: relative;;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid black;
     display: -ms-flexbox;
