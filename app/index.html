@@ -86,7 +86,7 @@
             <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" onclick="xmlexp.exportXML();cvsexp.exportCSV();alert(&quot;session saved&quot;);$(this).css(&quot;background&quot;,&quot;cover url(floppy-red.png)&quot;);"></div>
             <div id="load-xmi" title="Load your local XMI file"></div>
-            <button class="menu_button">LOG</button>
+            <button ng-controller="XMLController"  ng-click="alert()" class="menu_button">LOG</button>
             <button class="menu_button">Export to XMI</button>
             <button class="menu_button">Import XMI</button>
         </div>
@@ -160,6 +160,7 @@
     <script src="app.js"></script>
     <script src="lib/jsPlumb-2.2.3-min.js"></script>
     <script src="class/class.js"></script>
+    <script src="XMLController.js"></script>
     <script src="services/idGenerator.js"></script>
     <script src="class/classObject.js"></script>
     <script src="package/packageObject.js"></script>
