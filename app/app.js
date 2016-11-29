@@ -6,11 +6,13 @@ var myApp = angular.module('myApp', [
   'myApp.version',
 ]);
 
-myApp.controller('AppController', ['$scope', 'diagramService', function($scope, diagramService){
+myApp.controller('AppController', ['$scope', 'diagramService', 'observerService', function($scope, diagramService, observerService){
     $scope.tour = false;
     $scope.workflow = false;
     $scope.about = false;
     $scope.cite = false;
+    $scope.feedback = false;
+    $scope.question = "";
     $scope.toolbox = true;
     $scope.showTour = function(){
         console.log("clicked")
@@ -38,6 +40,15 @@ myApp.controller('AppController', ['$scope', 'diagramService', function($scope, 
         console.log("clearing")
         diagramService.clearAll();
     }
+    $scope.showFeedback = function(){
+        console.log("clicked")
+        $scope.feedback = !$scope.feedback;
+    }
+    $scope.sendFeedback = function() {
+        console.log($scope.question);
+        observerService.addLogEntry($scope.question);
+        $scope.feedback = !$scope.feedback;
+    }
 }]);
 
 myApp.directive('ngConfirmClick', [function(){
@@ -47,10 +58,27 @@ myApp.directive('ngConfirmClick', [function(){
             var clickAction = attr.confirmedClick;
             element.bind('click',function (event) {
                 if ( window.confirm(msg) ) {
-                    console.log("confirmed")
                     scope.$eval(clickAction);
                 }
             });
         }
     }
-}])
+}]);
+
+myApp.directive('workflowDirective', function(){
+    return {
+        templateUrl: 'directives/workflow.html'
+    };
+});
+
+myApp.directive('aboutDirective', function(){
+    return {
+        templateUrl: 'directives/about.html'
+    };
+});
+
+myApp.directive('feedbackDirective', function(){
+    return {
+        templateUrl: 'directives/feedback.html'
+    };
+});
