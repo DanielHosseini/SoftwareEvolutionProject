@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="ui-style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
@@ -87,10 +88,9 @@
             <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" onclick="xmlexp.exportXML();cvsexp.exportCSV();alert(&quot;session saved&quot;);$(this).css(&quot;background&quot;,&quot;cover url(floppy-red.png)&quot;);"></div>
             <div id="load-xmi" title="Load your local XMI file"></div>
-            <button class="menu_button">LOG</button>
-
+            <button ng-controller="XMLController"  ng-click="getObserverLog()" class="menu_button">LOG</button>
             <button ng-controller="XMLController"  ng-click="exportXML()" class="menu_button">Export to XMI</button>
-            <button class="menu_button">Import XMI</button>
+            <button ng-controller="XMLController"  ng-click="importXML()" class="menu_button">Import XMI</button>
         </div>
         <table>
             <tbody>
@@ -150,7 +150,6 @@
                 </div>
               </div>
 
-
           </div>
     </div>
 
@@ -172,6 +171,7 @@
     <script src="operation/operation.js"></script>
     <script src="canvas/canvasController.js"></script>
     <script src="wrapper/jsPlumbWrapperController.js"></script>
+    <script src="services/observerService.js"></script>
     <script src="components/version/version.js"></script>
     <script src="components/version/version-directive.js"></script>
     <script src="components/version/interpolate-filter.js"></script>
