@@ -9,6 +9,11 @@ body H1 {
     font-size: 1.2em;
     font-family: Arial, Helvetica, sans-serif;
 }
+.alllign{
+    vertical-align : middle;
+    font-size : 17px;
+    background-color: blue;
+}
 
 .tooltip-menu{
     position: absolute;
