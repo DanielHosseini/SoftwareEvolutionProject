@@ -171,7 +171,7 @@ Toolbox.prototype.initTools = function(){
 
 
 
-    $(".toolboxAttribute").sortable({
+    $(".toolboxAttribute").({
         connectWith: ".connectedSortable",
         dropOnEmpty: false,
         remove: function(event, ui) {
@@ -432,7 +432,6 @@ function Attribute(name) {
     $(this.node).append(new HTMLNode('li',null,'attribute',name));
 
     $(this.node).find('li').on("click",function(e){
-
                         $(".selected").removeClass('selected');
                         $(this).addClass('selected');
                         e.stopPropagation();

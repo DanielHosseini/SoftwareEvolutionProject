@@ -18,6 +18,14 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         callbacks.push(callback);
     }
 
+    DiagramService.clearAll = function(){
+        DiagramService.diagram.classes.splice(0, DiagramService.diagram.classes.length)
+        DiagramService.diagram.associations.splice(0, DiagramService.diagram.associations.length)
+        DiagramService.diagram.packages.splice(0, DiagramService.diagram.packages.length)
+        DiagramService.diagram.classCount = 0;
+        DiagramService.diagram.packageCount = 0;
+    }
+
     DiagramService.addClass = function(item) {
         DiagramService.diagram.classes.push(item);
         DiagramService.diagram.classCount = DiagramService.diagram.classCount + 1;
@@ -65,6 +73,12 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         return DiagramService.diagram.packages;
     }
 
+    var alertObserver = function(){
+        angular.forEach(callbacks, function(callback) {
+            callback();
+        });
+    }
+
     DiagramService.addElement = function(element, position) {
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
@@ -76,13 +90,16 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
             console.log("diagramService last package position", DiagramService.getPackages()[DiagramService.getPackages().length - 1].position);
         }
 
-        if (element.hasClass('toolboxAttribute')) {}
+        if (element.hasClass('toolboxAttribute')) {
+          //Find class it was dropped on
+
+
+          console.log("Dropped random attribute");
+        }
 
         if (element.hasClass('toolboxOperation')) {}
 
-        angular.forEach(callbacks, function(callback) {
-            callback();
-        });
+        alertObserver();
     }
 
     DiagramService.updateElementPosition = function(element, elementId, position) {
@@ -94,8 +111,6 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
             DiagramService.findById(DiagramService.getPackages(), elementId).updatePosition(position);
         }
 
-        angular.forEach(callbacks, function(callback) {
-            callback();
-        });
+        alertObserver();
     }
 }]);

@@ -80,6 +80,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
+            console.log("CLicked flärp");
             if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
                 jsPlumb.makeSource(angular.element(e), {
                     parent: p,

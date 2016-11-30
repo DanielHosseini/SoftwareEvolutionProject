@@ -15,7 +15,12 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         $scope.doubleClick = function(clickedElement) {
             // TODO, stop editing all other classes and packages
             clickedElement.startEditName();
+            console.log("DblClicked: "+ clickedElement);
         };
+
+        $scope.click = function(clickedElement){
+        console.log("Clicked");
+        }
 
         $scope.editNameKeyPressed = function(clickedElement, $event) {
             if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
