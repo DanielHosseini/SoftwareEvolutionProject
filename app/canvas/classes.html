@@ -1,16 +1,12 @@
-<div ng-controller="canvasController">
-    <div ng-repeat="class in classes">
-        <div plumb-item class="class ui-draggable ui-draggable-handle" ng-click="click(class)" ng-dblClick="doubleClick(class)" style="position:absolute;left:{{class.position[0]}}px;top:{{class.position[1]}}px;" data-id="{{class.id}}">
-            <div class="ep" id="jsPlumb_1_12">➜</div>
-            <h1 class="heading element-name" ng-style="{ display: class.editMode === true ? 'none' : '' }">{{class.name}}</h1>
-            <input class="edittext" ng-style="{ display: class.editMode === false ? 'none' : '' }" type="text" ng-model="class.name" ng-keyup="editNameKeyPressed(class, $event)">
-            <hr>
-            <div class="attribute dummy">{{class.attributes}}
-            </div>
-            <hr>
-            <div class="operation dummy">{{class.operations}}
-            </div>
-            </ul>
-        </div>
+<div ng-repeat="class in classes" ng-controller="canvasController" plumb-item class="class ui-draggable ui-draggable-handle" ng-click="click(class)" ng-dblClick="doubleClick(class)" style="position:absolute;left:{{class.position[0]}}px;top:{{class.position[1]}}px;" data-id="{{class.id}}">
+    <div class="ep" id="jsPlumb_1_12">➜</div>
+    <h1 class="heading element-name" ng-style="{ display: class.editMode === true ? 'none' : '' }">{{class.name}}</h1>
+    <input class="edittext" ng-style="{ display: class.editMode === false ? 'none' : '' }" type="text" ng-model="class.name" ng-keyup="editNameKeyPressed(class, $event)">
+    <hr>
+    <div class="attribute dummy">{{class.attributes}}
     </div>
+    <hr>
+    <div class="operation dummy">{{class.operations}}
+    </div>
+    </ul>
 </div>
