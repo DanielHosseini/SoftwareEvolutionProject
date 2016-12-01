@@ -29,7 +29,7 @@
                 </button>
             </div>
             <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-                <p>Hi, welcome to the online UML editor<img width="80px" src="images/DaveAvatar.png" style="float: right;"></p>
+                <p>Hi, welcome to the online UML editor<img width="80px" src="images/DaveAvatar.png" style="float: right;" alt="Dave"></p>
                 <hr>
                 <p>June 2015 - replay function trial</p>
                 <p>2015/3/25 - possibility to submit a session and download it as a zip file. <br> - added submission of typical questions (tool unrelated) that arrise during modeling
@@ -69,7 +69,7 @@
                 </button>
             </div>
             <div id="citedialog" class="ui-dialog-content ui-widget-content" style="display: block; background: white; width: auto; min-height: 0px; max-height: none; height: 557px;">
-                <iframe style="border: 0px; " src="cite.html" width="100%" height="100%"></iframe>
+                <iframe style="border: 0px; " src="cite.html" width="100%" height="100%" name="iframe_a"></iframe>
             </div>
         </div>
         <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
@@ -105,8 +105,8 @@
                     <td>
                         <div id="helpblock" style="display: none;">
               </div>
-              <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
-              <img src="images/note.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">
+              <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand" alt="Doc">
+              <img src="images/note.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand" alt="Note">
                     </td>
                 </tr>
             </tbody>
@@ -137,7 +137,7 @@
                         <div class="speechBubblePoint">
                         </div>
                     </div>
-                    <img id="avatar" width="100px" src="../images/DaveAvatar.png">
+                    <img id="avatar" width="100px" src="../images/DaveAvatar.png" alt="DaveAvatar">
                 </div>
             </div>
               <div diagram-holder id="diagram-canvas" ng-controller="canvasController">

@@ -12,7 +12,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
 
     jsPlumb.bind("contextmenu", function(c, e) {
         console.log("contextmenu");
-        if ((e.metaKey && window.navigator.platform == "MacIntel" || e.ctrlKey && window.navigator.platform == "Win32") && c.getOverlay("directedAssociation")) {
+        if ((e.metaKey && window.navigator.platform === "MacIntel" || e.ctrlKey && window.navigator.platform === "Win32") && c.getOverlay("directedAssociation")) {
             c.removeOverlay("directedAssociation");
             c.addOverlay(["Arrow", {
                 label: "Arrow",
@@ -37,7 +37,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
 
     jsPlumb.bind("click", function(c, e) {
         console.log("clicked");
-        if (e.altKey || e.keyCode == 18) {
+        if (e.altKey || e.keyCode === 18) {
             e.preventDefault();
             //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
             jsPlumb.detach(c);
@@ -60,7 +60,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         angular.element(document.getElementById("label-edit")).css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
         angular.element(document.getElementById("label-edit")).focus();
         angular.element(document.getElementById("label-edit")).on("keypress blur", function(e) {
-            if (e.keyCode == 13 || !e.keyCode) {
+            if (e.keyCode === 13 || !e.keyCode) {
                 connector.getOverlay("label").setLabel(angular.element(this).val());
                 $elm.show();
                 angular.element(document.getElementById("label-edit")).remove();
@@ -80,7 +80,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
-            if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
+            if (angular.element(e).attr('id') === undefined) { //check if endpoint already exsists [toolbox-demo]
                 jsPlumb.makeSource(angular.element(e), {
                     parent: p,
                     anchor: "Continuous",
@@ -95,7 +95,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
         connector = c;
-        if (connector.getOverlay("directedAssociation") || type == "aggregate") {
+        if (connector.getOverlay("directedAssociation") || type === "aggregate") {
             // if it is an directed association
             connector.removeOverlay("directedAssociation");
             // add an aggregation
@@ -107,7 +107,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 id: "aggregation",
                 location: 1
             }]);
-        } else if (connector.getOverlay("aggregation") || type == "composite") {
+        } else if (connector.getOverlay("aggregation") || type === "composite") {
             // if it is an aggregation
             connector.removeOverlay("aggregation");
             // add a composition
@@ -118,7 +118,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 id: "composition",
                 location: 1
             }]);
-        } else if (connector.getOverlay("composition") || type == "inheritance") {
+        } else if (connector.getOverlay("composition") || type === "inheritance") {
             // if it is an inheritance
             connector.removeOverlay("composition");
             // add a composition
@@ -131,7 +131,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 paintStyle: { fillStyle: "white" }
             }]);
 
-        } else if (connector.getOverlay("inheritance" || type == "directed")) {
+        } else if (connector.getOverlay("inheritance" || type === "directed")) {
             // if it is an inheritance
             connector.removeOverlay("inheritance");
         } else {
