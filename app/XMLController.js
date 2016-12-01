@@ -224,7 +224,7 @@ var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xm
 
     console.log("Final XML", XMLstring)
 
-   var blob = new Blob([XMLstring], {
+        var blob = new Blob([XMLstring], {
             type:"text/xml"
         });
         saveAs(blob, "UOE"+Date.now().toString()+".xml");
@@ -544,7 +544,12 @@ $('#diagram-canvas .class').each( function(){
 
   $scope.getObserverLog = function(){
     var log = observerService.getLog();
-    console.log(log)
+            var blob = new Blob([log], {
+            type:"text/csv"
+        });
+        saveAs(blob, "UOE"+Date.now().toString()+".csv");
+
+        console.log(log)
 
   }
 
