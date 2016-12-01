@@ -224,34 +224,10 @@ var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xm
 
     console.log("Final XML", XMLstring)
 
-    function download(content, filename, contentType)
-    {
-        if(!contentType) contentType = 'application/octet-stream';
-        content=vkbeautify.xml(content);
-        var a = document.createElement('a');
-        var blob = new Blob([content], {'type':contentType});
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("Trident/");
-        if (msie > 0){
-            var newWindow = window.open('','_blank','toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=1, menuBar=1, width=640, height=480, left=50, top=50', true);
-            var preEl = newWindow.document.createElement("pre");
-            var codeEl = newWindow.document.createElement("code");
-            codeEl.appendChild(newWindow.document.createTextNode(content));
-            preEl.appendChild(codeEl);
-            newWindow.document.body.appendChild(preEl);
-        }
-        else{
-            a.href = window.URL.createObjectURL(blob);
-            a.download = filename;
-        }
-        a.click();
-    }
-    var txt = new XMLSerializer().serializeToString($.parseXML(XMLstring));
-    var reg = /(>)\s*(<)(\/*)/g;
-    txt = txt.replace(reg, '$1\r\n$2$3');
-    //if(typeof element !='undefined')
-    download(txt,'OUE_Export_'+Date.now()+'.xml','text/xml');
-    localStorage.XMIencoded=txt;
+   var blob = new Blob([XMLstring], {
+            type:"text/xml"
+        });
+        saveAs(blob, "UOE"+Date.now().toString()+".xml");
 
 } //END ALERT FUNC
  
