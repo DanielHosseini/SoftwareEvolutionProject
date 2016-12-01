@@ -223,12 +223,37 @@ var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xm
     XMLstring += '</UML:Diagram.element></UML:Diagram></XMI.content></XMI>';
 
     console.log("Final XML", XMLstring)
-        var txt = new XMLSerializer().serializeToString($.parseXML(XMLstring));
 
+    function download(content, filename, contentType)
+    {
+        if(!contentType) contentType = 'application/octet-stream';
+        content=vkbeautify.xml(content);
+        var a = document.createElement('a');
+        var blob = new Blob([content], {'type':contentType});
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("Trident/");
+        if (msie > 0){
+            var newWindow = window.open('','_blank','toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=1, copyhistory=1, menuBar=1, width=640, height=480, left=50, top=50', true);
+            var preEl = newWindow.document.createElement("pre");
+            var codeEl = newWindow.document.createElement("code");
+            codeEl.appendChild(newWindow.document.createTextNode(content));
+            preEl.appendChild(codeEl);
+            newWindow.document.body.appendChild(preEl);
+        }
+        else{
+            a.href = window.URL.createObjectURL(blob);
+            a.download = filename;
+        }
+        a.click();
+    }
+    var txt = new XMLSerializer().serializeToString($.parseXML(XMLstring));
+    var reg = /(>)\s*(<)(\/*)/g;
+    txt = txt.replace(reg, '$1\r\n$2$3');
+    //if(typeof element !='undefined')
+    download(txt,'OUE_Export_'+Date.now()+'.xml','text/xml');
+    localStorage.XMIencoded=txt;
 
-
- 
-	   } //END ALERT FUNC
+} //END ALERT FUNC
  
   $scope.importXML = function(){
     var element = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><XMI xmi.version=\"1.1\" xmlns:UML=\"href://org.omg/UML/1.3\"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name=\"UML\" xmi.version=\"1.3\" /></XMI.header><XMI.content><UML:Model xmi.id=\"UMLModel.3\" name=\"Design Model\" visibility=\"public\" isSpecification=\"false\" namespace=\"UMLModel.2\" isRoot=\"false\" isLeaf=\"false\" isAbstract=\"false\"><UML:Namespace.ownedElement><UML:Class name=\"Daniel\" namespace=\"model1\" xmi.id=\"jsPlumb_1_5\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class><UML:Package isAbstract=\"false\" isLeaf=\"false\" isRoot=\"false\" name=\"Kalle\" xmi.id=\"jsPlumb_1_6\"><UML:Namespace.ownedElement></UML:Namespace.ownedElement></UML:Package></UML:Namespace.ownedElement></UML:Model><UML:Diagram xmi.id=\"UMLClassDiagram.4\" name=\"OnlineUMLExport\" diagramType=\"ClassDiagram\" toolName=\"Rational Rose 98\" owner=\"UMLModel.3\"><UML:Diagram.element><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_5\" geometry=\"73,51,198,96,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_5\"></UML:DiagramElement><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_6\" geometry=\"113,119,238,199,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_6\"></UML:DiagramElement></UML:Diagram.element></UML:Diagram></XMI.content></XMI>";
