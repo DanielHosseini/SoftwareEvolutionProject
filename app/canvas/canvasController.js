@@ -5,7 +5,6 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         var currentlyEditedElement = undefined;
 
         $scope.hints = false;
-        $scope.is_active = false;
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;
         $scope.classes = $scope.diagram.classes;
@@ -19,10 +18,18 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             clickedElement.startEditName();
         };
 
-        $scope.click = function(clickedElement){
-          document.querySelectorAll(".selected").removeClass('selected');
+        $scope.epClick = function(clickEvent) {
 
-        }
+          $scope.clickEvent = clickEvent.target.parentElement.id;
+          console.log($scope.clickEvent); //ID of surrounding DIV, i.e a Class (id = jsPlumb1.5)
+          jsPlumb.addEndpoint($scope.clickEvent, {
+            endpoint:"Dot",
+            anchor:[ "Perimeter", { shape:"Circle" } ]
+});
+      };
+
+
+
 
         $scope.editNameKeyPressed = function(clickedElement, $event) {
             if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
@@ -38,6 +45,17 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             $scope.hints = !$scope.hints;
         }
     }])
+
+    .directive('toggleEndpoint', function() {
+    return {
+        restrict: 'A', //Restricts to divs
+        link: function(scope, element, attrs) {
+            element.bind('click', function() {
+                element.toggleClass(attrs.toggleEndpoint);
+            });
+        }
+    };
+    })
 
     .directive('toggleSelected', function() {
     return {
