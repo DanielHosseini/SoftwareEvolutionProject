@@ -40,8 +40,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     jsPlumb.bind("click", function(c, e) {
         console.log("clicked");
         if (e.altKey || e.keyCode === 18) {
-            e.preventDefault();
-            //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
+            e.preventDefault();            //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
             jsPlumb.detach(c);
         }
     });

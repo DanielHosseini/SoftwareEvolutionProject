@@ -5,7 +5,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         var currentlyEditedElement = undefined;
 
         $scope.hints = false;
-
+        $scope.is_active = false;
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;
         $scope.classes = $scope.diagram.classes;
@@ -18,6 +18,11 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             // TODO, stop editing all other classes and packages
             clickedElement.startEditName();
         };
+
+        $scope.click = function(clickedElement){
+          document.querySelectorAll(".selected").removeClass('selected');
+
+        }
 
         $scope.editNameKeyPressed = function(clickedElement, $event) {
             if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
@@ -33,6 +38,19 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             $scope.hints = !$scope.hints;
         }
     }])
+
+    .directive('toggleSelected', function() {
+    return {
+        restrict: 'A', //Restricts to divs
+        link: function(scope, element, attrs) {
+            element.bind('click', function() {
+              angular.element(document.querySelectorAll(".selected")).removeClass('selected');
+                element.toggleClass(attrs.toggleSelected);
+            });
+        }
+    };
+})
+
     .directive('canvasClassesDirective', function() {
         return {
             replace: true,

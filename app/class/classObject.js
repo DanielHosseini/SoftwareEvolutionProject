@@ -10,7 +10,20 @@ myApp.factory('classObject', ['idGenerator', function(idGenerator) {
         this.operations = [];
         this.position = position;
         this.editMode = false;
+        this.selected = false;
     };
+
+    classObject.prototype.toggleSelected = function () {
+      if (this.selected) {
+        this.selected = false;
+
+      }
+      else{this.selected = true}
+    };
+
+    classObject.prototype.getSelected = function(){
+      return this.selected;
+    }
 
     classObject.prototype.getId = function() {
         return this.id;
