@@ -22,10 +22,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
           $scope.clickEvent = clickEvent.target.parentElement.id;
           console.log($scope.clickEvent); //ID of surrounding DIV, i.e a Class (id = jsPlumb1.5)
-          jsPlumb.addEndpoint($scope.clickEvent, {
-            endpoint:"Dot",
-            anchor:[ "Perimeter", { shape:"Circle" } ]
-});
+          //Need to make some drag from $scope.ClickEvent to a destination
       };
 
 
