@@ -80,6 +80,7 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     }
 
     DiagramService.addElement = function(element, position) {
+        console.log(element)
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
             console.log("diagramService last class position", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
@@ -93,7 +94,6 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         if (element.hasClass('toolboxAttribute')) {}
 
         if (element.hasClass('toolboxOperation')) {}
-
         alertObserver();
     }
 
