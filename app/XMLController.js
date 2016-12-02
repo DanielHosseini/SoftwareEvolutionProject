@@ -233,7 +233,7 @@ var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xm
 } //END ALERT FUNC
 
   $scope.importXML = function(){
-    var element = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><XMI xmi.version=\"1.1\" xmlns:UML=\"href://org.omg/UML/1.3\"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name=\"UML\" xmi.version=\"1.3\" /></XMI.header><XMI.content><UML:Model xmi.id=\"UMLModel.3\" name=\"Design Model\" visibility=\"public\" isSpecification=\"false\" namespace=\"UMLModel.2\" isRoot=\"false\" isLeaf=\"false\" isAbstract=\"false\"><UML:Namespace.ownedElement><UML:Class name=\"Daniel\" namespace=\"model1\" xmi.id=\"jsPlumb_1_5\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class><UML:Package isAbstract=\"false\" isLeaf=\"false\" isRoot=\"false\" name=\"Kalle\" xmi.id=\"jsPlumb_1_6\"><UML:Namespace.ownedElement></UML:Namespace.ownedElement></UML:Package></UML:Namespace.ownedElement></UML:Model><UML:Diagram xmi.id=\"UMLClassDiagram.4\" name=\"OnlineUMLExport\" diagramType=\"ClassDiagram\" toolName=\"Rational Rose 98\" owner=\"UMLModel.3\"><UML:Diagram.element><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_5\" geometry=\"73,51,198,96,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_5\"></UML:DiagramElement><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_6\" geometry=\"113,119,238,199,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_6\"></UML:DiagramElement></UML:Diagram.element></UML:Diagram></XMI.content></XMI>";
+    var element = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><XMI xmi.version=\"1.1\" xmlns:UML=\"href://org.omg/UML/1.3\"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name=\"UML\" xmi.version=\"1.3\" /></XMI.header><XMI.content><UML:Model xmi.id=\"UMLModel.3\" name=\"Design Model\" visibility=\"public\" isSpecification=\"false\" namespace=\"UMLModel.2\" isRoot=\"false\" isLeaf=\"false\" isAbstract=\"false\"><UML:Namespace.ownedElement><UML:Class name=\"Class\" namespace=\"model1\" xmi.id=\"jsPlumb_1_5\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class><UML:Class name=\"Olliver\" namespace=\"model1\" xmi.id=\"jsPlumb_1_6\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class></UML:Namespace.ownedElement></UML:Model><UML:Diagram xmi.id=\"UMLClassDiagram.4\" name=\"OnlineUMLExport\" diagramType=\"ClassDiagram\" toolName=\"Rational Rose 98\" owner=\"UMLModel.3\"><UML:Diagram.element><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_5\" geometry=\"223,64,348,109,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_5\"></UML:DiagramElement><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_6\" geometry=\"672,589,797,634,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_6\"></UML:DiagramElement></UML:Diagram.element></UML:Diagram></XMI.content></XMI>";
 
 var XMI = $.parseXML(element);
 console.log(XMI)
@@ -313,6 +313,7 @@ console.log(element)
             else
                 y = 0;
             diagramService.addClass(new classObject(name, [x, y]))
+            console.log([x,y])
 
         }
 
@@ -433,14 +434,7 @@ console.log(element)
                      jsPlumb.repaintEverything();
                      });
 
-$('#diagram-canvas .class').each( function(){
-                                  //   jsPlumb.toggleSourceEnabled(this);
-                                 //    jsPlumb.toggleTargetEnabled(this);
-                                     $(this).simulate('drag-n-drop', {dx: 1});
-                                     //$(this).simulate('drag-n-drop', {dx: -1});
-                                 //    jsPlumb.toggleSourceEnabled(this);
-                                //     jsPlumb.toggleTargetEnabled(this);
-                                   })
+
 
   } //End Import Method
 

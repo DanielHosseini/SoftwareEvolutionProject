@@ -81,7 +81,11 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     }
 
     DiagramService.addElement = function(element, position) {
-        console.log(element)
+        var top = angular.element(document.querySelector('#diagram-canvas')).prop('offsetTop')
+        var left = angular.element(document.querySelector('#diagram-canvas')).prop('offsetLeft')
+        position[0] = position[0] - left;
+        position[1] = position[1] - top;
+
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
             console.log("diagramService last class position", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
