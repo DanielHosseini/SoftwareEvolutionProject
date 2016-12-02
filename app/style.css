@@ -22,7 +22,7 @@ body H1 {
     border-radius: 5px;
     border: 2px solid black;
     background: white;
-    margin-left: 50%;
+    left: 50%;
     z-index: 1000;
     opacity: 0%;
 }
@@ -34,8 +34,8 @@ body H1 {
     border-radius: 5px;
     border: 2px solid black;
     background: white;
-    margin-top: 20%;
-    margin-left: 15%;
+    top: 20%;
+    left: 10%;
     z-index: 1000;
     opacity: 0%;
 }
@@ -47,8 +47,8 @@ body H1 {
     border-radius: 5px;
     border: 2px solid black;
     background: white;
-    margin-top: 50%;
-    margin-left: 50%;
+    top: 50%;
+    left: 50%;
     z-index: 1000;
     opacity: 0%;
 }
@@ -62,6 +62,7 @@ body H1 {
 #diagram-canvas,
 #screenshot-canvas,
 #task-screen {
+    position: relative;;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid black;
     display: -ms-flexbox;
@@ -76,17 +77,6 @@ div#diagram-canvas{
 
 #infobox {
     top: 415.438px;
-}
-
-#task-button, #question-button{
-    cursor: pointer;
-    cursor: hand;
-}
-
-.close{
-    cursor: pointer;
-    cursor: hand;
-    float: right;
 }
 
 .warning {

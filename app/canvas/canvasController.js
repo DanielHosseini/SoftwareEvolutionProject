@@ -4,6 +4,8 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
         var currentlyEditedElement = undefined;
 
+        $scope.hints = false;
+
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;
         $scope.classes = $scope.diagram.classes;
@@ -26,6 +28,10 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
                 };
             }
         };
+
+        $scope.showHints = function(){
+            $scope.hints = !$scope.hints;
+        }
     }])
     .directive('canvasClassesDirective', function() {
         return {
@@ -39,4 +45,18 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         replace: true,
         templateUrl: 'canvas/packages.html'
     };
+})
+
+.directive('keyHint', function(){
+    if(window.navigator.platform==="MacIntel"){
+        return {
+            replace: true,
+            templateUrl: "directives/machints.html"
+        }
+    }else if((window.navigator.platform).indexOf("Linux")>-1 && (window.navigator.platform).indexOf("arm")>-1){
+        return {
+            replace: true,
+            templateUrl: "directives/windowhints.html"
+        }
+    }
 })

@@ -12,7 +12,9 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
 
     jsPlumb.bind("contextmenu", function(c, e) {
         console.log("contextmenu");
-        if ((e.metaKey && window.navigator.platform == "MacIntel" || e.ctrlKey && window.navigator.platform == "Win32") && c.getOverlay("directedAssociation")) {
+        var isMac = e.metaKey && window.navigator.platform === "MacIntel"
+        var isWin = e.ctrlKey && window.navigator.platform === "Win32"
+        if ((isMac || isWin) && c.getOverlay("directedAssociation")) {
             c.removeOverlay("directedAssociation");
             c.addOverlay(["Arrow", {
                 label: "Arrow",
@@ -31,13 +33,13 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         e.preventDefault();
     });
 
-    jsPlumb.bind("connection", function(info) {
+    jsPlumb.bind("connection", function() {
         //observerService.addLogEntry('CREATE', 'ASSOCIATION', 'NULL', info.sourceId, info.targetId);
     });
 
     jsPlumb.bind("click", function(c, e) {
         console.log("clicked");
-        if (e.altKey || e.keyCode == 18) {
+        if (e.altKey || e.keyCode === 18) {
             e.preventDefault();
             //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
             jsPlumb.detach(c);
@@ -51,7 +53,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
         }
         name = connector.getOverlay("label").getLabel();
-        angular.element(name).bind("click", function(c, e) { console.log('click') });
+        angular.element(name).bind("click", function() { console.log('click') });
         $elm = connector.getOverlay("label");
         $elm.hide();
         var theelm = $elm.getElement();
@@ -60,7 +62,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         angular.element(document.getElementById("label-edit")).css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
         angular.element(document.getElementById("label-edit")).focus();
         angular.element(document.getElementById("label-edit")).on("keypress blur", function(e) {
-            if (e.keyCode == 13 || !e.keyCode) {
+            if (e.keyCode === 13 || !e.keyCode) {
                 connector.getOverlay("label").setLabel(angular.element(this).val());
                 $elm.show();
                 angular.element(document.getElementById("label-edit")).remove();
@@ -80,7 +82,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
-            if (angular.element(e).attr('id') == undefined) { //check if endpoint already exsists [toolbox-demo]
+            if (angular.element(e).attr('id') === undefined) { //check if endpoint already exsists [toolbox-demo]
                 jsPlumb.makeSource(angular.element(e), {
                     parent: p,
                     anchor: "Continuous",
@@ -95,7 +97,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
         connector = c;
-        if (connector.getOverlay("directedAssociation") || type == "aggregate") {
+        if (connector.getOverlay("directedAssociation") || type === "aggregate") {
             // if it is an directed association
             connector.removeOverlay("directedAssociation");
             // add an aggregation
@@ -107,7 +109,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 id: "aggregation",
                 location: 1
             }]);
-        } else if (connector.getOverlay("aggregation") || type == "composite") {
+        } else if (connector.getOverlay("aggregation") || type === "composite") {
             // if it is an aggregation
             connector.removeOverlay("aggregation");
             // add a composition
@@ -118,7 +120,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 id: "composition",
                 location: 1
             }]);
-        } else if (connector.getOverlay("composition") || type == "inheritance") {
+        } else if (connector.getOverlay("composition") || type === "inheritance") {
             // if it is an inheritance
             connector.removeOverlay("composition");
             // add a composition
@@ -131,7 +133,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
                 paintStyle: { fillStyle: "white" }
             }]);
 
-        } else if (connector.getOverlay("inheritance" || type == "directed")) {
+        } else if (connector.getOverlay("inheritance") || type === "directed") {
             // if it is an inheritance
             connector.removeOverlay("inheritance");
         } else {
@@ -148,7 +150,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     $scope.init = function() {
         jsPlumb.bind("ready", function() {
             console.log("Set up jsPlumb listeners (should be only done once)");
-            jsPlumb.bind("connection", function(info) {
+            jsPlumb.bind("connection", function() {
                 $scope.$apply(function() {
                     console.log("Possibility to push connection into array");
                 });
@@ -161,12 +163,12 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             jsPlumb.makeTarget(element, {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
-                start: function(event) {
+                start: function() {
                     //console.log("start drag", event);
                     //console.log("draggind element", diagramService.getClasses());
                 },
@@ -194,12 +196,12 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             jsPlumb.draggable(element, {
-                start: function(event) {
+                start: function() {
                     //console.log("start", event);
                 },
-                stop: function(event, ui) {
+                stop: function(event) {
                     //console.log("dropped", event);
                     element[0].style.cssText = "";
 

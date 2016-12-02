@@ -24,46 +24,8 @@
 
 <body>
     <div style="position: relative" ng-controller="AppController">
-        <div ng-show="workflow" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
-            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-                <span id="ui-id-18">Online UML Editor</span>
-                <button class="close" ng-click="showWorkflow()">Close
-                </button>
-            </div>
-            <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-                <p>Hi, welcome to the online UML editor<img width="80px" src="images/DaveAvatar.png" style="float: right;"></p>
-                <hr>
-                <p>June 2015 - replay function trial</p>
-                <p>2015/3/25 - possibility to submit a session and download it as a zip file. <br> - added submission of typical questions (tool unrelated) that arrise during modeling
-                <br> - added bug filing button</p>
-                <p>Older than 2015/3/25 - New workflow: start diagramming - save your work with the save button on the left menu - export you xmi and log on the right menu</p>
-                <p>You can continue working on your diagram if you open the web page again by <strong>confirming</strong>the continue question</p>
-                <p>You can start a new diagram session by opening the web page again by <strong>canceling</strong> the continue question</p>
-                <p>don't ignore the popup messages, read them carefuly</p>
-                <p class="warning">Known Bugs : some drawing of associations seems to go wrong, still after moving the classes / packages, they restore</p>
-            </div>
-        </div>
-        <div ng-show="about" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
-            <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
-                <span id="ui-id-2">About UML WebEditor</span>
-                <button class="close" ng-click="showAbout()">Close
-                </button>
-            </div>
-            <div id="dialog-new" style="display: block; width: auto; min-height: 82px; max-height: none; height: auto;" class="ui-dialog-content ui-widget-content">
-                <p autofocus="">
-                </p>
-                <ul>
-                    <li>drag elements to diagram-draw area</li>
-                    <li>assiociation are drawn from the upper right corner of a class</li>
-                </ul>
-                <p>
-                </p>
-                <p>This WebEditor was developed for research at Leiden University, Leiden, The Netherlands.<br>
-                    <br> © Dave Stikkolorum 2014<br>
-                    <a target="_blank" href="http://www.liacs.nl/~drstikko">http://www.liacs.nl/~drstikko</a>
-                </p>
-            </div>
-        </div>
+        <workflow-directive></workflow-directive>
+        <about-directive></about-directive>
         <div ng-show="cite" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
             <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
                 <span id="ui-id-5">Citation and research papers</span>
@@ -71,9 +33,10 @@
                 </button>
             </div>
             <div id="citedialog" class="ui-dialog-content ui-widget-content" style="display: block; background: white; width: auto; min-height: 0px; max-height: none; height: 557px;">
-                <iframe style="border: 0px; " src="cite.html" width="100%" height="100%"></iframe>
+                <iframe style="border: 0px; " src="cite.html" width="100%" height="100%" name="iframe_a"></iframe>
             </div>
         </div>
+        <feedback-directive></feedback-directive>
         <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
         <div ng-show="tour" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
         <div ng-show="tour" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
@@ -82,7 +45,7 @@
             <span id="about" ng-click="showAbout()">help/about</span>
             <span id="workflow" ng-click="showWorkflow()">explain workflow</span>
             <span id="close-toolbox" ng-click="showToolbox()">show/hide toolbox</span>
-            <span id="clear" ng-click="clear()">clear diagram</span>
+            <span id="clear" ng-confirm-click="Sure you want to clear?" confirmed-click="clear()">clear diagram</span>
 
             <span id="cite" ng-click="showCite()">cite/research</span>
             <span id="show" ng-click="showTour()">show tour</span>
@@ -93,7 +56,7 @@
             <button ng-controller="XMLController"  ng-click="exportXML()" class="menu_button">Export to XMI</button>
             <button ng-controller="XMLController"  ng-click="importXML()" class="menu_button">Import XMI</button>
         </div>
-        <table>
+        <table >
             <tbody>
                 <tr>
 
@@ -109,7 +72,7 @@
                         <div id="helpblock" style="display: none;">
               </div>
               <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
-              <img src="images/note.png" id="question-button" onclick="showfeedbackdialog()" style="border: 2px solid black; height: 50px; cursor: hand">
+              <img src="images/note.png" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: hand">
                     </td>
                 </tr>
             </tbody>
@@ -140,10 +103,11 @@
                         <div class="speechBubblePoint">
                         </div>
                     </div>
-                    <img id="avatar" width="100px" src="../images/DaveAvatar.png">
+                    <img id="avatar" width="100px" src="../images/DaveAvatar.png" alt="DaveAvatar">
                 </div>
             </div>
               <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
+                  <key-hint></key-hint>
                 <div>
                       <canvas-classes-directive></canvas-classes-directive>
                       <canvas-packages-directive></canvas-packages-directive>
@@ -169,6 +133,7 @@
     <script src="package/packageObject.js"></script>
     <script src="package/package.js"></script>
     <script src="services/diagramService.js"></script>
+    <script src="services/observerService.js"></script>
     <script src="attribute/attribute.js"></script>
     <script src="operation/operation.js"></script>
     <script src="canvas/canvasController.js"></script>

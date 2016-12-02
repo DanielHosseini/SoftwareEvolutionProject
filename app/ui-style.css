@@ -95,15 +95,15 @@
 #key-hint{
     float: right;
     position: absolute;
-    top: 100px;
-    right: 30;
+    top: 10px;
+    right: 30px;
     color: grey;
     font-style: italic;
 }
 
 #key-hint:hover{
     color: black;
-    cursor:hand;
+    cursor:pointer;
 }
 
 #infobox {
