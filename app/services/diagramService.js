@@ -24,6 +24,7 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         DiagramService.diagram.packages.splice(0, DiagramService.diagram.packages.length)
         DiagramService.diagram.classCount = 0;
         DiagramService.diagram.packageCount = 0;
+        alertObserver();
     }
 
     DiagramService.addClass = function(item) {

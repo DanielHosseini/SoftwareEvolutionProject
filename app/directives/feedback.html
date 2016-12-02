@@ -1,0 +1,28 @@
+<div ng-show="feedback" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-draggable ui-resizable" tabindex="-1" role="dialog" aria-describedby="dialog-new" aria-labelledby="ui-id-18" style="position: absolute; height: auto; width: 40%; top: 177px; left: 322px; display: block;">
+    <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+        <span id="ui-id-2">About UML WebEditor</span>
+        <button class="close" ng-click="showFeedback()">Close
+        </button>
+    </div>
+    <div id="feedbackdialog" style="width: auto; min-height: 0px; max-height: none; height: 282px;" class="ui-dialog-content ui-widget-content">
+        <ul>
+            <li>Wat vind je tot nu toe moeilijk?</li>
+            <li>hielpen de opmerkingen je verder? Zo ja, wat precies?</li>
+            <li>wat ga je veranderen?</li>
+        </ul>
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    Mijn opmerkingen:
+                    <br>
+                    <textarea ng-model="question" name="question" rows="4" columns="60" style="width:400px">
+                    </textarea>
+                    <br>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+        <button ng-click="sendFeedback()" type="button">Verstuur</button>
+    </div>
+</div>

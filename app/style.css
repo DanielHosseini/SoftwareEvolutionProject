@@ -10,6 +10,44 @@ body H1 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.tooltip-menu{
+    position: absolute;
+    width: 170px;
+    height: 30px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background: white;
+    left: 50%;
+    z-index: 1000;
+    opacity: 0%;
+}
+
+.tooltip-toolbox{
+    position: absolute;
+    width: 170px;
+    height: 80px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background: white;
+    top: 20%;
+    left: 10%;
+    z-index: 1000;
+    opacity: 0%;
+}
+
+.tooltip-canvas{
+    position: absolute;
+    width: 170px;
+    height: 80px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background: white;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    opacity: 0%;
+}
+
 #wrapper{
     height: 100%;
     width: auto;
@@ -19,6 +57,7 @@ body H1 {
 #diagram-canvas,
 #screenshot-canvas,
 #task-screen {
+    position: relative;;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid black;
     display: -ms-flexbox;
@@ -223,7 +262,7 @@ select {
 .class {
     width: 125px;
     //padding:1em;
-/*    position: absolute; */  
+/*    position: absolute; */
     border: 1px solid black;
     z-index: 4;
     border: 1px solid #000000;
