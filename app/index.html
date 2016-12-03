@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="ui-style.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-
 </head>
 
 <body>
@@ -41,26 +40,22 @@
         <div ng-show="tour" class="tooltip-menu">This is the menu-bar.</div>
         <div ng-show="tour" class="tooltip-canvas">This is the modeling area. Here you can create your models.</div>
         <div ng-show="tour" class="tooltip-toolbox">This is the toolbox. You can drag UML elements to the modeling area.</div>
-
         <div id="top_menu" class="do_not_print">
             <span id="about" ng-click="showAbout()">help/about</span>
             <span id="workflow" ng-click="showWorkflow()">explain workflow</span>
             <span id="close-toolbox" ng-click="showToolbox()">show/hide toolbox</span>
             <span id="clear" ng-confirm-click="Sure you want to clear?" confirmed-click="clear()">clear diagram</span>
-
             <span id="cite" ng-click="showCite()">cite/research</span>
             <span id="show" ng-click="showTour()">show tour</span>
-                <div id="save-all" title="Save this session in the browser's memory" ng-controller="XMLController" ng-click="exportXML()"></div>
-        <div id="load-xmi" title="Load your local XMI file"></div><input style="visibility: hidden" type="file" id="files" name="files" accept=".xmi, .xml"/>
-
-            <button ng-controller="XMLController"  ng-click="getObserverLog()" class="menu_button">LOG</button>
-            <button ng-controller="XMLController"  ng-click="exportXML()" class="menu_button">Export to XMI</button>
-            <button ng-controller="XMLController"  ng-click="XMLImporter()" class="menu_button">Import XMI</button>
+            <div id="save-all" title="Save this session in the browser's memory" ng-controller="XMLController" ng-click="exportXML()"></div>
+            <!-- <div id="load-xmi" title="Load your local XMI file"></div><input style="visibility: hidden" type="file" id="files" name="files" accept=".xmi, .xml"/> -->
+            <button ng-controller="XMLController" ng-click="getObserverLog()" class="menu_button">LOG</button>
+            <button ng-controller="XMLController" ng-click="exportXML()" class="menu_button">Export to XMI</button>
+            <button ng-controller="XMLController" ng-click="XMLImporter()" class="menu_button">Import XMI</button>
         </div>
-        <table >
+        <table>
             <tbody>
                 <tr>
-
                     <td></td>
                     <td>
                         <h1>
@@ -71,9 +66,9 @@
                     </td>
                     <td>
                         <div id="helpblock" style="display: none;">
-              </div>
-              <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
-              <img src="images/note.png" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: hand">
+                        </div>
+                        <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
+                        <img src="images/note.png" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: hand">
                     </td>
                 </tr>
             </tbody>
@@ -107,19 +102,19 @@
                     <img id="avatar" width="100px" src="../images/DaveAvatar.png" alt="DaveAvatar">
                 </div>
             </div>
-              <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
-                  <key-hint></key-hint>
+            <div diagram-holder id="diagram-canvas" ng-controller="canvasController">
+                <key-hint></key-hint>
                 <div>
-                      <canvas-classes-directive></canvas-classes-directive>
-                      <canvas-packages-directive></canvas-packages-directive>
-
+                    <canvas-classes-directive></canvas-classes-directive>
+                    <canvas-packages-directive></canvas-packages-directive>
                 </div>
-              </div>
-
-          </div>
+            </div>
+        </div>
     </div>
-    <div id="xmi-input-dialog" title="Import XMI" hidden="hidden"><p>Please enter your xml code</p><textarea id="xmi-input"></textarea></div>
-
+    <div id="xmi-input-dialog" title="Import XMI" hidden="hidden">
+        <p>Please enter your xml code</p>
+        <textarea id="xmi-input"></textarea>
+    </div>
     <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
