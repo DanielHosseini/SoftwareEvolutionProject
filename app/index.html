@@ -48,7 +48,8 @@
             <span id="cite" ng-click="showCite()">cite/research</span>
             <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" ng-controller="XMLController" ng-click="exportXML()"></div>
-            <!-- <div id="load-xmi" title="Load your local XMI file"></div><input style="visibility: hidden" type="file" id="files" name="files" accept=".xmi, .xml"/> -->
+            <div id="load-xmi" title="Load your local XMI file" ng-controller="XMLController"></div>
+            <input style="visibility: hidden;" type="file" id="files" name="files" accept=".xmi, .xml"/>
             <button ng-controller="XMLController" ng-click="getObserverLog()" class="menu_button">LOG</button>
             <button ng-controller="XMLController" ng-click="exportXML()" class="menu_button">Export to XMI</button>
             <button ng-controller="XMLController" ng-click="XMLImporter()" class="menu_button">Import XMI</button>
@@ -140,6 +141,27 @@
     <script src="components/version/version.js"></script>
     <script src="components/version/version-directive.js"></script>
     <script src="components/version/interpolate-filter.js"></script>
+<script>
+    //-------- load local file
+    function handleFileSelect(evt) {
+        var files = evt.target.files[0]; // FileList object
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = (function(theFile) {
+        return function(e) {
+        angular.element('#load-xmi').scope().importXML(e.target.result);
+        angular.element('#load-xmi').scope().$apply();
+        //XMLImporter.prototype.importXML(e.target.result);
+        };
+        })(files);
+        // Read in the image file as a data URL.
+        reader.readAsText(files);
+    }
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    angular.element('#load-xmi').click(function() {
+        angular.element('#files').click();
+    });
+</script>
 </body>
 
 </html>
