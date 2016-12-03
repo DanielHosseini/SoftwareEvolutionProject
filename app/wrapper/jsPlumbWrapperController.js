@@ -158,6 +158,16 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     };
 }]);
 
+myApp.directive('plumbNonDraggable', ['diagramService', function(diagramService) {
+    return {
+        replace: true,
+        controller: 'jsPlumbWrapperController',
+        link: function(scope, element, attrs) {
+            jsPlumb.setDraggable(element, false);
+        }
+    };
+}]);
+
 myApp.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
@@ -168,6 +178,7 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
             });
             jsPlumb.draggable(element, {
                 start: function(event) {
+                    // TODO: try to cancel if on attribute or operation
                     //console.log("start drag", event);
                     //console.log("draggind element", diagramService.getClasses());
                 },

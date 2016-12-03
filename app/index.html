@@ -29,12 +29,12 @@
                 <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
                     <class-directive></class-directive>
                 </div>
-                <div plumb-menu-item ng-controller="AttributeController" class="toolboxAttribute">
-                    <attribute-directive></attribute-directive>
-                </div>
-                <div plumb-menu-item ng-controller="OperationController" class="toolboxOperation">
-                    <operation-directive></operation-directive>
-                </div>
+                <ul ng-controller="AttributeController" class="toolboxAttribute">
+                    <li dnd-draggable="attributeTemplate" draggable="true" dnd-type="attributeObject" class="attribute ui-sortable-handle">{{attributeTemplate.name}}</li>
+                </ul>
+                <ul ng-controller="OperationController" class="toolboxOperation">
+                    <li dnd-draggable="operationTemplate" draggable="true" dnd-type="operationObject" class="operation ui-sortable-handle">{{operationTemplate.name}}</li>
+                </ul>
                 <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
                     <package-directive></package-directive>
                 </div>
@@ -62,8 +62,11 @@
   -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="app.js"></script>
+    <script src="lib/angular-drag-and-drop-lists.min.js"></script>
     <script src="lib/jsPlumb-2.2.3-min.js"></script>
+    <script src="app.js"></script>
+    <script src="attribute/attributeObject.js"></script>
+    <script src="operation/operationObject.js"></script>
     <script src="class/class.js"></script>
     <script src="services/idGenerator.js"></script>
     <script src="class/classObject.js"></script>
