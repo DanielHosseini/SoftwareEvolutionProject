@@ -9,10 +9,7 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
         'packages': []
     };
     var callbacks = [];
-    // var DiagramService = {classes:[],associations:[],packages:[]};
-    // DiagramService.diagram.classes = [];
-    // DiagramService.diagram.associations = [];
-    // DiagramService.diagram.packages = [];
+    
 
     this.addObserver = function(callback) {
         callbacks.push(callback);

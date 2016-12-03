@@ -11,7 +11,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 function toXMIClass(childs, namespace) {
                     console.log("toxmi method")
-                    if (typeof namespace != 'undefined')
+                    if (typeof namespace !== 'undefined')
                         namespace = 'namespace="' + namespace + '"';
                     else
                         namespace = 'namespace="model1"';
@@ -29,11 +29,11 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         XMLstring += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
 
                         for (var j = 0; j < atts.length; j++) {
-                            if ($(atts[j]).attr('class').search('dummy') == -1) {
-                                if ($(atts[j]).attr('class').search('attribute') != -1)
+                            if ($(atts[j]).attr('class').search('dummy') === -1) {
+                                if ($(atts[j]).attr('class').search('attribute') !== -1)
                                     XMLstring += '<UML:Attribute name="' + $(atts[j]).text() + '" xmi.id="att' + j + '_' + class_id + '" />'
 
-                                if ($(atts[j]).attr('class').search('operation') != -1)
+                                if ($(atts[j]).attr('class').search('operation') !== -1)
                                     XMLstring += '<UML:Operation name="' + $(atts[j]).text().replace('()', '') + '" xmi.id="oper' + j + '_' + class_id + '" />'
                             }
                         }
@@ -72,38 +72,38 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     dep = false;
                     //below can be done much nicer
                     var overlays = jsPlumb.getAllConnections()[i].getOverlays();
-                    if (overlays.length == 1) {
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "directedAssociation")
+                    if (overlays.length === 1) {
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "directedAssociation")
                             nav = ' isNavigable="true"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "aggregation")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "aggregation")
                             agr = '     aggregation="aggregate"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "composition")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "composition")
                             agr = '     aggregation="composite"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "label")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "label")
                             name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[0].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "inheritance")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "inheritance")
                             gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "dependency")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "dependency")
                             dep = true;
                     }
-                    if (overlays.length == 2) {
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "directedAssociation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "directedAssociation")
+                    if (overlays.length === 2) {
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "directedAssociation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "directedAssociation")
                             nav = ' isNavigable="true"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "aggregation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "agregation")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "aggregation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "agregation")
                             agr = '     aggregation="aggregate"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "composition" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "composition")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "composition" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "composition")
                             agr = '     aggregation="composite"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "label")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "label")
                             name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[0].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "label")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "label")
                             name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[1].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "inheritance")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "inheritance")
                             gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "inheritance")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "inheritance")
                             gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) == "dependency")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "dependency")
                             dep = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) == "dependency")
+                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "dependency")
                             dep = true;
                     }
 
@@ -111,31 +111,31 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     if (overlays.length > 2) {
                         for (var index = 0; index < overlays.length; index++) {
                             var overlayid = jsPlumb.getAllConnections()[i].getOverlays()[index].id;
-                            if (overlayid == "directedAssociation")
+                            if (overlayid === "directedAssociation")
                                 nav = ' isNavigable="true"';
-                            if (overlayid == "aggregation")
+                            if (overlayid === "aggregation")
                                 agr = '     aggregation="aggregate"';
-                            if (overlayid == "composition")
+                            if (overlayid === "composition")
                                 agr = '     aggregation="composite"';
-                            if (overlayid == "label")
+                            if (overlayid === "label")
                                 name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[index].labelText + '"';
                             //multiplicity source
-                            if (overlayid == "m_l")
+                            if (overlayid === "m_l")
                                 var ms = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
                             //multiplicity target
-                            if (overlayid == "m_r")
+                            if (overlayid === "m_r")
                                 var mt = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
                         }
                     }
 
-                    if (typeof ms != 'undefined') {
+                    if (typeof ms !== 'undefined') {
                         var lower_source = ms.split('..')[0];
                         var upper_source = ms.split('..')[1];
                     } else {
                         var lower_source = "";
                         var upper_source = "";
                     }
-                    if (typeof mt != 'undefined') {
+                    if (typeof mt !== 'undefined') {
                         var lower_target = mt.split('..')[0];
                         var upper_target = mt.split('..')[1];
                     } else {
@@ -180,7 +180,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var top = $(childs[i]).offset().top - $(childs[i]).parent().offset().top;
                         var left = $(childs[i]).offset().left - $(childs[i]).parent().offset().left;
 
-                        if (typeof id != 'undefined') {
+                        if (typeof id !== 'undefined') {
                             //console.log('blaat');
                             top = $(childs[i]).offset().top - $(childs[i]).parent().parent().offset().top;
                             left = $(childs[i]).offset().left - $(childs[i]).parent().parent().offset().left;
@@ -194,7 +194,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         XMLstring += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).attr('id') + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).attr('id') + '">';
 
-                        if (typeof idref != 'undefined')
+                        if (typeof idref !== 'undefined')
                             XMLstring += '<parentDiagramElement idref="' + idref + '"/>';
 
                         XMLstring += '</UML:DiagramElement>';
@@ -261,7 +261,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 var ymax = 0;
                 var xmax = 0;
                 $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element').children().each(function() {
-                    if (typeof $(this).attr('geometry') != 'undefined') {
+                    if (typeof $(this).attr('geometry') !== 'undefined') {
                         var xnew = Number($(this).attr('geometry').split(',')[0]) + Number($(this).attr('geometry').split(',')[2]);
                         var ynew = Number($(this).attr('geometry').split(',')[1]) + Number($(this).attr('geometry').split(',')[3]);
 
@@ -289,17 +289,17 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 for (i = 0; i < model_elements.length; i++) { //
 
-                    if ($(model_elements[i]).prop('tagName') == "UML:Package") {
+                    if ($(model_elements[i]).prop('tagName') === "UML:Package") {
                         var name = $(model_elements[i]).attr('name');
 
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (x != 'undefined')
+                        if (x !== 'undefined')
                             x = $(x).attr('geometry').split(',')[0];
                         else
                             x = 0;
                         var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (y != 'undefined')
+                        if (y !== 'undefined')
                             y = $(y).attr('geometry').split(',')[1];
                         else
                             y = 0;
@@ -313,16 +313,16 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                     }
 
-                    if ($(model_elements[i]).prop('tagName') == "UML:Class") {
+                    if ($(model_elements[i]).prop('tagName') === "UML:Class") {
                         var name = $(model_elements[i]).attr('name');
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (x != 'undefined')
+                        if (x !== 'undefined')
                             x = $(x).attr('geometry').split(',')[0];
                         else
                             x = 0;
                         var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (y != 'undefined')
+                        if (y !== 'undefined')
                             y = $(y).attr('geometry').split(',')[1];
                         else
                             y = 0;
@@ -336,7 +336,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 for (var i = 0; i < model_elements.length; i++) {
                     var features = $(model_elements[i]).prop('tagName', 'UML:Class').children().children();
                     for (var j = 0; j < features.length; j++) {
-                        if ($(features[j]).prop('tagName') == "UML:Attribute") {
+                        if ($(features[j]).prop('tagName') === "UML:Attribute") {
                             //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.attribute-list");
                             var u = $('.class[old_id=\'' + $(model_elements[i]).prop('tagName', 'UML:Class').attr('xmi.id') + '\']').find("ul.attribute-list");
                             // u.append( '<li class="attribute ui-sortable-handle">'+ $(features[j]).attr('name') + '</li>' );//maybe later with new Operation()?
@@ -350,7 +350,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                             }
 
                         }
-                        if ($(features[j]).prop('tagName') == "UML:Operation") {
+                        if ($(features[j]).prop('tagName') === "UML:Operation") {
                             //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.operation-list");
                             var u = $('.class[old_id=\'' + $(model_elements[i]).prop('tagName', 'UML:Class').attr('xmi.id') + '\']').find("ul.operation-list");
                             //u.append( '<li class="operation ui-sortable-handle">'+ $(features[j]).attr('name') + '()</li>' );//maybe later with new Operation()?
@@ -371,7 +371,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
 
                 for (var i = 0; i < model_elements.length; i++) { //
-                    if ($(model_elements[i]).prop('tagName') == "UML:Association") {
+                    if ($(model_elements[i]).prop('tagName') === "UML:Association") {
 
                         var check_in_diagram = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
 
@@ -385,19 +385,19 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         console.log(navig + ' ' + aggr1);
                         var tmpcon = jsPlumb.connect({ source: connections[end0], target: connections[end1], connector: ["Straight"], paintStyle: { strokeStyle: '#000000', lineWidth: 2 } });
                         //  tmpcon.addOverlay(["Arrow", {id: "directedAssociation"}]);
-                        if (typeof aggr1 != 'undefined' || typeof navig != 'undefined')
+                        if (typeof aggr1 !== 'undefined' || typeof navig !== 'undefined')
                             jsPlumbHelper.changeEndShape(tmpcon, aggr1);
                         var name = $(model_elements[i]).attr('name');
-                        if (typeof name != 'undefined')
+                        if (typeof name !== 'undefined')
                             tmpcon.addOverlay(["Label", { label: name, id: "label", cssClass: "connectionLabel" }]);
 
-                        if (check_in_diagram.length == 0)
+                        if (check_in_diagram.length === 0)
                             tmpcon.setPaintStyle({ strokeStyle: 'red' });
                     }
                 }
 
                 for (var i = 0; i < model_elements.length; i++) { //
-                    if ($(model_elements[i]).prop('tagName') == "UML:Dependency") {
+                    if ($(model_elements[i]).prop('tagName') === "UML:Dependency") {
                         console.log('found dependency');
                         var end0 = $(model_elements[i]).attr('client');
                         var end1 = $(model_elements[i]).attr('supplier');
@@ -417,13 +417,13 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         tmpcon.setHoverPaintStyle({ dashstyle: "4 4", strokeStyle: "#42a62c", lineWidth: 2 });
 
                         var name = $(model_elements[i]).attr('name');
-                        if (typeof name != 'undefined')
+                        if (typeof name !== 'undefined')
                             tmpcon.addOverlay(["Label", { label: name, id: "label", cssClass: "connectionLabel" }]);
                     }
                 }
 
                 for (var i = 0; i < model_elements.length; i++) { //
-                    if ($(model_elements[i]).prop('tagName') == "UML:Generalization") {
+                    if ($(model_elements[i]).prop('tagName') === "UML:Generalization") {
 
                         var end0 = $(model_elements[i]).attr('child');
                         var end1 = $(model_elements[i]).attr('parent');
@@ -432,7 +432,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         jsPlumbHelper.changeEndShape(tmpcon, 'inheritance');
 
                         var name = $(model_elements[i]).attr('name');
-                        if (typeof name != 'undefined')
+                        if (typeof name !== 'undefined')
                             tmpcon.addOverlay(["Label", { label: name, id: "label", cssClass: "connectionLabel" }]);
                     }
                 }
