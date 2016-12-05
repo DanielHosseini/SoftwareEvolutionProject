@@ -221,6 +221,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 console.log("Final XML", XMLstring)
 
+                XMLstring=vkbeautify.xml(XMLstring);
                 var blob = new Blob([XMLstring], {
                     type: "text/xml"
                 });
