@@ -14,7 +14,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
     $scope.doubleClick = function(clickedElement) {
         // TODO, stop editing all other classes and packages
-        clickedElement.editMode = true;
+        clickedElement.startEditName();
     };
 
     $scope.click = function(clickedElement) {
@@ -26,7 +26,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             if (clickedElement.name === "") {
                 alert("Name must not be empty!");
             } else {
-                clickedElement.editMode = false;
+                clickedElement.stopEditName();
             }
         };
     };
