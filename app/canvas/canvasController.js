@@ -14,7 +14,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
     $scope.doubleClick = function(clickedElement) {
         // TODO, stop editing all other classes and packages
-        clickedElement.startEditName();
+        clickedElement.editMode = true;
     };
 
     $scope.click = function(clickedElement) {
@@ -23,7 +23,11 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
     $scope.editNameKeyPressed = function(clickedElement, $event) {
         if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
-            clickedElement.stopEditName();
+            if (clickedElement.name === "") {
+                alert("Name must not be empty!");
+            } else {
+                clickedElement.editMode = false;
+            }
         };
     };
 
