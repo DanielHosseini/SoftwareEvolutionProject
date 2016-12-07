@@ -254,7 +254,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 var model_elements = $(XMI).find('UML\\:Model, \\Model').find('UML\\:Namespace\\.ownedElement, \\Namespace\\.ownedElement').children();
                 var diagram_elements = $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element');
 
-                console.log(model_elements);
 
                 var ymax = 0;
                 var xmax = 0;
@@ -285,11 +284,13 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 console.log(xratio + ' ' + yratio);
 
+                var packages = [];
+
                 for (i = 0; i < model_elements.length; i++) { //
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Package") {
                         var name = $(model_elements[i]).attr('name');
-
+                        var packageId = $(model_elements[i]).attr('xmi.id')
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         if (x !== 'undefined')
@@ -307,12 +308,15 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var h = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         var pwidth = ($(w).attr('geometry').split(',')[2]) - x;
                         var pheight = ($(h).attr('geometry').split(',')[3]) - y;
-                        diagramService.addPackage(new packageObject(name, [x, y]))
+
+                        packages.push({id: packageId, pack: new packageObject(name, [x, y])});
 
                     }
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Class") {
+
                         var name = $(model_elements[i]).attr('name');
+                        var refId = $(model_elements[i]).attr('namespace')
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         if (x !== 'undefined')
@@ -324,12 +328,29 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                             y = $(y).attr('geometry').split(',')[1];
                         else
                             y = 0;
-                        diagramService.addClass(new classObject(name, [x, y]))
-                        console.log([x, y])
 
+                        if(refId.indexOf('package') >= -1){
+                            angular.forEach(packages, function(packag){
+                                if(packag.id === refId){
+                                    packag.pack.addClass(new classObject(name, [x, y]))
+                                }
+                            })
+                        } else {
+                            diagramService.addClass(new classObject(name, [x, y]))
+                        }
                     }
 
+
+
+
+
                 }
+
+                angular.forEach(packages, function(packag){
+                    if(packag.id === refId){
+                        diagramService.addPackage(packag.pack);
+                    }
+                })
 
                 for (var i = 0; i < model_elements.length; i++) {
                     var features = $(model_elements[i]).prop('tagName', 'UML:Class').children().children();
