@@ -38,7 +38,10 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
     };
 
     $scope.dragendHandler = function(event, droppedElement) {
-        droppedElement.updatePosition([event.x, event.y - event.target.clientHeight]);
+        var canvas = angular.element(document.getElementById('diagram-canvas'));
+        var canvasLeft = canvas.prop('offsetLeft');
+        var canvasTop = canvas.prop('offsetTop');
+        droppedElement.updatePosition([event.x - canvasLeft, event.y - canvasTop - event.target.clientHeight]);
         event.stopPropagation();
     };
 }])
