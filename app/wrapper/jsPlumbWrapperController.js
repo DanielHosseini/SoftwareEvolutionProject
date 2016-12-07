@@ -72,14 +72,14 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         e.preventDefault();
 
     });
-    initTargets = function() {
+    $scope.initTargets = function() {
         jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
             dropOptions: { hoverClass: "dragHover" },
             anchor: "Continuous"
         });
     };
 
-    initEndpoints = function(nextColour, curved) {
+    $scope.initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
             if (angular.element(e).attr('id') === undefined) { //check if endpoint already exsists [toolbox-demo]
@@ -94,7 +94,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         });
     };
 
-    changeEndShape = function(c, type) {
+    $scope.changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
         var connector = c;
         if (connector.getOverlay("directedAssociation") || type === "aggregate") {
@@ -188,7 +188,7 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                     var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
                     var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
 
-                    droppedEl = angular.element(event.el);
+                    var droppedEl = angular.element(event.el);
                     var elementId = event.el.attributes['data-id'].value;
                     diagramService.updateElementPosition(droppedEl, elementId, [elementLeft, elementTop]);
 
