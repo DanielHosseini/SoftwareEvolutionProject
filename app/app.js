@@ -16,37 +16,29 @@ myApp.controller('AppController', ['$scope', 'diagramService', 'observerService'
     $scope.question = "";
     $scope.toolbox = true;
     $scope.showTour = function(){
-        console.log("clicked")
         $scope.tour=!$scope.tour;
     }
     $scope.showWorkflow = function(){
-        console.log("clicked")
         $scope.workflow=!$scope.workflow;
     }
     $scope.showAbout = function(){
-        console.log("clicked")
         $scope.about=!$scope.about;
     }
     $scope.showCite = function(){
-        console.log("clicked")
         $scope.cite=!$scope.cite;
     }
 
     $scope.showToolbox = function(){
-        console.log("clicked")
         $scope.toolbox=!$scope.toolbox;
     }
 
     $scope.clear  = function(){
-        console.log("clearing")
         diagramService.clearAll();
     }
     $scope.showFeedback = function(){
-        console.log("clicked")
         $scope.feedback = !$scope.feedback;
     }
     $scope.sendFeedback = function() {
-        console.log($scope.question);
         observerService.addLogEntry($scope.question);
         $scope.feedback = !$scope.feedback;
     }

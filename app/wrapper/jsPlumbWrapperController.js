@@ -3,7 +3,6 @@ var myApp = angular.module('myApp');
 //TODO: Fix observerService
 myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope, diagramService) {
     $scope.printClasses = function() {
-        console.log(diagramService.getPackages());
     };
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
@@ -11,7 +10,6 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("contextmenu", function(c, e) {
-        console.log("contextmenu");
         var isMac = e.metaKey && window.navigator.platform === "MacIntel"
         var isWin = e.ctrlKey && window.navigator.platform === "Win32"
         if ((isMac || isWin) && c.getOverlay("directedAssociation")) {
@@ -38,7 +36,6 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("click", function(c, e) {
-        console.log("clicked");
         if (e.altKey || e.keyCode === 18) {
             e.preventDefault();
             //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
@@ -47,7 +44,6 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("dblclick", function(c, e) {
-        console.log("dblclick");
         var connector = c;
         if (connector.getOverlay("label") === null) {
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
@@ -149,10 +145,8 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     };
     $scope.init = function() {
         jsPlumb.bind("ready", function() {
-            console.log("Set up jsPlumb listeners (should be only done once)");
             jsPlumb.bind("connection", function() {
                 $scope.$apply(function() {
-                    console.log("Possibility to push connection into array");
                 });
             });
         });
