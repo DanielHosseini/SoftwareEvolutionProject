@@ -8,9 +8,9 @@
     class="class ui-draggable ui-draggable-handle"
     style="position:absolute;left:{{class.position[0]}}px;top:{{class.position[1]}}px;"
     data-id="{{class.id}}">
-
-    <div class="ep" id="jsPlumb_1_12">➜</div>
-    <div>
+    <div id="class-{{$index}}">
+    <div class="ep" >➜</div>
+    <div >
         <h1 class="heading element-name"
         ng-dblClick="doubleClick(class); $event.stopPropagation()"
         ng-style="{ display: class.editMode === true ? 'none' : '' }">{{class.name}}</h1>
@@ -24,7 +24,7 @@
             style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
 
-            <li class='attributeElement' ng-repeat="attribute in class.attributes"
+            <li id="attribute-{{$index}}" class='attributeElement' ng-repeat="attribute in class.attributes"
                 dnd-type="attributeObject"
                 dnd-draggable="attribute"
                 style="position: relative;"
@@ -44,7 +44,7 @@
             style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
 
-            <li class='operationElement' ng-repeat="operation in class.operations"
+            <li id="attribute-{{$index}}" class='operationElement' ng-repeat="operation in class.operations"
                 dnd-type="operationObject"
                 dnd-draggable="operation"
                 style="position: relative;"
@@ -58,4 +58,5 @@
         </ul>
     </div>
     </ul>
+</div>
 </div>

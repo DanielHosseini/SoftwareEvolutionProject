@@ -21,7 +21,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var atts = angular.element(childs[i]).find('ul').children();
 
                         var class_name = angular.element(childs[i]).find('h1').text();
-                        var class_id = angular.element(childs[i]).attr('id');
+                        var class_id = $(childs[i]).children()[0].id;
 
 
 
@@ -44,12 +44,12 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 var packages = angular.element('#diagram-canvas').children().children('.package');
 
-
                 for (var i = 0; i < packages.length; i++) {
-                    XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' + $(packages[i]).attr('id') + '">';
+                    console.log($(packages[i]).children()[0].id)
+                    XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' +$(packages[i]).children()[0].id + '">';
                     XMLstring += '<UML:Namespace.ownedElement>';
                     var classes = angular.element(packages[i]).find('.class');
-                    toXMIClass(classes, $(packages[i]).attr('id'));
+                    toXMIClass(classes, $(packages[i]).children()[0].id);
                     XMLstring += '</UML:Namespace.ownedElement>';
                     XMLstring += '</UML:Package>';
 
@@ -187,8 +187,9 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var elementHeight = $(childs[i]).height();
                         var idref = id;
 
+                        console.log("pos", $(childs[i]).children()[0].id)
 
-                        XMLstring += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).attr('id') + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).attr('id') + '">';
+                        XMLstring += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).children()[0].id + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).children()[0].id + '">';
 
                         if (typeof idref !== 'undefined')
                             XMLstring += '<parentDiagramElement idref="' + idref + '"/>';
