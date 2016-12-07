@@ -36,9 +36,8 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         movedClass.updatePosition([event.x, event.y]);
     };
 
-    $scope.dragendHandler = function(event, droppedClass) {
-        console.log('dragEnd', event);
-        droppedClass.updatePosition([event.x, event.y - event.target.clientHeight]);
+    $scope.dragendHandler = function(event, droppedElement) {
+        droppedElement.updatePosition([event.x, event.y - event.target.clientHeight]);
         event.stopPropagation();
     };
 }])

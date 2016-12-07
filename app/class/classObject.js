@@ -6,10 +6,9 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
     var classObject = function(name, position) {
         this.id = idGenerator.getNewId();
         this.name = name;
+        this.type = "class"
         this.attributes = [];
-        //this.attributes.push(new attributeObject("att1"));
         this.operations = [];
-        //this.operations.push(new operationObject("op1"));
         this.position = position;
         this.editMode = false;
         this.allowedAttributeTypes = ['attributeObject'];

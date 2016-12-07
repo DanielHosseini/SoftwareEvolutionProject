@@ -343,6 +343,11 @@ li.selected {
     visibility: hidden;
 }
 
+ul[dnd-list] {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
 ul[dnd-list], ul[dnd-list] > li {
     position: relative;
 }
