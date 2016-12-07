@@ -43,8 +43,8 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 for (var i = 0; i < packages.length; i++) {
                     XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' +$(packages[i]).children()[0].id + '">';
                     XMLstring += '<UML:Namespace.ownedElement>';
-                    var classes = angular.element(packages[i]).find('.class');
-                    toXMIClass(classes, $(packages[i]).children()[0].id);
+                    var classesInPackage = angular.element(packages[i]).find('.class');
+                    toXMIClass(classesInPackage, $(packages[i]).children()[0].id);
                     XMLstring += '</UML:Namespace.ownedElement>';
                     XMLstring += '</UML:Package>';
 
@@ -197,6 +197,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 childs = $('#diagram-canvas').find('.package');
                 for (var i = 0; i < childs.length; i++) {
                     classToDiagram(new Array(childs[i]));
+
                     var classes = $(childs[i]).children('.class');
                     classToDiagram(classes, 'UMLClassView.' + $(childs[i]).attr('id'));
                 }
@@ -236,7 +237,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
         $scope.importXML = function(element) {
 
                 var XMI = $.parseXML(element);
-                var XMItest = XMI;
                 var model_elements = $(XMI).find('UML\\:Model, \\Model').find('UML\\:Namespace\\.ownedElement, \\Namespace\\.ownedElement').children();
                 var diagram_elements = $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element');
 
@@ -274,7 +274,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 for (i = 0; i < model_elements.length; i++) {
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Package") {
-                        var name = $(model_elements[i]).attr('name');
+                        var packageName = $(model_elements[i]).attr('name');
                         var packageId = $(model_elements[i]).attr('xmi.id')
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
@@ -292,13 +292,13 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var w = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         var h = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
 
-                        packages.push({id: packageId, pack: new packageObject(name, [x, y])});
+                        packages.push({id: packageId, pack: new packageObject(packageName, [x, y])});
 
                     }
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Class") {
 
-                        var name = $(model_elements[i]).attr('name');
+                        var className = $(model_elements[i]).attr('name');
                         var refId = $(model_elements[i]).attr('namespace')
                         var classId = $(model_elements[i]).attr('xmi.id')
 
@@ -314,10 +314,10 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                             y = 0;
 
                         if(refId.indexOf('package') >= -1){
-                            classes.push({id: classId, clas: new classObject(name, [x, y]), packageId: refId});
+                            classes.push({id: classId, clas: new classObject(className, [x, y]), packageId: refId});
 
                         } else {
-                            classes.push({id: classId, clas: new classObject(name, [x, y])});
+                            classes.push({id: classId, clas: new classObject(className, [x, y])});
                         }
                     }
 
