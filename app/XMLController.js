@@ -6,11 +6,9 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
         $scope.exportXML = function() {
 
                 var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xmlns:UML="href://org.omg/UML/1.3"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name="UML" xmi.version="1.3" /></XMI.header><XMI.content><UML:Model xmi.id="UMLModel.3" name="Design Model" visibility="public" isSpecification="false" namespace="UMLModel.2" isRoot="false" isLeaf="false" isAbstract="false"><UML:Namespace.ownedElement>';
-                console.log("FIRST", XMLstring)
 
 
                 function toXMIClass(childs, namespace) {
-                    console.log("toxmi method")
                     if (typeof namespace !== 'undefined')
                         namespace = 'namespace="' + namespace + '"';
                     else
@@ -22,33 +20,27 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         var class_name = angular.element(childs[i]).find('h1').text();
                         var class_id = $(childs[i]).children()[0].id;
-                        console.log(class_name);
 
 
 
                         XMLstring += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
-                        console.log(class_name, atts.length)
                         for (var j = 0; j < atts.length; j++) {
-                            console.log($(atts[j]).attr('class').search('attributeElement'))
                             if ($(atts[j]).attr('class').search('attributeElement') !== -1)
                                 XMLstring += '<UML:Attribute name="' + $(atts[j]).text().trim() + '" xmi.id="att' + j + '_' + class_id + '" />'
 
                             if ($(atts[j]).attr('class').search('operationElement') !== -1)
                                 XMLstring += '<UML:Operation name="' + $(atts[j]).text().trim() + '" xmi.id="oper' + j + '_' + class_id + '" />'
                         }
-                        console.log(XMLstring)
                         XMLstring += '</UML:Classifier.feature></UML:Class>';
                     }
                 }
 
                 var childs = angular.element('#diagram-canvas').children().children('.class');
-                console.log(childs)
                 toXMIClass(childs);
 
                 var packages = angular.element('#diagram-canvas').children().children('.package');
 
                 for (var i = 0; i < packages.length; i++) {
-                    console.log($(packages[i]).children()[0].id)
                     XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' +$(packages[i]).children()[0].id + '">';
                     XMLstring += '<UML:Namespace.ownedElement>';
                     var classes = angular.element(packages[i]).find('.class');
@@ -180,7 +172,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var left = $(childs[i]).offset().left - $(childs[i]).parent().offset().left;
 
                         if (typeof id !== 'undefined') {
-                            //console.log('blaat');
                             top = $(childs[i]).offset().top - $(childs[i]).parent().parent().offset().top;
                             left = $(childs[i]).offset().left - $(childs[i]).parent().parent().offset().left;
                         }
@@ -189,8 +180,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var elementWidth = $(childs[i]).width();
                         var elementHeight = $(childs[i]).height();
                         var idref = id;
-
-                        console.log("pos", $(childs[i]).children()[0].id)
 
                         XMLstring += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).children()[0].id + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).children()[0].id + '">';
 
@@ -218,9 +207,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 }
 
                 XMLstring += '</UML:Diagram.element></UML:Diagram></XMI.content></XMI>';
-
-                console.log("Final XML", XMLstring)
-
                 XMLstring=vkbeautify.xml(XMLstring);
                 var blob = new Blob([XMLstring], {
                     type: "text/xml"
@@ -248,11 +234,8 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
         }
 
         $scope.importXML = function(element) {
-                //var element = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><XMI xmi.version=\"1.1\" xmlns:UML=\"href://org.omg/UML/1.3\"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name=\"UML\" xmi.version=\"1.3\" /></XMI.header><XMI.content><UML:Model xmi.id=\"UMLModel.3\" name=\"Design Model\" visibility=\"public\" isSpecification=\"false\" namespace=\"UMLModel.2\" isRoot=\"false\" isLeaf=\"false\" isAbstract=\"false\"><UML:Namespace.ownedElement><UML:Class name=\"Class\" namespace=\"model1\" xmi.id=\"jsPlumb_1_5\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class><UML:Class name=\"Olliver\" namespace=\"model1\" xmi.id=\"jsPlumb_1_6\"><UML:Classifier.feature></UML:Classifier.feature></UML:Class></UML:Namespace.ownedElement></UML:Model><UML:Diagram xmi.id=\"UMLClassDiagram.4\" name=\"OnlineUMLExport\" diagramType=\"ClassDiagram\" toolName=\"Rational Rose 98\" owner=\"UMLModel.3\"><UML:Diagram.element><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_5\" geometry=\"223,64,348,109,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_5\"></UML:DiagramElement><UML:DiagramElement xmi.id=\"UMLClassView.jsPlumb_1_6\" geometry=\"672,589,797,634,\" style=\"LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1,\" subject=\"jsPlumb_1_6\"></UML:DiagramElement></UML:Diagram.element></UML:Diagram></XMI.content></XMI>";
 
                 var XMI = $.parseXML(element);
-                console.log(XMI)
-                console.log(element)
                 var XMItest = XMI;
                 var model_elements = $(XMI).find('UML\\:Model, \\Model').find('UML\\:Namespace\\.ownedElement, \\Namespace\\.ownedElement').children();
                 var diagram_elements = $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element');
@@ -285,12 +268,10 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     yratio = 1;
 
 
-                console.log(xratio + ' ' + yratio);
-
                 var packages = [];
                 var classes = [];
 
-                for (i = 0; i < model_elements.length; i++) { //
+                for (i = 0; i < model_elements.length; i++) {
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Package") {
                         var name = $(model_elements[i]).attr('name');
@@ -353,10 +334,8 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     var features = $(model_elements[i]).prop('tagName', 'UML:Class').children().children();
                     for (var j = 0; j < features.length; j++) {
                         if ($(features[j]).prop('tagName') === "UML:Attribute") {
-                            //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.attribute-list");
                             var classId = $(features[j]).attr('xmi.id')
                             classId = classId.substring(classId.indexOf('class'), classId.length)
-                            // u.append( '<li class="attribute ui-sortable-handle">'+ $(features[j]).attr('name') + '</li>' );//maybe later with new Operation()?
                             var name = $(features[j]).attr('name')
                             angular.forEach(classes, function(clas){
                                 if(clas.id === classId ){
@@ -367,10 +346,8 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         }
                         if ($(features[j]).prop('tagName') === "UML:Operation") {
-                            //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.operation-list");
                             var classId = $(features[j]).attr('xmi.id')
                             classId = classId.substring(classId.indexOf('class'), classId.length)
-                            //u.append( '<li class="operation ui-sortable-handle">'+ $(features[j]).attr('name') + '()</li>' );//maybe later with new Operation()?
                             var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
                             angular.forEach(classes, function(clas){
                                 if(clas.id === classId ){
@@ -383,7 +360,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     }
                 }
                 angular.forEach(classes, function(clas){
-                    console.log(clas.packageId)
                     if(clas.packageId === undefined || clas.packageId.indexOf("package") === -1){
                         diagramService.addClass(clas.clas);
                     }else {
@@ -402,7 +378,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
 
 
-                for (var i = 0; i < model_elements.length; i++) { //
+                for (var i = 0; i < model_elements.length; i++) { 
                     if ($(model_elements[i]).prop('tagName') === "UML:Association") {
 
                         var check_in_diagram = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
@@ -414,9 +390,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var navig = $($($(model_elements[i]).children()[0]).children()[1]).attr('isNavigable');
                         if (navig)
                             agr1 = 'directed';
-                        console.log(navig + ' ' + aggr1);
                         var tmpcon = jsPlumb.connect({ source: connections[end0], target: connections[end1], connector: ["Straight"], paintStyle: { strokeStyle: '#000000', lineWidth: 2 } });
-                        //  tmpcon.addOverlay(["Arrow", {id: "directedAssociation"}]);
                         if (typeof aggr1 !== 'undefined' || typeof navig !== 'undefined')
                             jsPlumbHelper.changeEndShape(tmpcon, aggr1);
                         var name = $(model_elements[i]).attr('name');
@@ -428,9 +402,8 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     }
                 }
 
-                for (var i = 0; i < model_elements.length; i++) { //
+                for (var i = 0; i < model_elements.length; i++) {
                     if ($(model_elements[i]).prop('tagName') === "UML:Dependency") {
-                        console.log('found dependency');
                         var end0 = $(model_elements[i]).attr('client');
                         var end1 = $(model_elements[i]).attr('supplier');
 
@@ -454,7 +427,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     }
                 }
 
-                for (var i = 0; i < model_elements.length; i++) { //
+                for (var i = 0; i < model_elements.length; i++) {
                     if ($(model_elements[i]).prop('tagName') === "UML:Generalization") {
 
                         var end0 = $(model_elements[i]).attr('child');
@@ -491,8 +464,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 type: "text/csv"
             });
             saveAs(blob, "UOE" + Date.now().toString() + ".csv");
-
-            console.log(log)
 
         }
 

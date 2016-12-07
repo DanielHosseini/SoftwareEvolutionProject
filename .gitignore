@@ -9,6 +9,7 @@ performance/temp*.html
 *~
 *.swp
 angular.js.tmproj
+.sonar/report-task.txt
 /node_modules/
 bower_components/
 angular.xcodeproj
