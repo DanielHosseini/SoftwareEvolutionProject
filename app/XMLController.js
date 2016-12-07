@@ -291,8 +291,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         var w = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         var h = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        var pwidth = ($(w).attr('geometry').split(',')[2]) - x;
-                        var pheight = ($(h).attr('geometry').split(',')[3]) - y;
 
                         packages.push({id: packageId, pack: new packageObject(name, [x, y])});
 
@@ -385,11 +383,10 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         var end0 = $($($(model_elements[i]).children()[0]).children()[0]).attr('type');
                         var end1 = $($($(model_elements[i]).children()[0]).children()[1]).attr('type');
-                        var aggr0 = $($($(model_elements[i]).children()[0]).children()[0]).attr('aggregation');
                         var aggr1 = $($($(model_elements[i]).children()[0]).children()[1]).attr('aggregation');
                         var navig = $($($(model_elements[i]).children()[0]).children()[1]).attr('isNavigable');
                         if (navig)
-                            agr1 = 'directed';
+                           var agr1 = 'directed';
                         var tmpcon = jsPlumb.connect({ source: connections[end0], target: connections[end1], connector: ["Straight"], paintStyle: { strokeStyle: '#000000', lineWidth: 2 } });
                         if (typeof aggr1 !== 'undefined' || typeof navig !== 'undefined')
                             jsPlumbHelper.changeEndShape(tmpcon, aggr1);
