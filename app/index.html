@@ -49,7 +49,7 @@
             <span id="show" ng-click="showTour()">show tour</span>
             <div id="save-all" title="Save this session in the browser's memory" ng-controller="XMLController" ng-click="exportXML()"></div>
             <div id="load-xmi" title="Load your local XMI file" ng-controller="XMLController"></div>
-            <input style="visibility: hidden;" type="file" id="files" name="files" accept=".xmi, .xml"/>
+            <input style="visibility: hidden;" type="file" id="files" name="files" accept=".xmi, .xml" />
             <button ng-controller="XMLController" ng-click="getObserverLog()" class="menu_button">LOG</button>
             <button ng-controller="XMLController" ng-click="exportXML()" class="menu_button">Export to XMI</button>
             <button ng-controller="XMLController" ng-click="XMLImporter()" class="menu_button">Import XMI</button>
@@ -81,12 +81,12 @@
                 <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
                     <class-directive></class-directive>
                 </div>
-                <div plumb-menu-item ng-controller="AttributeController" class="toolboxAttribute">
-                    <attribute-directive></attribute-directive>
-                </div>
-                <div plumb-menu-item ng-controller="OperationController" class="toolboxOperation">
-                    <operation-directive></operation-directive>
-                </div>
+                <ul ng-controller="AttributeController" class="toolboxAttribute">
+                    <li dnd-draggable="attributeTemplate" draggable="true" dnd-type="attributeObject" class="attribute ui-sortable-handle">{{attributeTemplate.name}}</li>
+                </ul>
+                <ul ng-controller="OperationController" class="toolboxOperation">
+                    <li dnd-draggable="operationTemplate" draggable="true" dnd-type="operationObject" class="operation ui-sortable-handle">{{operationTemplate.name}}</li>
+                </ul>
                 <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
                     <package-directive></package-directive>
                 </div>
@@ -121,10 +121,13 @@
   -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="app.js"></script>
+    <script src="lib/angular-drag-and-drop-lists.min.js"></script>
     <script src="lib/jsPlumb-2.2.3-min.js"></script>
+    <script src="app.js"></script>
     <script src="lib/FileSaver.js"></script>
     <script src="lib/vkbeautify.js"></script>
+    <script src="attribute/attributeObject.js"></script>
+    <script src="operation/operationObject.js"></script>
     <script src="class/class.js"></script>
     <script src="services/idGenerator.js"></script>
     <script src="class/classObject.js"></script>
@@ -141,18 +144,18 @@
     <script src="components/version/version.js"></script>
     <script src="components/version/version-directive.js"></script>
     <script src="components/version/interpolate-filter.js"></script>
-<script>
+    <script>
     //-------- load local file
     function handleFileSelect(evt) {
         var files = evt.target.files[0]; // FileList object
         var reader = new FileReader();
         // Closure to capture the file information.
         reader.onload = (function(theFile) {
-        return function(e) {
-        angular.element('#load-xmi').scope().importXML(e.target.result);
-        angular.element('#load-xmi').scope().$apply();
-        //XMLImporter.prototype.importXML(e.target.result);
-        };
+            return function(e) {
+                angular.element('#load-xmi').scope().importXML(e.target.result);
+                angular.element('#load-xmi').scope().$apply();
+                //XMLImporter.prototype.importXML(e.target.result);
+            };
         })(files);
         // Read in the image file as a data URL.
         reader.readAsText(files);
@@ -161,7 +164,7 @@
     angular.element('#load-xmi').click(function() {
         angular.element('#files').click();
     });
-</script>
+    </script>
 </body>
 
 </html>

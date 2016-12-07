@@ -4,6 +4,7 @@
 var myApp = angular.module('myApp', [
   'ngRoute',
   'myApp.version',
+  'dndLists'
 ]);
 
 myApp.controller('AppController', ['$scope', 'diagramService', 'observerService', function($scope, diagramService, observerService){

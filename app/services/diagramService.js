@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp');
-myApp.service('diagramService', ['classObject', 'packageObject', function(classObject, packageObject) {
+myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
         'classCount': 0,
@@ -10,6 +10,15 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     };
     var callbacks = [];
     
+
+    $rootScope.$on('class:addedToPackage', function(event, classId) {
+        for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
+            if (DiagramService.diagram.classes[i].id === classId) {
+                DiagramService.removeClassAt(i);
+                break;
+            }
+        }
+    });
 
     this.addObserver = function(callback) {
         callbacks.push(callback);
@@ -30,7 +39,11 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
     }
 
     DiagramService.removeClass = function(item) {
-        DiagramService.diagram.classes.splice(DiagramService.diagram.classes.indexOf(item), 1)
+        DiagramService.diagram.classes.splice(DiagramService.diagram.classes.indexOf(item), 1);
+    }
+
+    DiagramService.removeClassAt = function(index) {
+        DiagramService.diagram.classes.splice(index, 1);
     }
 
     DiagramService.getClasses = function() {
@@ -93,9 +106,15 @@ myApp.service('diagramService', ['classObject', 'packageObject', function(classO
             console.log("diagramService last package position", DiagramService.getPackages()[DiagramService.getPackages().length - 1].position);
         }
 
-        if (element.hasClass('toolboxAttribute')) {}
+        if (element.hasClass('toolboxAttribute')) {
+          //Find class it was dropped on
+
+
+          console.log("Dropped random attribute");
+        }
 
         if (element.hasClass('toolboxOperation')) {}
+
         alertObserver();
     }
 

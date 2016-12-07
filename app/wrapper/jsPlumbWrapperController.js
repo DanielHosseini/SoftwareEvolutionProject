@@ -159,6 +159,16 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     };
 }]);
 
+myApp.directive('plumbNonDraggable', ['diagramService', function(diagramService) {
+    return {
+        replace: true,
+        controller: 'jsPlumbWrapperController',
+        link: function(scope, element, attrs) {
+            jsPlumb.setDraggable(element, false);
+        }
+    };
+}]);
+
 myApp.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
@@ -168,7 +178,7 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
-                start: function() {
+                start: function(event) {
                 },
                 stop: function(event) {
                     var canvas = angular.element(document.getElementById('diagram-canvas'));

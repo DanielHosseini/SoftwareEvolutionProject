@@ -1,15 +1,40 @@
 'use strict';
 var myApp = angular.module('myApp');
-myApp.factory('classObject', ['idGenerator', function(idGenerator) {
+myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
 
     // Instantiate the class object
     var classObject = function(name, position) {
         this.id = idGenerator.getNewId();
         this.name = name;
+        this.type = "class"
         this.attributes = [];
         this.operations = [];
         this.position = position;
         this.editMode = false;
+        this.allowedAttributeTypes = ['attributeObject'];
+    };
+
+    classObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
+        if (item.type === "attribute") {
+            var newElement = new attributeObject(item.name);
+            if (allowedType === "attributeObject") {
+                this.addAttribute(newElement, index);
+            } else{
+                this.attributes.push(newElement);
+                alert("Attributes are placed in the upper part of a class element");
+            }
+        }
+        if (item.type === "operation") {
+            var newElement = new operationObject(item.name);
+            if (allowedType === "operationObject") {
+                this.addOperation(newElement, index);
+            } else {
+                this.operations.push(newElement);
+                alert("Operations are placed in the lower part of a class element");
+            }
+        }
+
+        return true;
     };
 
     classObject.prototype.getId = function() {
@@ -32,8 +57,8 @@ myApp.factory('classObject', ['idGenerator', function(idGenerator) {
         this.editMode = false;
     };
 
-    classObject.prototype.addAttribute = function(attribute) {
-        this.attributes.push(attribute);
+    classObject.prototype.addAttribute = function(attribute, index) {
+        this.attributes.splice(index, 0, attribute);
     };
 
     classObject.prototype.getAttributes = function() {
@@ -41,24 +66,24 @@ myApp.factory('classObject', ['idGenerator', function(idGenerator) {
     };
 
     classObject.prototype.deleteAttribute = function(attribute) {
-        var index = classObject.prototype.attributes.indexOf(attribute);
+        var index = this.attributes.indexOf(attribute);
         if (index > -1) {
-            classObject.prototype.attributes.splice(index, 1);
+            this.attributes.splice(index, 1);
         }
     };
 
-    classObject.prototype.addOperation = function(operation) {
-        classObject.prototype.operations.push(operation);
+    classObject.prototype.addOperation = function(operation, index) {
+        this.operations.splice(index, 0, operation);
     };
 
     classObject.prototype.getOperations = function() {
-        return classObject.prototype.operations;
+        return this.operations;
     };
 
     classObject.prototype.deleteOperation = function(operation) {
-        var index = classObject.prototype.operations.indexOf(operation);
+        var index = this.operations.indexOf(operation);
         if (index > -1) {
-            classObject.prototype.operations.splice(index, 1);
+            this.operations.splice(index, 1);
         }
     };
 

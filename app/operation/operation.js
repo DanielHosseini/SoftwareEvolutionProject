@@ -1,20 +1,10 @@
 'use strict';
-//Implement Methods
 var myApp = angular.module('myApp');
-myApp.controller('OperationController', function ($scope) {
+myApp.controller('OperationController', ['$scope', 'operationObject', function($scope, operationObject) {
 
-    $scope.name = "Operation()";
-    $scope.position = null;
-    $scope.init = function(position){
-        $scope.position = position;
-    }
-    $scope.setName = function(name){
-        $scope.name = name;
-    }
-    $scope.updatePosition = function(position){
-        $scope.position = position;
-    }
-}).directive('operationDirective', function(){
+    $scope.operationTemplate = new operationObject("Operation()");
+
+}]).directive('operationDirective', function(){
     return {
         templateUrl: 'operation/operation.html'
     };

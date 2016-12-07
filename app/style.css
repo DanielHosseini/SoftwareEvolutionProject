@@ -389,3 +389,18 @@ li.selected {
     height: 0px;
     visibility: hidden;
 }
+
+ul[dnd-list] {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+ul[dnd-list], ul[dnd-list] > li {
+    position: relative;
+}
+
+ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 42px;
+}

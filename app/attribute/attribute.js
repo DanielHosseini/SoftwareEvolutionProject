@@ -1,19 +1,10 @@
 'use strict';
 var myApp = angular.module('myApp');
-myApp.controller('AttributeController', function ($scope) {
+myApp.controller('AttributeController', ['$scope', 'attributeObject', function($scope, attributeObject) {
 
-    $scope.name = "Attribute";
-    $scope.position = null;
-    $scope.init = function(position){
-        $scope.position = position;
-    }
-    $scope.setName = function(name){
-        $scope.name = name;
-    }
-    $scope.updatePosition = function(position){
-        $scope.position = position;
-    }
-}).directive('attributeDirective', function(){
+    $scope.attributeTemplate = new attributeObject("Attribute");
+
+}]).directive('attributeDirective', function(){
     return {
         templateUrl: 'attribute/attribute.html'
     };
