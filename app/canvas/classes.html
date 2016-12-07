@@ -21,13 +21,13 @@
     <div class="attribute-holder">
         <ul dnd-list="class.attributes"
             dnd-dragover="true"
-            style="position: relative;min-height: 30px;" 
+            style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
-            
-            <li ng-repeat="attribute in class.attributes"
+
+            <li class='attributeElement' ng-repeat="attribute in class.attributes"
                 dnd-type="attributeObject"
                 dnd-draggable="attribute"
-                style="position: relative;" 
+                style="position: relative;"
                 dnd-effect-allowed="move"
                 dnd-moved="class.attributes.splice($index, 1)"
                 draggable="true"
@@ -41,13 +41,13 @@
     <div class="operation-holder">
         <ul dnd-list="class.operations"
             dnd-dragover="true"
-            style="position: relative;min-height: 30px;" 
+            style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
-            
-            <li ng-repeat="operation in class.operations"
+
+            <li class='operationElement' ng-repeat="operation in class.operations"
                 dnd-type="operationObject"
                 dnd-draggable="operation"
-                style="position: relative;" 
+                style="position: relative;"
                 dnd-effect-allowed="move"
                 dnd-moved="class.operations.splice($index, 1)"
                 draggable="true"

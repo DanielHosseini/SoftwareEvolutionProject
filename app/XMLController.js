@@ -19,23 +19,21 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                     for (var i = 0; i < childs.length; i++) {
                         console.log("loop")
-                        var atts = $(childs[i]).find('ul').children();
+                        var atts = angular.element(childs[i]).find('ul').children();
 
-                        var class_name = $(childs[i]).children('h1').text();
-                        var class_id = $(childs[i]).attr('id');
+                        var class_name = angular.element(childs[i]).find('h1').text();
+                        var class_id = angular.element(childs[i]).attr('id');
 
 
 
                         XMLstring += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
 
                         for (var j = 0; j < atts.length; j++) {
-                            if ($(atts[j]).attr('class').search('dummy') === -1) {
-                                if ($(atts[j]).attr('class').search('attribute') !== -1)
-                                    XMLstring += '<UML:Attribute name="' + $(atts[j]).text() + '" xmi.id="att' + j + '_' + class_id + '" />'
+                            if ($(atts[j]).attr('class').search('attributeElement') !== -1)
+                                XMLstring += '<UML:Attribute name="' + $(atts[j]).text().trim() + '" xmi.id="att' + j + '_' + class_id + '" />'
 
-                                if ($(atts[j]).attr('class').search('operation') !== -1)
-                                    XMLstring += '<UML:Operation name="' + $(atts[j]).text().replace('()', '') + '" xmi.id="oper' + j + '_' + class_id + '" />'
-                            }
+                            if ($(atts[j]).attr('class').search('operationElement') !== -1)
+                                XMLstring += '<UML:Operation name="' + $(atts[j]).text().trim() + '" xmi.id="oper' + j + '_' + class_id + '" />'
                         }
                         XMLstring += '</UML:Classifier.feature></UML:Class>';
                     }
