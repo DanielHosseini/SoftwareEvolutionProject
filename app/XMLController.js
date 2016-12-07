@@ -1,7 +1,7 @@
 'use strict';
 var myApp = angular.module('myApp');
-myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject',
-    function($scope, observerService, diagramService, classObject, packageObject) {
+myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
+    function($scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
 
         $scope.exportXML = function() {
 
@@ -22,18 +22,21 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         var class_name = angular.element(childs[i]).find('h1').text();
                         var class_id = $(childs[i]).children()[0].id;
+                        console.log(class_name);
 
 
 
                         XMLstring += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
-
+                        console.log(class_name, atts.length)
                         for (var j = 0; j < atts.length; j++) {
+                            console.log($(atts[j]).attr('class').search('attributeElement'))
                             if ($(atts[j]).attr('class').search('attributeElement') !== -1)
                                 XMLstring += '<UML:Attribute name="' + $(atts[j]).text().trim() + '" xmi.id="att' + j + '_' + class_id + '" />'
 
                             if ($(atts[j]).attr('class').search('operationElement') !== -1)
                                 XMLstring += '<UML:Operation name="' + $(atts[j]).text().trim() + '" xmi.id="oper' + j + '_' + class_id + '" />'
                         }
+                        console.log(XMLstring)
                         XMLstring += '</UML:Classifier.feature></UML:Class>';
                     }
                 }
@@ -285,6 +288,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 console.log(xratio + ' ' + yratio);
 
                 var packages = [];
+                var classes = [];
 
                 for (i = 0; i < model_elements.length; i++) { //
 
@@ -317,6 +321,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                         var name = $(model_elements[i]).attr('name');
                         var refId = $(model_elements[i]).attr('namespace')
+                        var classId = $(model_elements[i]).attr('xmi.id')
 
                         var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
                         if (x !== 'undefined')
@@ -330,13 +335,10 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                             y = 0;
 
                         if(refId.indexOf('package') >= -1){
-                            angular.forEach(packages, function(packag){
-                                if(packag.id === refId){
-                                    packag.pack.addClass(new classObject(name, [x, y]))
-                                }
-                            })
+                            classes.push({id: classId, clas: new classObject(name, [x, y]), packageId: refId});
+
                         } else {
-                            diagramService.addClass(new classObject(name, [x, y]))
+                            classes.push({id: classId, clas: new classObject(name, [x, y])});
                         }
                     }
 
@@ -346,46 +348,57 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 }
 
-                angular.forEach(packages, function(packag){
-                    if(packag.id === refId){
-                        diagramService.addPackage(packag.pack);
-                    }
-                })
 
                 for (var i = 0; i < model_elements.length; i++) {
                     var features = $(model_elements[i]).prop('tagName', 'UML:Class').children().children();
                     for (var j = 0; j < features.length; j++) {
                         if ($(features[j]).prop('tagName') === "UML:Attribute") {
                             //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.attribute-list");
-                            var u = $('.class[old_id=\'' + $(model_elements[i]).prop('tagName', 'UML:Class').attr('xmi.id') + '\']').find("ul.attribute-list");
+                            var classId = $(features[j]).attr('xmi.id')
+                            classId = classId.substring(classId.indexOf('class'), classId.length)
                             // u.append( '<li class="attribute ui-sortable-handle">'+ $(features[j]).attr('name') + '</li>' );//maybe later with new Operation()?
-                            var tmp_attribute = new Attribute($(features[j]).attr('name')); //also makes ul -> has to be changed
-                            u.append($(tmp_attribute.getNode()).find(".attribute"));
+                            var name = $(features[j]).attr('name')
+                            angular.forEach(classes, function(clas){
+                                if(clas.id === classId ){
+                                    clas.clas.addAttribute(new attributeObject(name));
+                                }
+                            })
 
-                            //resizing of class element
-                            var tmpw = (parseInt($(u).css('font-size')) * $(features[j]).attr('name').length) / 1.9;
-                            if (tmpw > $(u).parents('.class').width()) {
-                                $(u).parents('.class').width(tmpw + 10);
-                            }
 
                         }
                         if ($(features[j]).prop('tagName') === "UML:Operation") {
                             //var u=$('#'+$(model_elements[i]).prop('tagName','UML:Class').attr('xmi.id')).find("ul.operation-list");
-                            var u = $('.class[old_id=\'' + $(model_elements[i]).prop('tagName', 'UML:Class').attr('xmi.id') + '\']').find("ul.operation-list");
+                            var classId = $(features[j]).attr('xmi.id')
+                            classId = classId.substring(classId.indexOf('class'), classId.length)
                             //u.append( '<li class="operation ui-sortable-handle">'+ $(features[j]).attr('name') + '()</li>' );//maybe later with new Operation()?
-                            var tmp_operation = new Operation($(features[j]).attr('name') + '()'); //also makes ul -> has to be changed
-                            u.append($(tmp_operation.getNode()).find(".operation"));
-
-                            //resizing of class element
-                            var tmpw = (parseInt($(u).css('font-size')) * $(features[j]).attr('name').length) / 1.9;
-                            if (tmpw > $(u).parents('.class').width()) {
-                                $(u).parents('.class').width(tmpw + 10);
-                            }
+                            var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
+                            angular.forEach(classes, function(clas){
+                                if(clas.id === classId ){
+                                    clas.clas.addOperation(new operationObject(name));
+                                }
+                            })
 
                         }
 
                     }
                 }
+                angular.forEach(classes, function(clas){
+                    console.log(clas.packageId)
+                    if(clas.packageId === undefined || clas.packageId.indexOf("package") === -1){
+                        diagramService.addClass(clas.clas);
+                    }else {
+                        angular.forEach(packages, function(packag){
+                            if(packag.id === clas.packageId){
+                                packag.pack.addClass(clas.clas);
+                            }
+                        })
+                    }
+                })
+                angular.forEach(packages, function(packag){
+                    if(packag.id === refId){
+                        diagramService.addPackage(packag.pack);
+                    }
+                })
 
 
 
