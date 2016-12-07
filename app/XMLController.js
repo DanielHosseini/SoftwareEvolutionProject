@@ -18,7 +18,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
 
                     for (var i = 0; i < childs.length; i++) {
-                        console.log("loop")
                         var atts = angular.element(childs[i]).find('ul').children();
 
                         var class_name = angular.element(childs[i]).find('h1').text();
@@ -39,24 +38,23 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     }
                 }
 
-                var childs = $('#diagram-canvas').find('.class');
+                var childs = angular.element('#diagram-canvas').children().children('.class');
+                console.log(childs)
                 toXMIClass(childs);
 
-                var packages = $('#diagram-canvas').find('.package');
+                var packages = angular.element('#diagram-canvas').children().children('.package');
 
 
                 for (var i = 0; i < packages.length; i++) {
                     XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' + $(packages[i]).attr('id') + '">';
                     XMLstring += '<UML:Namespace.ownedElement>';
-                    var classes = $(packages[i]).children('.class');
+                    var classes = angular.element(packages[i]).find('.class');
                     toXMIClass(classes, $(packages[i]).attr('id'));
                     XMLstring += '</UML:Namespace.ownedElement>';
                     XMLstring += '</UML:Package>';
 
 
                 }
-                console.log("BOTH CLASS AND PACKAGE", XMLstring)
-
 
                 //add association to xml string
                 var conns = jsPlumb.getAllConnections();
