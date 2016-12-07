@@ -21,9 +21,11 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
 
             // Notify listeners so the canvas can remove the class from its classes array
             $rootScope.$broadcast('class:addedToPackage', item.id);
+
+            return true;
         }
 
-        return true;
+        return false;
     };
 
     packageObject.prototype.getId = function() {
