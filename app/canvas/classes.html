@@ -7,9 +7,10 @@
     dnd-dragend="dragendHandler(event, class)"
     class="class ui-draggable ui-draggable-handle"
     style="position:absolute;left:{{class.position[0]}}px;top:{{class.position[1]}}px;"
-    data-id="{{class.id}}">
+    data-id="{{class.id}}"
+    toggle-selected="selected">
     <div id="class-{{$index}}">
-    <div class="ep" >➜</div>
+    <div class="ep" ng-click="epClick($event)" >➜</div>
     <div >
         <h1 class="heading element-name"
         ng-dblClick="doubleClick(class); $event.stopPropagation()"
