@@ -2,20 +2,30 @@
 var myApp = angular.module('myApp');
 myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
 
-    $scope.hints = false;
+    var currentlyEditedElement = undefined;
+        $scope.hints = false;
+        $scope.diagram = diagramService.diagram;
+        $scope.packages = $scope.diagram.packages;
+        $scope.classes = $scope.diagram.classes;
+        $scope.associations = diagramService.associations;
+        diagramService.addObserver(function() {
+            $scope.$apply();
+        });
 
-    $scope.diagram = diagramService.diagram;
-    $scope.packages = $scope.diagram.packages;
-    $scope.classes = $scope.diagram.classes;
-    $scope.associations = diagramService.associations;
-    diagramService.addObserver(function() {
-        $scope.$apply();
-    });
+        $scope.doubleClick = function(clickedElement) {
+            // TODO, stop editing all other classes and packages
+            clickedElement.startEditName();
+        };
 
-    $scope.doubleClick = function(clickedElement) {
-        // TODO, stop editing all other classes and packages
-        clickedElement.editMode = true;
-    };
+        $scope.epClick = function(clickEvent) {
+
+          $scope.clickEvent = clickEvent.target.parentElement.id;
+          console.log($scope.clickEvent); //ID of surrounding DIV, i.e a Class (id = jsPlumb1.5)
+          //Need to make some drag from $scope.ClickEvent to a destination
+
+
+          //Can we create a target of any div?
+      };
 
     $scope.editNameKeyPressed = function(clickedElement, $event) {
         if ($event.which === 13 || event.which === 27) { // 13 enter key, 27 = esc key
@@ -52,6 +62,29 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         event.stopPropagation();
     };
 }])
+
+.directive('toggleEndpoint', function() {
+return {
+    restrict: 'A', //Restricts to divs
+    link: function(scope, element, attrs) {
+        element.bind('click', function() {
+            element.toggleClass(attrs.toggleEndpoint);
+        });
+    }
+};
+})
+
+.directive('toggleSelected', function() {
+return {
+    restrict: 'A', //Restricts to divs
+    link: function(scope, element, attrs) {
+        element.bind('click', function() {
+          angular.element(document.querySelectorAll(".selected")).removeClass('selected');
+            element.toggleClass(attrs.toggleSelected);
+        });
+    }
+};
+})
 
 .directive('canvasClassesDirective', function() {
     return {
