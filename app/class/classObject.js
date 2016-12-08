@@ -11,6 +11,7 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
         this.operations = [];
         this.position = position;
         this.editMode = false;
+        this.selected = false;
         this.allowedAttributeTypes = ['attributeObject'];
     };
 
@@ -36,6 +37,18 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
 
         return true;
     };
+
+    classObject.prototype.toggleSelected = function () {
+      if (this.selected) {
+        this.selected = false;
+
+      }
+      else{this.selected = true}
+    };
+
+    classObject.prototype.getSelected = function(){
+      return this.selected;
+    }
 
     classObject.prototype.getId = function() {
         return this.id;
