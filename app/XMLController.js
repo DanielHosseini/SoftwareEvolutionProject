@@ -63,59 +63,37 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     dep = false;
                     //below can be done much nicer
                     var overlays = jsPlumb.getAllConnections()[i].getOverlays();
-                    if (overlays.length === 1) {
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "directedAssociation")
-                            nav = ' isNavigable="true"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "aggregation")
-                            agr = '     aggregation="aggregate"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "composition")
-                            agr = '     aggregation="composite"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "label")
-                            name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[0].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "inheritance")
-                            gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "dependency")
-                            dep = true;
-                    }
-                    if (overlays.length === 2) {
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "directedAssociation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "directedAssociation")
-                            nav = ' isNavigable="true"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "aggregation" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "agregation")
-                            agr = '     aggregation="aggregate"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "composition" || (jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "composition")
-                            agr = '     aggregation="composite"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "label")
-                            name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[0].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "label")
-                            name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[1].labelText + '"';
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "inheritance")
-                            gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "inheritance")
-                            gen = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[0].id) === "dependency")
-                            dep = true;
-                        if ((jsPlumb.getAllConnections()[i].getOverlays()[1].id) === "dependency")
-                            dep = true;
-                    }
-
-
-                    if (overlays.length > 2) {
-                        for (var index = 0; index < overlays.length; index++) {
-                            var overlayid = jsPlumb.getAllConnections()[i].getOverlays()[index].id;
-                            if (overlayid === "directedAssociation")
+                    for (var index = 0; index < overlays.length; index++) {
+                        var overlayid = jsPlumb.getAllConnections()[i].getOverlays()[index].id;
+                        switch(overlayid) {
+                            case "directedAssociation":
                                 nav = ' isNavigable="true"';
-                            if (overlayid === "aggregation")
+                                break;
+                            case "aggregation":
                                 agr = '     aggregation="aggregate"';
-                            if (overlayid === "composition")
+                                break;
+                            case "composition":
                                 agr = '     aggregation="composite"';
-                            if (overlayid === "label")
+                                break;
+                            case "label":
                                 name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[index].labelText + '"';
+                                break;
                             //multiplicity source
-                            if (overlayid === "m_l")
+                            case "m_l":
                                 var ms = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
+                                break;
                             //multiplicity target
-                            if (overlayid === "m_r")
+                            case "m_r":
                                 var mt = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
+                                break;
+                            case "inheritance":
+                                gen = true;
+                                break;
+                            case "dependency":
+                                dep = true;
+                                break;
+                            default:
+                                break;
                         }
                     }
 
@@ -271,7 +249,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 var packages = [];
                 var classes = [];
 
-                for (i = 0; i < model_elements.length; i++) {
+                for (var i = 0; i < model_elements.length; i++) {
 
                     if ($(model_elements[i]).prop('tagName') === "UML:Package") {
                         var packageName = $(model_elements[i]).attr('name');
@@ -289,8 +267,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                             y = 0;
 
 
-                        var w = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        var h = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
 
                         packages.push({id: packageId, pack: new packageObject(packageName, [x, y])});
 
@@ -327,35 +303,35 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 }
 
-
+                var features = [];
                 for (var i = 0; i < model_elements.length; i++) {
-                    var features = $(model_elements[i]).prop('tagName', 'UML:Class').children().children();
-                    for (var j = 0; j < features.length; j++) {
-                        if ($(features[j]).prop('tagName') === "UML:Attribute") {
-                            var classId = $(features[j]).attr('xmi.id')
-                            classId = classId.substring(classId.indexOf('class'), classId.length)
-                            var name = $(features[j]).attr('name')
-                            angular.forEach(classes, function(clas){
-                                if(clas.id === classId ){
-                                    clas.clas.addAttribute(new attributeObject(name));
-                                }
-                            })
+                    features.push($(model_elements[i]).prop('tagName', 'UML:Class').children().children());
+                }
+                for (var j = 0; j < features.length; j++) {
+                    if ($(features[j]).prop('tagName') === "UML:Attribute") {
+                        var classId = $(features[j]).attr('xmi.id')
+                        classId = classId.substring(classId.indexOf('class'), classId.length)
+                        var name = $(features[j]).attr('name')
+                        angular.forEach(classes, function(clas){
+                            if(clas.id === classId ){
+                                clas.clas.addAttribute(new attributeObject(name));
+                            }
+                        })
 
-
-                        }
-                        if ($(features[j]).prop('tagName') === "UML:Operation") {
-                            var classId = $(features[j]).attr('xmi.id')
-                            classId = classId.substring(classId.indexOf('class'), classId.length)
-                            var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
-                            angular.forEach(classes, function(clas){
-                                if(clas.id === classId ){
-                                    clas.clas.addOperation(new operationObject(name));
-                                }
-                            })
-
-                        }
 
                     }
+                    if ($(features[j]).prop('tagName') === "UML:Operation") {
+                        var classId = $(features[j]).attr('xmi.id')
+                        classId = classId.substring(classId.indexOf('class'), classId.length)
+                        var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
+                        angular.forEach(classes, function(clas){
+                            if(clas.id === classId ){
+                                clas.clas.addOperation(new operationObject(name));
+                            }
+                        })
+
+                    }
+
                 }
                 angular.forEach(classes, function(clas){
                     if(clas.packageId === undefined || clas.packageId.indexOf("package") === -1){
@@ -376,7 +352,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
 
 
-                for (var i = 0; i < model_elements.length; i++) { 
+                for (var i = 0; i < model_elements.length; i++) {
                     if ($(model_elements[i]).prop('tagName') === "UML:Association") {
 
                         var check_in_diagram = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
@@ -386,7 +362,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                         var aggr1 = $($($(model_elements[i]).children()[0]).children()[1]).attr('aggregation');
                         var navig = $($($(model_elements[i]).children()[0]).children()[1]).attr('isNavigable');
                         if (navig)
-                           var agr1 = 'directed';
+                           var aggr1 = 'directed';
                         var tmpcon = jsPlumb.connect({ source: connections[end0], target: connections[end1], connector: ["Straight"], paintStyle: { strokeStyle: '#000000', lineWidth: 2 } });
                         if (typeof aggr1 !== 'undefined' || typeof navig !== 'undefined')
                             jsPlumbHelper.changeEndShape(tmpcon, aggr1);
@@ -445,7 +421,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
 
 
-                $(".package").on('dragstop', function(event) {
+                $(".package").on('dragstop', function() {
 
                     jsPlumb.repaintEverything();
                 });
