@@ -1,7 +1,6 @@
-'use strict';
+
 var myApp = angular.module('myApp');
 myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
-    var currentlyEditedElement = undefined;
 
     $scope.hints = false;
 

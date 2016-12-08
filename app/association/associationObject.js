@@ -1,4 +1,4 @@
-'use strict';
+
 var myApp = angular.module('myApp');
 myApp.factory('associationObject', ['idGenerator', function(idGenerator) {
 

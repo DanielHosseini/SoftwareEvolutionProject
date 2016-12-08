@@ -1,4 +1,4 @@
-'use strict';
+
 var myApp = angular.module('myApp');
 myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
 

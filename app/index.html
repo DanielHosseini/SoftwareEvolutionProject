@@ -12,7 +12,6 @@
     <title>WebUML</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css"> -->
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet" href="app.css">
@@ -68,8 +67,8 @@
                     <td>
                         <div id="helpblock" style="display: none;">
                         </div>
-                        <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
-                        <img src="images/note.png" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: hand">
+                        <img src="images/doc.png" alt="Show task" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: pointer;">
+                        <img src="images/note.png" alt="Send feedback" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: pointer">
                     </td>
                 </tr>
             </tbody>
@@ -125,9 +124,6 @@
         <p>Please enter your xml code</p>
         <textarea id="xmi-input"></textarea>
     </div>
-    <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="lib/angular-drag-and-drop-lists.min.js"></script>

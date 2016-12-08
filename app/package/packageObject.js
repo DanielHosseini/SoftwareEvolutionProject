@@ -1,4 +1,4 @@
-'use strict';
+
 var myApp = angular.module('myApp');
 myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
 

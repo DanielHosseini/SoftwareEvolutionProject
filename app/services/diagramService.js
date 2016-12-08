@@ -110,19 +110,16 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
 
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
-            console.log("diagramService last class position", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
         }
 
         if (element.hasClass('toolboxPackage')) {
             DiagramService.addPackage(new packageObject('Package', position));
-            console.log("diagramService last package position", DiagramService.getPackages()[DiagramService.getPackages().length - 1].position);
         }
 
         if (element.hasClass('toolboxAttribute')) {
           //Find class it was dropped on
 
 
-          console.log("Dropped random attribute");
         }
 
         if (element.hasClass('toolboxOperation')) {}

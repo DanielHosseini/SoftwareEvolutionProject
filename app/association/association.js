@@ -1,4 +1,4 @@
-'use strict';
+
 var myApp = angular.module('myApp');
 myApp.controller('AssociationController', function ($scope) {
 
