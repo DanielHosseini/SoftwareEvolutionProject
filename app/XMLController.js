@@ -2,41 +2,158 @@
 var myApp = angular.module('myApp');
 myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
     function($scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
+        function toXMIClass(childs, namespace) {
+            var returnString = "";
+            if (typeof namespace !== 'undefined')
+                namespace = 'namespace="' + namespace + '"';
+            else
+                namespace = 'namespace="model1"';
+
+
+            for (var i = 0; i < childs.length; i++) {
+                var atts = angular.element(childs[i]).find('ul').children();
+
+                var class_name = angular.element(childs[i]).find('h1').text();
+                var class_id = $(childs[i]).children()[0].id;
+
+
+
+                returnString += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
+                for (var j = 0; j < atts.length; j++) {
+                    if ($(atts[j]).attr('class').search('attributeElement') !== -1)
+                        returnString += '<UML:Attribute name="' + $(atts[j]).text().trim() + '" xmi.id="att' + j + '_' + class_id + '" />'
+
+                    if ($(atts[j]).attr('class').search('operationElement') !== -1)
+                        returnString += '<UML:Operation name="' + $(atts[j]).text().trim() + '" xmi.id="oper' + j + '_' + class_id + '" />'
+                }
+                returnString += '</UML:Classifier.feature></UML:Class>';
+            }
+            return returnString;
+        }
+
+        function addAssociations(conns){
+            var returnString = "";
+
+
+            for (var i = 0; i < conns.length; i++) {
+
+                var name, nav, agr, gen, dep;
+                name = '';
+                nav = '';
+                agr = '';
+                gen = false;
+                dep = false;
+                //below can be done much nicer
+                var overlays = jsPlumb.getAllConnections()[i].getOverlays();
+                for (var index = 0; index < overlays.length; index++) {
+                    var overlayid = jsPlumb.getAllConnections()[i].getOverlays()[index].id;
+                    switch(overlayid) {
+                        case "directedAssociation":
+                            nav = ' isNavigable="true"';
+                            break;
+                        case "aggregation":
+                            agr = '     aggregation="aggregate"';
+                            break;
+                        case "composition":
+                            agr = '     aggregation="composite"';
+                            break;
+                        case "label":
+                            name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[index].labelText + '"';
+                            break;
+                        //multiplicity source
+                        case "m_l":
+                            var ms = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
+                            break;
+                        //multiplicity target
+                        case "m_r":
+                            var mt = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
+                            break;
+                        case "inheritance":
+                            gen = true;
+                            break;
+                        case "dependency":
+                            dep = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                if (typeof ms !== 'undefined') {
+                    var lower_source = ms.split('..')[0];
+                    var upper_source = ms.split('..')[1];
+                } else {
+                    var lower_source = "";
+                    var upper_source = "";
+                }
+                if (typeof mt !== 'undefined') {
+                    var lower_target = mt.split('..')[0];
+                    var upper_target = mt.split('..')[1];
+                } else {
+                    var lower_target = "";
+                    var upper_target = "";
+                }
+
+                var mStringSource = '<UML:AssociationEnd.multiplicity><UML:Multiplicity><UML:Multiplicity.range><UML:MultiplicityRange lower="' + lower_source + '" upper="' + upper_source + '"/></UML:Multiplicity.range></UML:Multiplicity></UML:AssociationEnd.multiplicity>';
+                var mStringTarget = '<UML:AssociationEnd.multiplicity><UML:Multiplicity><UML:Multiplicity.range><UML:MultiplicityRange lower="' + lower_target + '" upper="' + upper_target + '"/></UML:Multiplicity.range></UML:Multiplicity></UML:AssociationEnd.multiplicity>';
+
+                //in case lower or upperbound are not there
+                mStringSource = mStringSource.replace("undefined", "");
+                mStringTarget = mStringTarget.replace("undefined", "");
+
+                if (dep) {
+                    returnString += '<UML:Dependency xmi.id="' + conns[i].id + '" ' + name + ' client="' + conns[i].sourceId + '" supplier="' + conns[i].targetId + '" />';
+                } else if (gen) {
+                    returnString += '<UML:Generalization xmi.id="' + conns[i].id + '" ' + name + ' visibility="public" isSpecification="false" namespace="model1" discriminator="" child="' + conns[i].sourceId + '" parent="' + conns[i].targetId + '" />';
+                } else {
+                    returnString += '<UML:Association ' + name + ' namespace="model1" xmi.id="' + conns[i].id + '"><UML:Association.connection>';
+
+                    returnString += '<UML:AssociationEnd association="ass' + i + '" type="' + conns[i].sourceId + '" xmi.id="end' + i + '">' + mStringSource + '<UML:AssociationEnd.participant></UML:AssociationEnd.participant></UML:AssociationEnd>';
+
+                    returnString += '<UML:AssociationEnd' + nav + ' ' + agr + ' association="ass' + i + '" type="' + conns[i].targetId + '" xmi.id="end' + i + '">' + mStringTarget + '<UML:AssociationEnd.participant></UML:AssociationEnd.participant></UML:AssociationEnd>';
+
+                    returnString += '</UML:Association.connection></UML:Association>';
+                }
+            }
+            return returnString;
+        }
+
+        function classToDiagram(childs, id) {
+            var returnString = "";
+            for (var i = 0; i < childs.length; i++) {
+
+                var top = $(childs[i]).offset().top - $(childs[i]).parent().offset().top;
+                var left = $(childs[i]).offset().left - $(childs[i]).parent().offset().left;
+
+                if (typeof id !== 'undefined') {
+                    top = $(childs[i]).offset().top - $(childs[i]).parent().parent().offset().top;
+                    left = $(childs[i]).offset().left - $(childs[i]).parent().parent().offset().left;
+                }
+
+
+                var elementWidth = $(childs[i]).width();
+                var elementHeight = $(childs[i]).height();
+                var idref = id;
+
+                returnString += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).children()[0].id + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).children()[0].id + '">';
+
+                if (typeof idref !== 'undefined')
+                    returnString += '<parentDiagramElement idref="' + idref + '"/>';
+
+                returnString += '</UML:DiagramElement>';
+            }
+            return returnString;
+
+        }
 
         $scope.exportXML = function() {
 
                 var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xmlns:UML="href://org.omg/UML/1.3"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name="UML" xmi.version="1.3" /></XMI.header><XMI.content><UML:Model xmi.id="UMLModel.3" name="Design Model" visibility="public" isSpecification="false" namespace="UMLModel.2" isRoot="false" isLeaf="false" isAbstract="false"><UML:Namespace.ownedElement>';
 
 
-                function toXMIClass(childs, namespace) {
-                    if (typeof namespace !== 'undefined')
-                        namespace = 'namespace="' + namespace + '"';
-                    else
-                        namespace = 'namespace="model1"';
-
-
-                    for (var i = 0; i < childs.length; i++) {
-                        var atts = angular.element(childs[i]).find('ul').children();
-
-                        var class_name = angular.element(childs[i]).find('h1').text();
-                        var class_id = $(childs[i]).children()[0].id;
-
-
-
-                        XMLstring += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
-                        for (var j = 0; j < atts.length; j++) {
-                            if ($(atts[j]).attr('class').search('attributeElement') !== -1)
-                                XMLstring += '<UML:Attribute name="' + $(atts[j]).text().trim() + '" xmi.id="att' + j + '_' + class_id + '" />'
-
-                            if ($(atts[j]).attr('class').search('operationElement') !== -1)
-                                XMLstring += '<UML:Operation name="' + $(atts[j]).text().trim() + '" xmi.id="oper' + j + '_' + class_id + '" />'
-                        }
-                        XMLstring += '</UML:Classifier.feature></UML:Class>';
-                    }
-                }
 
                 var childs = angular.element('#diagram-canvas').children().children('.class');
-                toXMIClass(childs);
+                XMLstring+= toXMIClass(childs);
 
                 var packages = angular.element('#diagram-canvas').children().children('.package');
 
@@ -44,98 +161,15 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     XMLstring += '<UML:Package isAbstract="false" isLeaf="false" isRoot="false" name="' + $(packages[i]).children('h1').text() + '" xmi.id="' +$(packages[i]).children()[0].id + '">';
                     XMLstring += '<UML:Namespace.ownedElement>';
                     var classesInPackage = angular.element(packages[i]).find('.class');
-                    toXMIClass(classesInPackage, $(packages[i]).children()[0].id);
+                    XMLstring+= toXMIClass(classesInPackage, $(packages[i]).children()[0].id);
                     XMLstring += '</UML:Namespace.ownedElement>';
                     XMLstring += '</UML:Package>';
 
 
                 }
 
-                //add association to xml string
                 var conns = jsPlumb.getAllConnections();
-                for (var i = 0; i < conns.length; i++) {
-
-                    var name, nav, agr, gen, dep;
-                    name = '';
-                    nav = '';
-                    agr = '';
-                    gen = false;
-                    dep = false;
-                    //below can be done much nicer
-                    var overlays = jsPlumb.getAllConnections()[i].getOverlays();
-                    for (var index = 0; index < overlays.length; index++) {
-                        var overlayid = jsPlumb.getAllConnections()[i].getOverlays()[index].id;
-                        switch(overlayid) {
-                            case "directedAssociation":
-                                nav = ' isNavigable="true"';
-                                break;
-                            case "aggregation":
-                                agr = '     aggregation="aggregate"';
-                                break;
-                            case "composition":
-                                agr = '     aggregation="composite"';
-                                break;
-                            case "label":
-                                name = ' name="' + jsPlumb.getAllConnections()[i].getOverlays()[index].labelText + '"';
-                                break;
-                            //multiplicity source
-                            case "m_l":
-                                var ms = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
-                                break;
-                            //multiplicity target
-                            case "m_r":
-                                var mt = jsPlumb.getAllConnections()[i].getOverlays()[index].labelText;
-                                break;
-                            case "inheritance":
-                                gen = true;
-                                break;
-                            case "dependency":
-                                dep = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    if (typeof ms !== 'undefined') {
-                        var lower_source = ms.split('..')[0];
-                        var upper_source = ms.split('..')[1];
-                    } else {
-                        var lower_source = "";
-                        var upper_source = "";
-                    }
-                    if (typeof mt !== 'undefined') {
-                        var lower_target = mt.split('..')[0];
-                        var upper_target = mt.split('..')[1];
-                    } else {
-                        var lower_target = "";
-                        var upper_target = "";
-                    }
-
-                    var mStringSource = '<UML:AssociationEnd.multiplicity><UML:Multiplicity><UML:Multiplicity.range><UML:MultiplicityRange lower="' + lower_source + '" upper="' + upper_source + '"/></UML:Multiplicity.range></UML:Multiplicity></UML:AssociationEnd.multiplicity>';
-                    var mStringTarget = '<UML:AssociationEnd.multiplicity><UML:Multiplicity><UML:Multiplicity.range><UML:MultiplicityRange lower="' + lower_target + '" upper="' + upper_target + '"/></UML:Multiplicity.range></UML:Multiplicity></UML:AssociationEnd.multiplicity>';
-
-                    //in case lower or upperbound are not there
-                    mStringSource = mStringSource.replace("undefined", "");
-                    mStringTarget = mStringTarget.replace("undefined", "");
-
-                    if (dep) {
-                        XMLstring += '<UML:Dependency xmi.id="' + conns[i].id + '" ' + name + ' client="' + conns[i].sourceId + '" supplier="' + conns[i].targetId + '" />';
-                    } else if (gen) {
-                        XMLstring += '<UML:Generalization xmi.id="' + conns[i].id + '" ' + name + ' visibility="public" isSpecification="false" namespace="model1" discriminator="" child="' + conns[i].sourceId + '" parent="' + conns[i].targetId + '" />';
-                    } else {
-                        XMLstring += '<UML:Association ' + name + ' namespace="model1" xmi.id="' + conns[i].id + '"><UML:Association.connection>';
-
-                        XMLstring += '<UML:AssociationEnd association="ass' + i + '" type="' + conns[i].sourceId + '" xmi.id="end' + i + '">' + mStringSource + '<UML:AssociationEnd.participant></UML:AssociationEnd.participant></UML:AssociationEnd>';
-
-                        XMLstring += '<UML:AssociationEnd' + nav + ' ' + agr + ' association="ass' + i + '" type="' + conns[i].targetId + '" xmi.id="end' + i + '">' + mStringTarget + '<UML:AssociationEnd.participant></UML:AssociationEnd.participant></UML:AssociationEnd>';
-
-                        XMLstring += '</UML:Association.connection></UML:Association>';
-                    }
-                }
-
-
-
+                XMLstring += addAssociations(conns);
 
                 XMLstring += '</UML:Namespace.ownedElement></UML:Model>';
 
@@ -143,41 +177,15 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
                 XMLstring += '<UML:Diagram xmi.id="UMLClassDiagram.4" name="OnlineUMLExport" diagramType="ClassDiagram" toolName="Rational Rose 98" owner="UMLModel.3"><UML:Diagram.element>';
 
-                function classToDiagram(childs, id) {
-                    for (var i = 0; i < childs.length; i++) {
-
-                        var top = $(childs[i]).offset().top - $(childs[i]).parent().offset().top;
-                        var left = $(childs[i]).offset().left - $(childs[i]).parent().offset().left;
-
-                        if (typeof id !== 'undefined') {
-                            top = $(childs[i]).offset().top - $(childs[i]).parent().parent().offset().top;
-                            left = $(childs[i]).offset().left - $(childs[i]).parent().parent().offset().left;
-                        }
-
-
-                        var elementWidth = $(childs[i]).width();
-                        var elementHeight = $(childs[i]).height();
-                        var idref = id;
-
-                        XMLstring += '<UML:DiagramElement xmi.id="UMLClassView.' + $(childs[i]).children()[0].id + '" geometry="' + Math.round(left) + ',' + Math.round(top) + ',' + Number(Math.round(left) + elementWidth) + ',' + Number(Math.round(top) + elementHeight) + '," style="LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,FillColor.Red=255,FillColor.Green=255,FillColor.Blue=185,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0,AutomaticResize=0,ShowAllAttributes=1,SuppressAttributes=0,ShowAllOperations=1,SuppressOperations=0,ShowOperationSignature=1," subject="' + $(childs[i]).children()[0].id + '">';
-
-                        if (typeof idref !== 'undefined')
-                            XMLstring += '<parentDiagramElement idref="' + idref + '"/>';
-
-                        XMLstring += '</UML:DiagramElement>';
-                    }
-
-                }
-
                 childs = $('#diagram-canvas').find('.class');
-                classToDiagram(childs);
+                XMLstring += classToDiagram(childs);
 
                 childs = $('#diagram-canvas').find('.package');
                 for (var i = 0; i < childs.length; i++) {
-                    classToDiagram(new Array(childs[i]));
+                    XMLstring += classToDiagram(new Array(childs[i]));
 
                     var classes = $(childs[i]).children('.class');
-                    classToDiagram(classes, 'UMLClassView.' + $(childs[i]).attr('id'));
+                    XMLstring += classToDiagram(classes, 'UMLClassView.' + $(childs[i]).attr('id'));
                 }
 
                 //add associations
