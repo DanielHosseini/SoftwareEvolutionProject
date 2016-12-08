@@ -28,7 +28,9 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
                 return true;
             } else {
                 if (allowedType !== "attributeObject") {
+                    this.attributes.push(newElement);
                     alert("Attributes are placed in the upper part of a class element");
+                    return true;
                 }
 
                 return newElement;
@@ -37,14 +39,24 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
         
         if (item.type === "operation") {
             var newElement = new operationObject(item.name);
-            if (allowedType === "operationObject") {
-                this.addOperation(newElement, index);
-            } else {
-                this.operations.push(newElement);
-                alert("Operations are placed in the lower part of a class element");
-            }
+            if (item.id === -1) {
+                if (allowedType === "operationObject") {
+                    this.addOperation(newElement, index);
+                } else {
+                    this.operations.push(newElement);
+                    alert("Operations are placed in the lower part of a class element");
+                }
 
-            return true;
+                return true;
+            } else {
+                if (allowedType !== "operationObject") {
+                    this.operations.push(newElement);
+                    alert("Operations are placed in the lower part of a class element");
+                    return true;
+                }
+
+                return newElement;
+            }
         }
 
         return false;
