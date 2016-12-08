@@ -14,14 +14,15 @@
     <input class="edittext" ng-style="{ display: package.editMode === false ? 'none' : '' }" type="text" ng-model="package.name" ng-keyup="editNameKeyPressed(package, $event)" ng-blur="editNameLostFocus(package)">
     <div class="content">
     	<ul dnd-list="package.classes"
-            dnd-dragover="true"
+            dnd-allowed-types="['classObject']"
+            dnd-horizontal-list="true"
             style="position: relative;min-height: 130px;"
             dnd-drop="package.onElementDropped(event, index, item, external, type, 'attributeObject')">
 
             <li ng-repeat="class in package.classes"
-                dnd-type="classObject"
+                dnd-type="'classObject'"
                 dnd-draggable="class"
-                style="position: relative;"
+                style="position: relative; margin-bottom: 8px;"
                 dnd-effect-allowed="move"
                 dnd-moved="package.deleteClassAt($index)"
                 draggable="true">
@@ -41,12 +42,13 @@
     				    <hr>
     				    <div class="attribute-holder">
     				        <ul dnd-list="class.attributes"
+                                dnd-allowed-types="['attributeObject']"
     				            dnd-dragover="true"
     				            style="position: relative;min-height: 30px;" 
     				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
     				            
     				            <li class='attributeElement' ng-repeat="attribute in class.attributes"
-    				                dnd-type="attributeObject"
+    				                dnd-type="'attributeObject'"
     				                dnd-draggable="attribute"
     				                style="position: relative;" 
     				                dnd-effect-allowed="move"
@@ -61,12 +63,13 @@
     				    <hr>
     				    <div class="operation-holder">
     				        <ul dnd-list="class.operations"
+                                dnd-allowed-types="['operationObject']"
     				            dnd-dragover="true"
     				            style="position: relative;min-height: 30px;" 
     				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
     				            
     				            <li class='operationElement' ng-repeat="operation in class.operations"
-    				                dnd-type="operationObject"
+    				                dnd-type="'operationObject'"
     				                dnd-draggable="operation"
     				                style="position: relative;" 
     				                dnd-effect-allowed="move"

@@ -55,6 +55,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
     };
 
     $scope.dragendHandler = function(event, droppedElement) {
+        console.log(event);
         var canvas = angular.element(document.getElementById('diagram-canvas'));
         var canvasLeft = canvas.prop('offsetLeft');
         var canvasTop = canvas.prop('offsetTop');

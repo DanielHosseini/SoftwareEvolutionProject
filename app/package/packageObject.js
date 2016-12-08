@@ -33,6 +33,11 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         return false;
     };
 
+    packageObject.prototype.dragoverCallback = function(event, index, external, type) {
+        console.log(event, type);
+        return true;
+    };
+
     packageObject.prototype.getId = function() {
         return this.id;
     };

@@ -19,7 +19,7 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
             setTimeout(function() {
                 DiagramService.removeClassAt(DiagramService.diagram.classes.length - 1);
                 $rootScope.$digest();
-            }, 50);
+            }, 100);
         } else {
             // This means that a class that was on the canvas was added to a package,
             // so find it and remove it from the classes without packages

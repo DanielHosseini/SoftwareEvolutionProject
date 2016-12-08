@@ -1,7 +1,7 @@
 <div ng-repeat="class in classes"
     ng-controller="canvasController"
     draggable="true"
-    dnd-type="classObject"
+    dnd-type="'classObject'"
     dnd-draggable="class"
     dnd-effect-allowed="move"
     dnd-dragend="dragendHandler(event, class)"
@@ -21,12 +21,13 @@
     <hr>
     <div class="attribute-holder">
         <ul dnd-list="class.attributes"
+            dnd-allowed-types="['attributeObject']"
             dnd-dragover="true"
             style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
 
             <li id="attribute-{{$index}}" class='attributeElement' ng-repeat="attribute in class.attributes"
-                dnd-type="attributeObject"
+                dnd-type="'attributeObject'"
                 dnd-draggable="attribute"
                 style="position: relative;"
                 dnd-effect-allowed="move"
@@ -41,12 +42,13 @@
     <hr>
     <div class="operation-holder">
         <ul dnd-list="class.operations"
+            dnd-allowed-types="['operationObject']"
             dnd-dragover="true"
             style="position: relative;min-height: 30px;"
             dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
 
             <li id="attribute-{{$index}}" class='operationElement' ng-repeat="operation in class.operations"
-                dnd-type="operationObject"
+                dnd-type="'operationObject'"
                 dnd-draggable="operation"
                 style="position: relative;"
                 dnd-effect-allowed="move"
