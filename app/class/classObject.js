@@ -17,13 +17,24 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
     classObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
         if (item.type === "attribute") {
             var newElement = new attributeObject(item.name);
-            if (allowedType === "attributeObject") {
-                this.addAttribute(newElement, index);
-            } else{
-                this.attributes.push(newElement);
-                alert("Attributes are placed in the upper part of a class element");
+            if (item.id === -1) {
+                if (allowedType === "attributeObject") {
+                    this.addAttribute(newElement, index);
+                } else{
+                    this.attributes.push(newElement);
+                    alert("Attributes are placed in the upper part of a class element");
+                }
+
+                return true;
+            } else {
+                if (allowedType !== "attributeObject") {
+                    alert("Attributes are placed in the upper part of a class element");
+                }
+
+                return newElement;
             }
         }
+        
         if (item.type === "operation") {
             var newElement = new operationObject(item.name);
             if (allowedType === "operationObject") {
@@ -32,9 +43,11 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
                 this.operations.push(newElement);
                 alert("Operations are placed in the lower part of a class element");
             }
+
+            return true;
         }
 
-        return true;
+        return false;
     };
 
     classObject.prototype.getId = function() {

@@ -12,10 +12,22 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
     
 
     $rootScope.$on('class:addedToPackage', function(event, classId) {
-        for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
-            if (DiagramService.diagram.classes[i].id === classId) {
-                DiagramService.removeClassAt(i);
-                break;
+        if (classId === -1) {
+            // This means that a new class has been dropped on a package,
+            // but had been added before that to the diagram on the canvas,
+            // so we remove the last class here
+            setTimeout(function() {
+                DiagramService.removeClassAt(DiagramService.diagram.classes.length - 1);
+                $rootScope.$digest();
+            }, 50);
+        } else {
+            // This means that a class that was on the canvas was added to a package,
+            // so find it and remove it from the classes without packages
+            for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
+                if (DiagramService.diagram.classes[i].id === classId) {
+                    DiagramService.removeClassAt(i);
+                    break;
+                }
             }
         }
     });

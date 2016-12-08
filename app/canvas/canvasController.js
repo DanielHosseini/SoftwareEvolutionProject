@@ -15,7 +15,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
     $scope.doubleClick = function(clickedElement) {
         // TODO, stop editing all other classes and packages
-        clickedElement.startEditName();
+        clickedElement.editMode = true;
     };
 
     $scope.editNameKeyPressed = function(clickedElement, $event) {
@@ -23,9 +23,17 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             if (clickedElement.name === "") {
                 alert("Name must not be empty!");
             } else {
-                clickedElement.stopEditName();
+                clickedElement.editMode = false;
             }
         };
+    };
+
+    $scope.editNameLostFocus = function(element) {
+        if (element.name === "") {
+            alert("Name must not be empty!");
+        } else {
+            element.editMode = false;
+        }
     };
 
     $scope.showHints = function(){

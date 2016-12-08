@@ -14,16 +14,23 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
 
     packageObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
         if (item.type === "class") {
+            // Notify listeners so the canvas can remove the class from its classes array
+            $rootScope.$broadcast('class:addedToPackage', item.id);
             var newElement = new classObject(item.name, item.position);
             newElement.attributes = item.attributes;
             newElement.operations = item.operations;
-            this.addClass(newElement, index);
 
-            // Notify listeners so the canvas can remove the class from its classes array
-            $rootScope.$broadcast('class:addedToPackage', item.id);
+            if (item.id === -1) {
+                // Element coming from toolbox so add the new element
+                this.addClassAt(newElement, index);
+
+                return true; 
+            } else {
+                return newElement;
+            }
         }
 
-        return true;
+        return false;
     };
 
     packageObject.prototype.getId = function() {
@@ -50,8 +57,16 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         this.classes.push(newClass);
     };
 
+    packageObject.prototype.addClassAt = function(newClass, index) {
+        this.classes.splice(index, 0, newClass);
+    };
+
     packageObject.prototype.getClasses = function() {
         return this.classes;
+    };
+
+    packageObject.prototype.deleteClassAt = function(index) {
+        this.classes.splice(index, 1);
     };
 
     packageObject.prototype.deleteClass = function(deletedClass) {
