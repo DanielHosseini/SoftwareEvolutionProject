@@ -17,7 +17,6 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 var class_id = $(childs[i]).children()[0].id;
 
 
-
                 returnString += '<UML:Class name="' + class_name + '" ' + namespace + ' xmi.id="' + class_id + '"><UML:Classifier.feature>';
                 for (var j = 0; j < atts.length; j++) {
                     if ($(atts[j]).attr('class').search('attributeElement') !== -1)
@@ -220,6 +219,94 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
             });
         }
 
+        function getClasses(model_elements, diagram_elements){
+            var classes = [];
+            for (var i = 0; i < model_elements.length; i++) {
+                if ($(model_elements[i]).prop('tagName') === "UML:Class") {
+
+                    var className = $(model_elements[i]).attr('name');
+                    var refId = $(model_elements[i]).attr('namespace')
+                    var classId = $(model_elements[i]).attr('xmi.id')
+
+                    var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
+                    if (x !== 'undefined')
+                        x = $(x).attr('geometry').split(',')[0];
+                    else
+                        x = 0;
+                    var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
+                    if (y !== 'undefined')
+                        y = $(y).attr('geometry').split(',')[1];
+                    else
+                        y = 0;
+
+                    if(refId.indexOf('package') >= -1){
+                        classes.push({id: classId, clas: new classObject(className, [x, y]), packageId: refId});
+
+                    } else {
+                        classes.push({id: classId, clas: new classObject(className, [x, y])});
+                    }
+                }
+            }
+            return classes;
+        }
+
+        function getPackages(model_elements, diagram_elements){
+            var packages = [];
+            for (var i = 0; i < model_elements.length; i++) {
+
+                if ($(model_elements[i]).prop('tagName') === "UML:Package") {
+                    var packageName = $(model_elements[i]).attr('name');
+                    var packageId = $(model_elements[i]).attr('xmi.id')
+
+                    var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
+                    if (x !== 'undefined')
+                        x = $(x).attr('geometry').split(',')[0];
+                    else
+                        x = 0;
+                    var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
+                    if (y !== 'undefined')
+                        y = $(y).attr('geometry').split(',')[1];
+                    else
+                        y = 0;
+
+
+
+                    packages.push({id: packageId, pack: new packageObject(packageName, [x, y])});
+
+                }
+            }
+            return packages;
+        }
+
+        function getFeatures(features, classes){
+            for (var j = 0; j < features.length; j++) {
+                if ($(features[j]).prop('tagName') === "UML:Attribute") {
+                    var classId = $(features[j]).attr('xmi.id')
+                    classId = classId.substring(classId.indexOf('class'), classId.length)
+                    var name = $(features[j]).attr('name')
+                    angular.forEach(classes, function(clas){
+                        if(clas.id === classId ){
+                            clas.clas.addAttribute(new attributeObject(name));
+                        }
+                    })
+
+
+                }
+                if ($(features[j]).prop('tagName') === "UML:Operation") {
+                    var classId = $(features[j]).attr('xmi.id')
+                    classId = classId.substring(classId.indexOf('class'), classId.length)
+                    var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
+                    angular.forEach(classes, function(clas){
+                        if(clas.id === classId ){
+                            clas.clas.addOperation(new operationObject(name));
+                        }
+                    })
+
+                }
+
+            }
+        }
+
         $scope.importXML = function(element) {
 
                 var XMI = $.parseXML(element);
@@ -254,93 +341,16 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     yratio = 1;
 
 
-                var packages = [];
-                var classes = [];
-
-                for (var i = 0; i < model_elements.length; i++) {
-
-                    if ($(model_elements[i]).prop('tagName') === "UML:Package") {
-                        var packageName = $(model_elements[i]).attr('name');
-                        var packageId = $(model_elements[i]).attr('xmi.id')
-
-                        var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (x !== 'undefined')
-                            x = $(x).attr('geometry').split(',')[0];
-                        else
-                            x = 0;
-                        var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (y !== 'undefined')
-                            y = $(y).attr('geometry').split(',')[1];
-                        else
-                            y = 0;
-
-
-
-                        packages.push({id: packageId, pack: new packageObject(packageName, [x, y])});
-
-                    }
-
-                    if ($(model_elements[i]).prop('tagName') === "UML:Class") {
-
-                        var className = $(model_elements[i]).attr('name');
-                        var refId = $(model_elements[i]).attr('namespace')
-                        var classId = $(model_elements[i]).attr('xmi.id')
-
-                        var x = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (x !== 'undefined')
-                            x = $(x).attr('geometry').split(',')[0];
-                        else
-                            x = 0;
-                        var y = $(diagram_elements).children('[subject|="' + $(model_elements[i]).attr('xmi.id') + '"]');
-                        if (y !== 'undefined')
-                            y = $(y).attr('geometry').split(',')[1];
-                        else
-                            y = 0;
-
-                        if(refId.indexOf('package') >= -1){
-                            classes.push({id: classId, clas: new classObject(className, [x, y]), packageId: refId});
-
-                        } else {
-                            classes.push({id: classId, clas: new classObject(className, [x, y])});
-                        }
-                    }
-
-
-
-
-
-                }
+                var packages = getPackages(model_elements, diagram_elements);
+                var classes = getClasses(model_elements, diagram_elements);
 
                 var features = [];
                 for (var i = 0; i < model_elements.length; i++) {
                     features.push($(model_elements[i]).prop('tagName', 'UML:Class').children().children());
                 }
-                for (var j = 0; j < features.length; j++) {
-                    if ($(features[j]).prop('tagName') === "UML:Attribute") {
-                        var classId = $(features[j]).attr('xmi.id')
-                        classId = classId.substring(classId.indexOf('class'), classId.length)
-                        var name = $(features[j]).attr('name')
-                        angular.forEach(classes, function(clas){
-                            if(clas.id === classId ){
-                                clas.clas.addAttribute(new attributeObject(name));
-                            }
-                        })
 
+                getFeatures(features, classes);
 
-                    }
-                    if ($(features[j]).prop('tagName') === "UML:Operation") {
-                        var classId = $(features[j]).attr('xmi.id')
-                        classId = classId.substring(classId.indexOf('class'), classId.length)
-                        var name = $(features[j]).attr('name'); //also makes ul -> has to be changed
-                        angular.forEach(classes, function(clas){
-                            if(clas.id === classId ){
-                                clas.clas.addOperation(new operationObject(name));
-                            }
-                        })
-
-                    }
-
-                }
                 angular.forEach(classes, function(clas){
                     if(clas.packageId === undefined || clas.packageId.indexOf("package") === -1){
                         diagramService.addClass(clas.clas);
@@ -353,9 +363,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                     }
                 })
                 angular.forEach(packages, function(packag){
-                    if(packag.id === refId){
-                        diagramService.addPackage(packag.pack);
-                    }
+                    diagramService.addPackage(packag.pack);
                 })
 
 
