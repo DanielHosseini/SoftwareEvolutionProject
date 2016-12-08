@@ -47,11 +47,11 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
 
     jsPlumb.bind("dblclick", function(c, e) {
         console.log("dblclick");
-        connector = c;
+        var connector = c;
         if (connector.getOverlay("label") === null) {
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
         }
-        name = connector.getOverlay("label").getLabel();
+        var name = connector.getOverlay("label").getLabel();
         angular.element(name).bind("click", function() { console.log('click') });
         $elm = connector.getOverlay("label");
         $elm.hide();
@@ -95,7 +95,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
 
     changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
-        connector = c;
+        var connector = c;
         if (connector.getOverlay("directedAssociation") || type === "aggregate") {
             // if it is an directed association
             connector.removeOverlay("directedAssociation");
@@ -158,6 +158,16 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     };
 }]);
 
+myApp.directive('plumbNonDraggable', ['diagramService', function(diagramService) {
+    return {
+        replace: true,
+        controller: 'jsPlumbWrapperController',
+        link: function(scope, element, attrs) {
+            jsPlumb.setDraggable(element, false);
+        }
+    };
+}]);
+
 myApp.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
@@ -167,11 +177,9 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
-                start: function() {
-                    //console.log("start drag", event);
-                    //console.log("draggind element", diagramService.getClasses());
+                start: function(event) {
                 },
-                stop: function(event, ui) {
+                stop: function(event) {
                     var canvas = angular.element(document.getElementById('diagram-canvas'));
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
@@ -183,7 +191,6 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                     var elementId = event.el.attributes['data-id'].value;
                     diagramService.updateElementPosition(droppedEl, elementId, [elementLeft, elementTop]);
 
-                    //console.log("dropping element", diagramService.getClasses());
                 },
                 containment: false
             });
@@ -198,10 +205,8 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
         link: function(scope, element) {
             jsPlumb.draggable(element, {
                 start: function() {
-                    //console.log("start", event);
                 },
                 stop: function(event) {
-                    //console.log("dropped", event);
                     element[0].style.cssText = "";
 
                     var canvas = angular.element(document.getElementById('diagram-canvas'));

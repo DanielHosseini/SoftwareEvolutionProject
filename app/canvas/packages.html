@@ -1,10 +1,89 @@
-<div ng-controller="canvasController">
-    <div ng-repeat="package in packages">
-        <div plumb-item class="package ui-draggable ui-draggable-handle" ng-dblClick="doubleClick(package)" style="position:absolute;left:{{package.position[0]}}px;top:{{package.position[1]}}px;" data-id="{{package.id}}">
-            <div class="top_left"></div>
-            <h1 class="heading" ng-style="{ display: package.editMode === true ? 'none' : '' }">{{package.name}}</h1>
-            <input class="edittext" ng-style="{ display: package.editMode === false ? 'none' : '' }" type="text" ng-model="package.name" ng-keyup="editNameKeyPressed(package, $event)">
-            <div class="content"></div>
-        </div>
+<div ng-repeat="package in packages"
+	ng-controller="canvasController"
+	draggable="true"
+    dnd-type="packageObject"
+    dnd-draggable="package"
+    dnd-effect-allowed="move"
+    dnd-dragend="dragendHandler(event, package)"
+	class="package ui-draggable ui-draggable-handle"
+	ng-dblClick="doubleClick(package)"
+	style="position:absolute;left:{{package.position[0]}}px;top:{{package.position[1]}}px;min-height: 200px;min-width: 200px;"
+	data-id="{{package.id}}">
+    <div class="top_left" id="package-{{$index}}"></div>
+    <h1 class="heading" ng-style="{ display: package.editMode === true ? 'none' : '' }">{{package.name}}</h1>
+    <input class="edittext" ng-style="{ display: package.editMode === false ? 'none' : '' }" type="text" ng-model="package.name" ng-keyup="editNameKeyPressed(package, $event)">
+    <div class="content">
+    	<ul dnd-list="package.classes"
+            dnd-dragover="true"
+            style="position: relative;min-height: 130px;"
+            dnd-drop="package.onElementDropped(event, index, item, external, type, 'attributeObject')">
+
+            <li ng-repeat="class in package.classes"
+                dnd-type="classObject"
+                dnd-draggable="class"
+                style="position: relative;"
+                dnd-effect-allowed="move"
+                dnd-moved="package.classes.splice($index, 1)"
+                draggable="true"
+                ng-dblClick="doubleClick(class); $event.stopPropagation()">
+                <div draggable="true"
+				    dnd-type="classObject"
+				    dnd-draggable="class"
+				    dnd-effect-allowed="move"
+				    class="class ui-draggable ui-draggable-handle"
+				    data-id="{{class.id}}">
+                    <div id="classpackage-{{$index}}">
+    				    <div class="ep" id="jsPlumb_1_12">➜</div>
+    				    <div>
+    				        <h1 class="heading element-name"
+    				        ng-dblClick="doubleClick(class); $event.stopPropagation()"
+    				        ng-style="{ display: class.editMode === true ? 'none' : '' }">{{class.name}}</h1>
+
+    				        <input class="edittext" ng-style="{ display: class.editMode === false ? 'none' : '' }" type="text" ng-model="class.name" ng-keyup="editNameKeyPressed(class, $event)"/>
+    				    </div>
+    				    <hr>
+    				    <div class="attribute-holder">
+    				        <ul dnd-list="class.attributes"
+    				            dnd-dragover="true"
+    				            style="position: relative;min-height: 30px;"
+    				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
+
+    				            <li class='attributeElement' ng-repeat="attribute in class.attributes"
+    				                dnd-type="attributeObject"
+    				                dnd-draggable="attribute"
+    				                style="position: relative;"
+    				                dnd-effect-allowed="move"
+    				                dnd-moved="class.attributes.splice($index, 1)"
+    				                draggable="true"
+    				                ng-dblClick="doubleClick(attribute); $event.stopPropagation()">
+    				                <div ng-style="{ display: attribute.editMode === true ? 'none' : '' }">{{attribute.name}}</div>
+    				                <input class="edittext" ng-style="{ display: attribute.editMode === false ? 'none' : '' }" type="text" ng-model="attribute.name" ng-keyup="editNameKeyPressed(attribute, $event); $event.stopPropagation()">
+    				            </li>
+    				        </ul>
+    				    </div>
+    				    <hr>
+    				    <div class="operation-holder">
+    				        <ul dnd-list="class.operations"
+    				            dnd-dragover="true"
+    				            style="position: relative;min-height: 30px;"
+    				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
+
+    				            <li class='operationElement' ng-repeat="operation in class.operations"
+    				                dnd-type="operationObject"
+    				                dnd-draggable="operation"
+    				                style="position: relative;"
+    				                dnd-effect-allowed="move"
+    				                dnd-moved="class.operations.splice($index, 1)"
+    				                draggable="true"
+    				                ng-dblClick="doubleClick(operation); $event.stopPropagation()">
+    				                <div ng-style="{ display: operation.editMode === true ? 'none' : '' }">{{operation.name}}</div>
+    				                <input class="edittext" ng-style="{ display: operation.editMode === false ? 'none' : '' }" type="text" ng-model="operation.name" ng-keyup="editNameKeyPressed(operation, $event); $event.stopPropagation()">
+    				            </li>
+    				        </ul>
+    				    </div>
+                    </div>
+				</div>
+			</li>
+		</ul>
     </div>
 </div>

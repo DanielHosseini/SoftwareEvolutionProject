@@ -10,7 +10,13 @@ body H1 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.tooltip-menu{
+.alllign {
+    vertical-align: middle;
+    font-size: 17px;
+    background-color: blue;
+}
+
+.tooltip-menu {
     position: absolute;
     width: 170px;
     height: 30px;
@@ -22,7 +28,7 @@ body H1 {
     opacity: 0%;
 }
 
-.tooltip-toolbox{
+.tooltip-toolbox {
     position: absolute;
     width: 170px;
     height: 80px;
@@ -35,7 +41,7 @@ body H1 {
     opacity: 0%;
 }
 
-.tooltip-canvas{
+.tooltip-canvas {
     position: absolute;
     width: 170px;
     height: 80px;
@@ -48,7 +54,7 @@ body H1 {
     opacity: 0%;
 }
 
-#wrapper{
+#wrapper {
     height: 100%;
     width: auto;
     margin: auto;
@@ -57,7 +63,7 @@ body H1 {
 #diagram-canvas,
 #screenshot-canvas,
 #task-screen {
-    position: relative;;
+    position: relative;
     font-family: Arial, Helvetica, sans-serif;
     border: 1px solid black;
     display: -ms-flexbox;
@@ -66,7 +72,8 @@ body H1 {
     border-radius: 3px;
     padding: 4px;
 }
-div#diagram-canvas{
+
+div#diagram-canvas {
     height: 700px;
 }
 
@@ -262,7 +269,7 @@ select {
 .class {
     width: 125px;
     //padding:1em;
-/*    position: absolute; */
+    /*    position: absolute; */
     border: 1px solid black;
     z-index: 4;
     border: 1px solid #000000;
@@ -315,7 +322,7 @@ select {
 .package {
     width: 125px;
     height: 80px;
-   /* position: absolute; */
+    /* position: absolute; */
     border: none;
     z-index: 0;
     cursor: move;
@@ -353,7 +360,8 @@ select {
     cursor: pointer;
     opacity: 0;
 }
-.ep:hover{
+
+.ep:hover {
     opacity: 100;
 }
 
@@ -380,4 +388,19 @@ li.selected {
 .dummy {
     height: 0px;
     visibility: hidden;
+}
+
+ul[dnd-list] {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+ul[dnd-list], ul[dnd-list] > li {
+    position: relative;
+}
+
+ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 42px;
 }

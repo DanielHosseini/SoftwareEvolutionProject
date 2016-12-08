@@ -1,5 +1,5 @@
 projectKey=Web.UML.Projet
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/Web.UML.Projet
-ceTaskId=AVi69QG-SiJ02rDjpUlr
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AVi69QG-SiJ02rDjpUlr
+ceTaskId=AVjEk9D0SiJ02rDjpUl5
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVjEk9D0SiJ02rDjpUl5
