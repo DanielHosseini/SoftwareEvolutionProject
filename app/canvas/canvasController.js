@@ -21,6 +21,9 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
           $scope.clickEvent = clickEvent.target.parentElement.id;
           console.log($scope.clickEvent); //ID of surrounding DIV, i.e a Class (id = jsPlumb1.5)
           //Need to make some drag from $scope.ClickEvent to a destination
+
+
+          //Can we create a target of any div?
       };
 
     $scope.editNameKeyPressed = function(clickedElement, $event) {
@@ -35,8 +38,8 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
 
         $scope.showHints = function(){
             $scope.hints = !$scope.hints;
-        }
-    };
+        };
+
 
 
     $scope.classMoved = function(event, movedClass) {
