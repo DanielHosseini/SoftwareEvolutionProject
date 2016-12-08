@@ -26,6 +26,7 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
 
             return true;
         }
+        
         if (item.type === "operation") {
             var newElement = new operationObject(item.name);
             if (allowedType === "operationObject") {

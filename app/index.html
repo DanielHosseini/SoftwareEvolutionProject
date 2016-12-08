@@ -78,13 +78,22 @@
             <div ng-show="toolbox" id="toolbox">
                 <h1 class="title">UML Elements</h1>
                 <hr class="seperator">
-                <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
-                    <class-directive></class-directive>
-                </div>
-                <ul ng-controller="AttributeController" class="toolboxAttribute">
+                <ul ng-controller="ClassController" style="list-style-type: none;">
+                    <li dnd-draggable="classTemplate" draggable="true" dnd-type="classObject" class="class ui-sortable-handle" dnd-dragend="newClassDragEndHandler(event, classTemplate)">
+                        <div class="ep" id="jsPlumb_1_12">➜</div>
+                        <h1 class="heading" ng-model='name'>{{classTemplate.name}}</h1>
+                        <hr>
+                        <div style="min-height: 30px;">
+                        </div>
+                        <hr>
+                        <div style="min-height: 30px;">
+                        </div>
+                    </li>
+                </ul>
+                <ul ng-controller="AttributeController" class="toolboxAttribute" style="margin-top: 50px;">
                     <li dnd-draggable="attributeTemplate" draggable="true" dnd-type="attributeObject" class="attribute ui-sortable-handle">{{attributeTemplate.name}}</li>
                 </ul>
-                <ul ng-controller="OperationController" class="toolboxOperation">
+                <ul ng-controller="OperationController" class="toolboxOperation" style="margin-top: 50px;">
                     <li dnd-draggable="operationTemplate" draggable="true" dnd-type="operationObject" class="operation ui-sortable-handle">{{operationTemplate.name}}</li>
                 </ul>
                 <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">

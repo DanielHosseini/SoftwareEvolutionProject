@@ -28,6 +28,14 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         };
     };
 
+    $scope.editNameLostFocus = function(element) {
+        if (element.name === "") {
+            alert("Name must not be empty!");
+        } else {
+            element.stopEditName();
+        }
+    };
+
     $scope.showHints = function(){
         $scope.hints = !$scope.hints;
     };
