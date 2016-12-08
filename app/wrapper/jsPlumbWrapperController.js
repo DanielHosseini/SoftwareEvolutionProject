@@ -1,7 +1,7 @@
 var myApp = angular.module('myApp');
 
 //TODO: Fix observerService
-myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope, diagramService) {
+myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope) {
     $scope.printClasses = function() {
     };
     jsPlumb.importDefaults({
@@ -50,7 +50,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         }
         var name = connector.getOverlay("label").getLabel();
         angular.element(name).bind("click", function() { console.log('click') });
-        $elm = connector.getOverlay("label");
+        var $elm = connector.getOverlay("label");
         $elm.hide();
         var theelm = $elm.getElement();
         var par = theelm.parentElement;
@@ -153,11 +153,11 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     };
 }]);
 
-myApp.directive('plumbNonDraggable', ['diagramService', function(diagramService) {
+myApp.directive('plumbNonDraggable', ['diagramService', function() {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             jsPlumb.setDraggable(element, false);
         }
     };
@@ -172,7 +172,7 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
-                start: function(event) {
+                start: function() {
                 },
                 stop: function(event) {
                     var canvas = angular.element(document.getElementById('diagram-canvas'));
@@ -232,7 +232,7 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                     service.updateSoemthing()
                     }
                     */
-                    droppedEl = angular.element(event.el);
+                    var droppedEl = angular.element(event.el);
                     diagramService.addElement(droppedEl, [elementLeft, elementTop]);
                 },
                 containment: false
