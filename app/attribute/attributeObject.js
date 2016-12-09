@@ -8,8 +8,21 @@ myApp.factory('attributeObject', ['idGenerator', function(idGenerator) {
         this.type = "attribute";
         this.name = name;
         this.editMode = false;
+        this.selected = false;
     };
 
+    attributeObject.prototype.toggleSelected = function () {
+      /*if (this.selected) {
+        this.selected = false;
+
+      }
+      else{this.selected = true}*/
+      console.log("Toggle Attribute");
+    };
+
+    attributeObject.prototype.getSelected = function(){
+      return this.selected;
+    }
     attributeObject.prototype.getId = function() {
         return this.id;
     };

@@ -30,16 +30,22 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
             if (clickedElement.name === "") {
                 alert("Name must not be empty!");
             } else {
-                clickedElement.stopEditName();
+                clickedElement.editMode = false;
             }
         };
     };
 
-        $scope.showHints = function(){
-            $scope.hints = !$scope.hints;
-        };
+    $scope.editNameLostFocus = function(element) {
+        if (element.name === "") {
+            alert("Name must not be empty!");
+        } else {
+            element.editMode = false;
+        }
+    };
 
-
+    $scope.showHints = function(){
+        $scope.hints = !$scope.hints;
+    };
 
     $scope.classMoved = function(event, movedClass) {
         console.log('moved', movedClass);
@@ -47,12 +53,14 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
     };
 
     $scope.dragendHandler = function(event, droppedElement) {
+        console.log(event);
         var canvas = angular.element(document.getElementById('diagram-canvas'));
         var canvasLeft = canvas.prop('offsetLeft');
         var canvasTop = canvas.prop('offsetTop');
         droppedElement.updatePosition([event.x - canvasLeft, event.y - canvasTop - event.target.clientHeight]);
         event.stopPropagation();
     };
+
 }])
 
 .directive('toggleEndpoint', function() {
@@ -68,9 +76,11 @@ return {
 
 .directive('toggleSelected', function() {
 return {
-    restrict: 'A', //Restricts to divs
+    restrict: 'AE',
     link: function(scope, element, attrs) {
-        element.bind('click', function() {
+        element.bind('click', function(event) {
+          event.stopPropagation(event);
+          console.log("Toggle" + element);
           angular.element(document.querySelectorAll(".selected")).removeClass('selected');
             element.toggleClass(attrs.toggleSelected);
         });

@@ -279,6 +279,7 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
 
         function getFeatures(features, classes){
             for (var j = 0; j < features.length; j++) {
+                console.log($(features[j]).prop('tagName'))
                 if ($(features[j]).prop('tagName') === "UML:Attribute") {
                     var classId = $(features[j]).attr('xmi.id')
                     classId = classId.substring(classId.indexOf('class'), classId.length)
@@ -343,12 +344,12 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 var packages = getPackages(model_elements, diagram_elements);
                 var classes = getClasses(model_elements, diagram_elements);
 
-                var features = [];
                 for (var i = 0; i < model_elements.length; i++) {
-                    features.push($(model_elements[i]).prop('tagName', 'UML:Class').children().children());
+                    var features = ($(model_elements[i]).prop('tagName', 'UML:Class').children().children());
+                    getFeatures(features, classes);
                 }
 
-                getFeatures(features, classes);
+
 
                 angular.forEach(classes, function(clas){
                     if(clas.packageId === undefined || clas.packageId.indexOf("package") === -1){
