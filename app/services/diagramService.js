@@ -12,7 +12,7 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
     
 
     $rootScope.$on('class:addedToPackage', function(event, classId) {
-        for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
+        for (var i = 0; i < DiagramService.diagram.classes.length; i++) { 
             if (DiagramService.diagram.classes[i].id === classId) {
                 DiagramService.removeClassAt(i);
                 break;
@@ -110,7 +110,10 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
 
         }
 
-        if (element.hasClass('toolboxOperation')) {}
+        if (element.hasClass('toolboxOperation')) {
+          //Find class it was dropped on
+
+        }
 
         alertObserver();
     }

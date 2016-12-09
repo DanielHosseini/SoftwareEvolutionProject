@@ -1,8 +1,6 @@
 
 var myApp = angular.module('myApp');
 myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
-
-    var currentlyEditedElement = undefined;
         $scope.hints = false;
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;

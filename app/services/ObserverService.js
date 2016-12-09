@@ -10,11 +10,9 @@ myApp.factory('observerService', function() {
 
 		// Inserts a new log entry with any number of string parameters passed
         addLogEntry: function() {
-            //log += Date.now().toString() + ',';
             for (var i = 0; i < arguments.length; i++) {
                 log += arguments[i] + ',';
             }
-            //log += "\r\n";
         },
 
         // Empties the log

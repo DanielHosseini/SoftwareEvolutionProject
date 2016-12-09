@@ -12,7 +12,7 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         this.editMode = false;
     };
 
-    packageObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
+    packageObject.prototype.onElementDropped = function(event, index, item) {
         if (item.type === "class") {
             var newElement = new classObject(item.name, item.position);
             newElement.attributes = item.attributes;

@@ -1,6 +1,5 @@
 var myApp = angular.module('myApp');
 
-//TODO: Fix observerService
 myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope) {
     $scope.printClasses = function() {
     };
@@ -32,12 +31,11 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("connection", function() {
-        //observerService.addLogEntry('CREATE', 'ASSOCIATION', 'NULL', info.sourceId, info.targetId);
     });
 
     jsPlumb.bind("click", function(c, e) {
         if (e.altKey || e.keyCode === 18) {
-            e.preventDefault();            //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
+            e.preventDefault();            
             jsPlumb.detach(c);
         }
     });
@@ -48,7 +46,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
         }
         var name = connector.getOverlay("label").getLabel();
-        angular.element(name).bind("click", function() { console.log('click') });
+        angular.element(name).bind("click", function() {});
         var $elm = connector.getOverlay("label");
         $elm.hide();
         var theelm = $elm.getElement();

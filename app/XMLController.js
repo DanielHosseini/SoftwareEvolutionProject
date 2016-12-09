@@ -1,4 +1,3 @@
-'use strict';
 var myApp = angular.module('myApp');
 myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
     function($scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
@@ -180,16 +179,16 @@ myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService'
                 XMLstring += classToDiagram(childs);
 
                 childs = $('#diagram-canvas').find('.package');
-                for (var i = 0; i < childs.length; i++) {
-                    XMLstring += classToDiagram(new Array(childs[i]));
+                for (var j = 0; j < childs.length; j++) {
+                    XMLstring += classToDiagram(new Array(childs[j]));
 
-                    var classes = $(childs[i]).children('.class');
-                    XMLstring += classToDiagram(classes, 'UMLClassView.' + $(childs[i]).attr('id'));
+                    var classes = $(childs[j]).children('.class');
+                    XMLstring += classToDiagram(classes, 'UMLClassView.' + $(childs[j]).attr('id'));
                 }
 
                 //add associations
-                for (var i = 0; i < conns.length; i++) {
-                    XMLstring += '<UML:DiagramElement xmi.id="UMLAssociationView' + conns[i].id + '" style="Association:LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0," subject="' + conns[i].id + '" />';
+                for (var k = 0; k < conns.length; k++) {
+                    XMLstring += '<UML:DiagramElement xmi.id="UMLAssociationView' + conns[k].id + '" style="Association:LineColor.Red=128,LineColor.Green=0,LineColor.Blue=0,Font.Red=0,Font.Green=0,Font.Blue=0,Font.FaceName=Tahoma,Font.Size=8,Font.Bold=0,Font.Italic=0,Font.Underline=0,Font.Strikethrough=0," subject="' + conns[k].id + '" />';
                 }
 
                 XMLstring += '</UML:Diagram.element></UML:Diagram></XMI.content></XMI>';
