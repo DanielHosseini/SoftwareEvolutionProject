@@ -12,11 +12,12 @@ myApp.factory('attributeObject', ['idGenerator', function(idGenerator) {
     };
 
     attributeObject.prototype.toggleSelected = function () {
-      if (this.selected) {
+      /*if (this.selected) {
         this.selected = false;
 
       }
-      else{this.selected = true}
+      else{this.selected = true}*/
+      console.log("Toggle Attribute");
     };
 
     attributeObject.prototype.getSelected = function(){
