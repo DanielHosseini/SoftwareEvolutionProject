@@ -8,7 +8,20 @@ myApp.factory('operationObject', ['idGenerator', function(idGenerator) {
         this.type = "operation";
         this.name = name;
         this.editMode = false;
+        this.selected  = false;
     };
+
+    operationObject.prototype.toggleSelected = function () {
+      if (this.selected) {
+        this.selected = false;
+
+      }
+      else{this.selected = true}
+    };
+
+    operationObject.prototype.getSelected = function(){
+      return this.selected;
+    }
 
     operationObject.prototype.getId = function() {
         return this.id;

@@ -5,6 +5,7 @@
     dnd-draggable="package"
     dnd-effect-allowed="move"
     dnd-dragend="dragendHandler(event, package)"
+		toggle-selected="selected"
 	class="package ui-draggable ui-draggable-handle"
 	style="position:absolute;left:{{package.position[0]}}px;top:{{package.position[1]}}px;min-height: 200px;min-width: 200px;"
 	data-id="{{package.id}}">
@@ -29,7 +30,7 @@
                 <div
 				    class="class ui-draggable ui-draggable-handle"
 				    data-id="{{class.id}}">
-                    
+
                     <div id="classpackage-{{$parent.$index}}{{$index}}">
     				    <div class="ep" id="jsPlumb_1_12">➜</div>
     				    <div>
@@ -44,13 +45,13 @@
     				        <ul dnd-list="class.attributes"
                                 dnd-allowed-types="['attributeObject']"
     				            dnd-dragover="true"
-    				            style="position: relative;min-height: 30px;" 
+    				            style="position: relative;min-height: 30px;"
     				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'attributeObject')">
-    				            
+
     				            <li class='attributeElement' ng-repeat="attribute in class.attributes"
     				                dnd-type="'attributeObject'"
     				                dnd-draggable="attribute"
-    				                style="position: relative;" 
+    				                style="position: relative;"
     				                dnd-effect-allowed="move"
     				                dnd-moved="class.attributes.splice($index, 1)"
     				                draggable="true"
@@ -65,13 +66,13 @@
     				        <ul dnd-list="class.operations"
                                 dnd-allowed-types="['operationObject']"
     				            dnd-dragover="true"
-    				            style="position: relative;min-height: 30px;" 
+    				            style="position: relative;min-height: 30px;"
     				            dnd-drop="class.onElementDropped(event, index, item, external, type, 'operationObject')">
-    				            
+
     				            <li class='operationElement' ng-repeat="operation in class.operations"
     				                dnd-type="'operationObject'"
     				                dnd-draggable="operation"
-    				                style="position: relative;" 
+    				                style="position: relative;"
     				                dnd-effect-allowed="move"
     				                dnd-moved="class.operations.splice($index, 1)"
     				                draggable="true"

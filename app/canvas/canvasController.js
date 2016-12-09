@@ -62,6 +62,7 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         droppedElement.updatePosition([event.x - canvasLeft, event.y - canvasTop - event.target.clientHeight]);
         event.stopPropagation();
     };
+
 }])
 
 .directive('toggleEndpoint', function() {
@@ -77,9 +78,11 @@ return {
 
 .directive('toggleSelected', function() {
 return {
-    restrict: 'A', //Restricts to divs
+    restrict: 'AE',
     link: function(scope, element, attrs) {
-        element.bind('click', function() {
+        element.bind('click', function(event) {
+          event.stopPropagation(event);
+          console.log("Toggle" + element);
           angular.element(document.querySelectorAll(".selected")).removeClass('selected');
             element.toggleClass(attrs.toggleSelected);
         });
