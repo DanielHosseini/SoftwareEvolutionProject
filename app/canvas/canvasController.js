@@ -45,8 +45,9 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         }
     };
 
-    $scope.showHints = function(){
+    $scope.showHints = function(mouseEvent){
         $scope.hints = !$scope.hints;
+        mouseEvent.stopPropagation();
     };
 
     $scope.classMoved = function(event, movedClass) {
@@ -61,6 +62,10 @@ myApp.controller('canvasController', ['$scope', 'diagramService', function($scop
         var canvasTop = canvas.prop('offsetTop');
         droppedElement.updatePosition([event.x - canvasLeft, event.y - canvasTop - event.target.clientHeight]);
         event.stopPropagation();
+    };
+
+    $scope.canvasClicked = function() {
+        angular.element(document.querySelectorAll(".selected")).removeClass('selected');
     };
 
 }])
