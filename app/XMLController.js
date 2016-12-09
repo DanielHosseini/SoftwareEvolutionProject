@@ -1,6 +1,6 @@
 angular.module('myApp')
 .controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
-    function($scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
+    function(scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
         function toXMIClass(childs, namespace) {
             var returnString = "";
             if (typeof namespace !== 'undefined')
@@ -144,7 +144,7 @@ angular.module('myApp')
 
         }
 
-        $scope.exportXML = function() {
+        scope.exportXML = function() {
 
                 var XMLstring = '<?xml version="1.0" encoding="UTF-8"?><XMI xmi.version="1.1" xmlns:UML="href://org.omg/UML/1.3"><XMI.header><XMI.documentation><XMI.owner></XMI.owner><XMI.contact></XMI.contact><XMI.exporter>UML WEB Editor</XMI.exporter><XMI.exporterVersion>1.0</XMI.exporterVersion><XMI.notice></XMI.notice></XMI.documentation><XMI.metamodel xmi.name="UML" xmi.version="1.3" /></XMI.header><XMI.content><UML:Model xmi.id="UMLModel.3" name="Design Model" visibility="public" isSpecification="false" namespace="UMLModel.2" isRoot="false" isLeaf="false" isAbstract="false"><UML:Namespace.ownedElement>';
 
@@ -201,8 +201,8 @@ angular.module('myApp')
             } //END ALERT FUNC
 
         //XMLImporter
-        $scope.XMLImporter = function() {
-            var parent = this;
+        scope.XMLImporter = function() {
+            
             angular.element("#xmi-input-dialog").dialog({
                 autoOpen: false
             });
@@ -210,9 +210,9 @@ angular.module('myApp')
             angular.element("#xmi-input-dialog").dialog({
                 buttons: {
                     ImportXMI: function() {
-                        parent.importXML(angular.element("#xmi-input").val());
-                        $scope.$apply();
-                        angular.element(this).dialog("close");
+                        scope.importXML(angular.element("#xmi-input").val());
+                        scope.$apply();
+                        angular.element("#xmi-input-dialog").dialog("close");
                     }
                 }
             });
@@ -307,8 +307,7 @@ angular.module('myApp')
             }
         }
 
-        $scope.importXML = function(element) {
-
+        scope.importXML = function(element) {
                 var XMI = $.parseXML(element);
                 var model_elements = $(XMI).find('UML\\:Model, \\Model').find('UML\\:Namespace\\.ownedElement, \\Namespace\\.ownedElement').children();
                 var diagram_elements = $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element');
@@ -317,9 +316,9 @@ angular.module('myApp')
                 var ymax = 0;
                 var xmax = 0;
                 $(XMI).find('UML\\:Diagram, \\Diagram').find('UML\\:Diagram\\.element, Diagram\\.element').children().each(function() {
-                    if (typeof $(this).attr('geometry') !== 'undefined') {
-                        var xnew = Number($(this).attr('geometry').split(',')[0]) + Number($(this).attr('geometry').split(',')[2]);
-                        var ynew = Number($(this).attr('geometry').split(',')[1]) + Number($(this).attr('geometry').split(',')[3]);
+                    if (typeof $(scope).attr('geometry') !== 'undefined') {
+                        var xnew = Number($(scope).attr('geometry').split(',')[0]) + Number($(scope).attr('geometry').split(',')[2]);
+                        var ynew = Number($(scope).attr('geometry').split(',')[1]) + Number($(scope).attr('geometry').split(',')[3]);
 
                         if (xnew > xmax)
                             xmax = xnew
@@ -446,7 +445,7 @@ angular.module('myApp')
 
             } //End Import Method
 
-        $scope.getObserverLog = function() {
+        scope.getObserverLog = function() {
             observerService.addLogEntry("Hello this is a test entry from XMLController")
             var log = observerService.getLog();
             var blob = new Blob([log], {

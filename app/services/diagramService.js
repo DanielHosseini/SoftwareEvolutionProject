@@ -103,8 +103,8 @@ angular.module('myApp')
     }
 
     DiagramService.addElement = function(element, position) {
-        var top = angular.element(document.querySelector('#diagram-canvas')).prop('offsetTop')
-        var left = angular.element(document.querySelector('#diagram-canvas')).prop('offsetLeft')
+        var top = angular.element('#diagram-canvas').prop('offsetTop');
+        var left = angular.element('#diagram-canvas').prop('offsetLeft');
         position[0] = position[0] - left;
         position[1] = position[1] - top;
 

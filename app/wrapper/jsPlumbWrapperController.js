@@ -1,6 +1,7 @@
 angular.module('myApp')
-.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope) {
-    $scope.printClasses = function() {
+.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function(scope) {
+    var vm = this;
+    scope.printClasses = function() {
     };
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
@@ -51,27 +52,27 @@ angular.module('myApp')
         var theelm = $elm.getElement();
         var par = theelm.parentElement;
         angular.element(par).append("<input id=\"label-edit\" type=\"text\" size=\"10\" value=\"" + name + "\">");
-        angular.element(document.getElementById("label-edit")).css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
-        angular.element(document.getElementById("label-edit")).focus();
-        angular.element(document.getElementById("label-edit")).on("keypress blur", function(e) {
+        angular.element("#label-edit").css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
+        angular.element("#label-edit").focus();
+        angular.element("#label-edit").on("keypress blur", function(e) {
             if (e.keyCode === 13 || !e.keyCode) {
-                connector.getOverlay("label").setLabel(angular.element(this).val());
+                connector.getOverlay("label").setLabel(angular.element(vm).val());
                 $elm.show();
-                angular.element(document.getElementById("label-edit")).remove();
+                angular.element("#label-edit").remove();
             }
         });
 
         e.preventDefault();
 
     });
-    $scope.initTargets = function() {
+    scope.initTargets = function() {
         jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
             dropOptions: { hoverClass: "dragHover" },
             anchor: "Continuous"
         });
     };
 
-    $scope.initEndpoints = function(nextColour, curved) {
+    scope.initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
             if (angular.element(e).attr('id') === undefined) { //check if endpoint already exsists [toolbox-demo]
@@ -86,7 +87,7 @@ angular.module('myApp')
         });
     };
 
-    $scope.changeEndShape = function(c, type) {
+    scope.changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
         var connector = c;
         if (connector.getOverlay("directedAssociation") || type === "aggregate") {
@@ -139,10 +140,10 @@ angular.module('myApp')
             }]);
         }
     };
-    $scope.init = function() {
+    scope.init = function() {
         jsPlumb.bind("ready", function() {
             jsPlumb.bind("connection", function() {
-                $scope.$apply(function() {
+                scope.$apply(function() {
                 });
             });
         });
@@ -171,7 +172,7 @@ angular.module('myApp')
                 start: function() {
                 },
                 stop: function(event) {
-                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvas = angular.element('#diagram-canvas');
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
 
@@ -200,7 +201,7 @@ angular.module('myApp')
                 stop: function(event) {
                     element[0].style.cssText = "";
 
-                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvas = angular.element('#diagram-canvas');
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
 

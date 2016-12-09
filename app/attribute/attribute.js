@@ -1,8 +1,8 @@
 angular.module('myApp')
-.controller('AttributeController', ['$scope', 'attributeObject', function($scope, attributeObject) {
+.controller('AttributeController', ['$scope', 'attributeObject', function(scope, attributeObject) {
 
-    $scope.attributeTemplate = new attributeObject("Attribute");
-    $scope.attributeTemplate.id = -1;
+    scope.attributeTemplate = new attributeObject("Attribute");
+    scope.attributeTemplate.id = -1;
 
 }])
 .directive('attributeDirective', function(){
