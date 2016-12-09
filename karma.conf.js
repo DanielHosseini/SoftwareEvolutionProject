@@ -16,7 +16,8 @@ module.exports = function(config) {
       'class/*.js',
       'attribute/*.js',
       'package/*.js',
-      'association/*.js'
+      'association/*.js',
+      "lib/angular-drag-and-drop-lists.min.js"
     ],
 
     autoWatch: true,

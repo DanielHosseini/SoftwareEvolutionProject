@@ -12,19 +12,10 @@ describe('AttributeController', function() {
         it('changes the name of the Attribute to fullName', function(){
             var $scope = {};
             var controller = $controller('AttributeController', {$scope: $scope});
-            $scope.name = 'Attribute';
-            $scope.setName('fullName');
-            expect($scope.name).toEqual('fullName');
+            $scope.attributeTemplate.name = 'Attribute';
+            $scope.attributeTemplate.setName('fullName');
+            expect($scope.attributeTemplate.name).toEqual('fullName');
         });
     });
 
-    describe('$scope.position', function(){
-        it('updates the position to be (20,10)', function(){
-            var $scope = {};
-            var controller = $controller('AttributeController', {$scope: $scope});
-            $scope.updatePosition({x: 20, y: 10});
-            expect($scope.position.x).toEqual(20);
-            expect($scope.position.y).toEqual(10);
-        })
-    })
 });
