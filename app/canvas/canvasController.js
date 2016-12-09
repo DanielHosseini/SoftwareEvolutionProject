@@ -1,5 +1,5 @@
 angular.module('myApp')
-.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
+.controller('CanvasController', ['$scope', 'diagramService', function($scope, diagramService) {
         $scope.hints = false;
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;
