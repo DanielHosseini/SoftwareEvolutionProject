@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.controller('PackageController', ['$scope', function($scope) {
+angular.module('myApp')
+.controller('PackageController', ['$scope', function($scope) {
 
 	$scope.name = "Package";
 	$scope.classes = [];

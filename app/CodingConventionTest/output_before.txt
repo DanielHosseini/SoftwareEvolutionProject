@@ -1,0 +1,167 @@
+
+D:\SourceTree_SEP\app\association\association.js
+   3:1  error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+   5:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   6:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   7:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   8:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   9:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  10:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  11:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  12:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  14:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  15:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  17:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  18:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  20:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  21:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  23:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  24:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  26:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  27:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  29:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  33:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+
+D:\SourceTree_SEP\app\association\associationObject.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\attribute\attribute.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  5:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+
+D:\SourceTree_SEP\app\attribute\attributeObject.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\canvas\canvasController.js
+   3:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+   3:1   error  The canvasController controller should follow this pattern: /[A-Z].*Controller$/                        angular/controller-name
+   4:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   5:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   6:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   7:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   8:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  13:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  18:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  20:11  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  28:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  38:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  46:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  47:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  51:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  56:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  58:38  error  You should use the $document service instead of the default document object                             angular/document-service
+  65:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  66:25  error  You should use the $document service instead of the default document object                             angular/document-service
+  89:27  error  You should use the $document service instead of the default document object                             angular/document-service
+
+D:\SourceTree_SEP\app\class\class.js
+  3:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  5:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  8:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  9:42  error  You should use the $document service instead of the default document object                             angular/document-service
+
+D:\SourceTree_SEP\app\class\classObject.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\operation\operation.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  5:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+
+D:\SourceTree_SEP\app\operation\operationObject.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\package\package.js
+   3:1  error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+   5:2  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   6:2  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   7:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   8:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   9:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  11:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  12:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  14:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  17:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  20:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  26:5  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  27:9  error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+
+D:\SourceTree_SEP\app\package\packageObject.js
+  3:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\services\diagramService.js
+    2:1   error  Avoid using a variable and instead use chaining with the getter syntax       angular/module-getter
+    2:1   error  You should prefer the factory() method instead of service()                  angular/no-service-method
+  106:35  error  You should use the $document service instead of the default document object  angular/document-service
+  107:36  error  You should use the $document service instead of the default document object  angular/document-service
+
+D:\SourceTree_SEP\app\services\idGenerator.js
+  2:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+  2:1  error  You should prefer the factory() method instead of service()             angular/no-service-method
+
+D:\SourceTree_SEP\app\services\ObserverService.js
+  2:1  error  Avoid using a variable and instead use chaining with the getter syntax  angular/module-getter
+
+D:\SourceTree_SEP\app\wrapper\jsPlumbWrapperController.js
+    3:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+    4:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   55:25  error  You should use the $document service instead of the default document object                             angular/document-service
+   56:25  error  You should use the $document service instead of the default document object                             angular/document-service
+   57:25  error  You should use the $document service instead of the default document object                             angular/document-service
+   59:72  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+   61:33  error  You should use the $document service instead of the default document object                             angular/document-service
+   68:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   75:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+   90:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  143:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  153:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  163:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  175:50  error  You should use the $document service instead of the default document object                             angular/document-service
+  193:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  204:50  error  You should use the $document service instead of the default document object                             angular/document-service
+
+D:\SourceTree_SEP\app\app.js
+   3:13  error  Declare modules without a variable using the setter syntax                                              angular/module-setter
+   9:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  10:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  11:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  12:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  13:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  14:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  15:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  16:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  17:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  18:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  20:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  21:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  23:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  24:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  26:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  27:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  30:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  31:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  34:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  37:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  38:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  40:5   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  42:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  46:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  60:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  66:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  72:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+
+D:\SourceTree_SEP\app\XMLController.js
+    2:1   error  Avoid using a variable and instead use chaining with the getter syntax                                  angular/module-getter
+  147:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  204:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  205:26  error  You should assign "this" to a consistent variable across your project: vm                               angular/controller-as-vm
+  215:41  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  310:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+  320:34  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  321:45  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  321:94  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  322:45  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  322:94  error  You should not use "this" directly. Instead, assign it to a variable called "vm"                        angular/controller-as-vm
+  449:9   error  You should not set properties on $scope in controllers. Use controllerAs syntax and add data to "this"  angular/controller-as
+
+✖ 130 problems (130 errors, 0 warnings)
+

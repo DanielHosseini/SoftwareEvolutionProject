@@ -1,6 +1,5 @@
-var myApp = angular.module('myApp');
-
-myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope) {
+angular.module('myApp')
+.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope) {
     $scope.printClasses = function() {
     };
     jsPlumb.importDefaults({
@@ -148,9 +147,9 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
             });
         });
     };
-}]);
+}])
 
-myApp.directive('plumbNonDraggable', ['diagramService', function() {
+.directive('plumbNonDraggable', ['diagramService', function() {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -158,9 +157,9 @@ myApp.directive('plumbNonDraggable', ['diagramService', function() {
             jsPlumb.setDraggable(element, false);
         }
     };
-}]);
+}])
 
-myApp.directive('plumbItem', ['diagramService', function(diagramService) {
+.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -188,9 +187,9 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
             });
         }
     };
-}]);
+}])
 
-myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
+.directive('plumbMenuItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',

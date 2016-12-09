@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
+angular.module('myApp')
+.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
 
     // Instantiate the class object
     var classObject = function(name, position) {

@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('operationObject', ['idGenerator', function(idGenerator) {
+angular.module('myApp')
+.factory('operationObject', ['idGenerator', function(idGenerator) {
 
     // Instantiate the operation object
     var operationObject = function(name) {
@@ -12,11 +11,12 @@ myApp.factory('operationObject', ['idGenerator', function(idGenerator) {
     };
 
     operationObject.prototype.toggleSelected = function () {
-      if (this.selected) {
-        this.selected = false;
-
-      }
-      else{this.selected = true}
+        if (this.selected) {
+            this.selected = false;
+        }
+        else {
+            this.selected = true;
+        }
     };
 
     operationObject.prototype.getSelected = function(){

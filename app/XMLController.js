@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
+angular.module('myApp')
+.controller('XMLController', ['$scope', 'observerService', 'diagramService', 'classObject', 'packageObject', 'attributeObject', 'operationObject',
     function($scope, observerService, diagramService, classObject, packageObject, attributeObject, operationObject) {
         function toXMIClass(childs, namespace) {
             var returnString = "";

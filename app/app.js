@@ -1,12 +1,10 @@
-
 // Declare app level module which depends on views, and components
-var myApp = angular.module('myApp', [
+angular.module('myApp', [
   'ngRoute',
   'myApp.version',
   'dndLists'
-]);
-
-myApp.controller('AppController', ['$scope', 'diagramService', 'observerService', function($scope, diagramService, observerService){
+])
+.controller('AppController', ['$scope', 'diagramService', 'observerService', function($scope, diagramService, observerService){
     $scope.tour = false;
     $scope.workflow = false;
     $scope.about = false;
@@ -41,9 +39,9 @@ myApp.controller('AppController', ['$scope', 'diagramService', 'observerService'
         observerService.addLogEntry($scope.question);
         $scope.feedback = !$scope.feedback;
     }
-}]);
+}])
 
-myApp.directive('ngConfirmClick', [function(){
+.directive('ngConfirmClick', [function(){
     return{
         link: function (scope, element, attr) {
             var msg = attr.ngConfirmClick || "Are you sure?";
@@ -55,21 +53,21 @@ myApp.directive('ngConfirmClick', [function(){
             });
         }
     }
-}]);
+}])
 
-myApp.directive('workflowDirective', function(){
+.directive('workflowDirective', function(){
     return {
         templateUrl: 'directives/workflow.html'
     };
-});
+})
 
-myApp.directive('aboutDirective', function(){
+.directive('aboutDirective', function(){
     return {
         templateUrl: 'directives/about.html'
     };
-});
+})
 
-myApp.directive('feedbackDirective', function(){
+.directive('feedbackDirective', function(){
     return {
         templateUrl: 'directives/feedback.html'
     };

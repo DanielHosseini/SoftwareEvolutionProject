@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.factory('observerService', function() {
+angular.module('myApp')
+.factory('observerService', function() {
     var log = "";
 
     return {

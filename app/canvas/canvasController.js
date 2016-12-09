@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
+angular.module('myApp')
+.controller('canvasController', ['$scope', 'diagramService', function($scope, diagramService) {
         $scope.hints = false;
         $scope.diagram = diagramService.diagram;
         $scope.packages = $scope.diagram.packages;
@@ -119,4 +118,4 @@ return {
             templateUrl: "directives/windowhints.html"
         }
     }
-})
+});

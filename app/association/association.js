@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.controller('AssociationController', function ($scope) {
+angular.module('myApp')
+.controller('AssociationController', function ($scope) {
 
     $scope.name = "Association";
     $scope.direction = "Undirected";//Undirected - Directed

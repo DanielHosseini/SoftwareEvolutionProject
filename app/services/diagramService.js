@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
+angular.module('myApp')
+.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
         'classCount': 0,

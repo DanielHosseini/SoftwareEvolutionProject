@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('attributeObject', ['idGenerator', function(idGenerator) {
+angular.module('myApp')
+.factory('attributeObject', ['idGenerator', function(idGenerator) {
 
     // Instantiate the attribute object
     var attributeObject = function(name) {

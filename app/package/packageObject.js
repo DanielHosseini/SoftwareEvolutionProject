@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
+angular.module('myApp')
+.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
 
     // Instantiate the package object
     var packageObject = function(name, position) {

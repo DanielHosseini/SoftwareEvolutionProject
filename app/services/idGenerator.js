@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.service('idGenerator', function() {
+angular.module('myApp')
+.service('idGenerator', function() {
 	var idGenerator = {};
 	var id = 0;
 
