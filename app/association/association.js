@@ -1,5 +1,5 @@
 angular.module('myApp')
-.controller('AssociationController', function (scope) {
+.controller('AssociationController', ['$scope',function (scope) {
 
     scope.name = "Association";
     scope.direction = "Undirected";//Undirected - Directed
@@ -32,7 +32,7 @@ angular.module('myApp')
     scope.getMultiplicity = function(){
         return scope.multiplicity;
     }
-})
+}])
 .directive('associationDirective', function(){
     return {
         templateUrl: 'association/association.html'
