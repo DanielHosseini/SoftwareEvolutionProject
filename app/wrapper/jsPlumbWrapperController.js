@@ -208,27 +208,6 @@ angular.module('myApp')
                     var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
                     var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
 
-                    /*
-                      TODO:
-
-                      - Add id to dropped elements then pass it to the canvas controller
-
-                    Handle events in this file, in the event say through canvasController
-                    to do stuff with diagramService
-
-
-                    func(event){
-                      ...
-                      controller.update()
-                    }
-
-                    //In the canvas controller far, far away
-                    - Check where it's dropped, if outside canvas then put it in the canvas at the nearest edge
-                    - Paint in canvas (Visual)
-                    fun update(){
-                    service.updateSoemthing()
-                    }
-                    */
                     var droppedEl = angular.element(event.el);
                     diagramService.addElement(droppedEl, [elementLeft, elementTop]);
                 },

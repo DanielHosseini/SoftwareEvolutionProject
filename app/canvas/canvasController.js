@@ -10,7 +10,6 @@ angular.module('myApp')
         });
 
         scope.doubleClick = function(clickedElement) {
-            // TODO, stop editing all other classes and packages
             clickedElement.startEditName();
         };
 

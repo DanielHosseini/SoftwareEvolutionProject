@@ -11,11 +11,6 @@ angular.module('myApp')
     };
 
     attributeObject.prototype.toggleSelected = function () {
-      /*if (this.selected) {
-        this.selected = false;
-
-      }
-      else{this.selected = true}*/
       console.log("Toggle Attribute");
     };
 

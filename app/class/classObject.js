@@ -63,11 +63,6 @@ angular.module('myApp')
     };
 
     classObject.prototype.toggleSelected = function () {
-      /*if (this.selected) {
-        this.selected = false;
-
-      }
-      else{this.selected = true}*/
       console.log("Toggle Class");
 
     };
