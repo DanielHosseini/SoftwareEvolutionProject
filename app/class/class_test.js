@@ -12,9 +12,9 @@ describe('ClassController', function() {
         it('changes the name of the class to main', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.name = 'not main';
-            $scope.setName('main');
-            expect($scope.name).toEqual('main');
+            $scope.classTemplate.name = 'not main';
+            $scope.classTemplate.setName('main');
+            expect($scope.classTemplate.name).toEqual('main');
         });
     });
 
@@ -22,22 +22,22 @@ describe('ClassController', function() {
         it('adds attribute to the list should be 1 longer', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            var length = $scope.attributes.length;
-            $scope.addAttribute('attr1');
-            expect($scope.attributes.length).toEqual(length+1);
+            var length = $scope.classTemplate.attributes.length;
+            $scope.classTemplate.addAttribute('attr1');
+            expect($scope.classTemplate.attributes.length).toEqual(length+1);
         });
         it('retrieves the attributelist should return length of 1', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.addAttribute('attr1');
-            expect($scope.attributes.length).toEqual(1);
+            $scope.classTemplate.addAttribute('attr1');
+            expect($scope.classTemplate.attributes.length).toEqual(1);
         });
         it('removes an attribute from the list should return length of 0', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.addAttribute('attr1');
-            $scope.deleteAttribute('attr1');
-            expect($scope.attributes.length).toEqual(0);
+            $scope.classTemplate.addAttribute('attr1');
+            $scope.classTemplate.deleteAttribute('attr1');
+            expect($scope.classTemplate.attributes.length).toEqual(0);
         });
     });
 
@@ -45,22 +45,22 @@ describe('ClassController', function() {
         it('adds operation to the list should be 1 longer', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            var length = $scope.operations.length;
-            $scope.addOperation('opr1');
-            expect($scope.operations.length).toEqual(length+1);
+            var length = $scope.classTemplate.operations.length;
+            $scope.classTemplate.addOperation('opr1');
+            expect($scope.classTemplate.operations.length).toEqual(length+1);
         });
         it('retrieves the attributelist should return length of 1', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.addOperation('opr1');
-            expect($scope.operations.length).toEqual(1);
+            $scope.classTemplate.addOperation('opr1');
+            expect($scope.classTemplate.operations.length).toEqual(1);
         });
         it('removes an attribute from the list should return length of 0', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.addOperation('opr1');
-            $scope.deleteOperation('opr1');
-            expect($scope.operations.length).toEqual(0);
+            $scope.classTemplate.addOperation('opr1');
+            $scope.classTemplate.deleteOperation('opr1');
+            expect($scope.classTemplate.operations.length).toEqual(0);
         });
     });
 
@@ -68,9 +68,9 @@ describe('ClassController', function() {
         it('updates the position to be (10,10)', function(){
             var $scope = {};
             $controller('ClassController', {$scope: $scope});
-            $scope.updatePosition({x: 10, y: 10});
-            expect($scope.position.x).toEqual(10);
-            expect($scope.position.y).toEqual(10);
+            $scope.classTemplate.updatePosition({x: 10, y: 10});
+            expect($scope.classTemplate.position.x).toEqual(10);
+            expect($scope.classTemplate.position.y).toEqual(10);
         })
     })
 });
