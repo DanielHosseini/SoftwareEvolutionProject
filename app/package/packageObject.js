@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
+angular.module('myApp')
+.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
 
     // Instantiate the package object
     var packageObject = function(name, position) {
@@ -12,7 +11,7 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         this.editMode = false;
     };
 
-    packageObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
+    packageObject.prototype.onElementDropped = function(event, index, item) {
         if (item.type === "class") {
             // Notify listeners so the canvas can remove the class from its classes array
             $rootScope.$broadcast('class:addedToPackage', item.id);

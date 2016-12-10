@@ -1,6 +1,5 @@
-
-var myApp = angular.module('myApp');
-myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
+angular.module('myApp')
+.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
 
     // Instantiate the class object
     var classObject = function(name, position) {
@@ -37,7 +36,7 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
                 return newElement;
             }
         }
-        
+
         if (item.type === "operation") {
             var newElement = new operationObject(item.name);
             if (item.id === -1) {
@@ -64,11 +63,13 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
     };
 
     classObject.prototype.toggleSelected = function () {
-      if (this.selected) {
+      /*if (this.selected) {
         this.selected = false;
 
       }
-      else{this.selected = true}
+      else{this.selected = true}*/
+      console.log("Toggle Class");
+
     };
 
     classObject.prototype.getSelected = function(){

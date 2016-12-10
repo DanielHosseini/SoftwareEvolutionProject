@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
+angular.module('myApp')
+.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
         'classCount': 0,
@@ -103,8 +103,8 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
     }
 
     DiagramService.addElement = function(element, position) {
-        var top = angular.element(document.querySelector('#diagram-canvas')).prop('offsetTop')
-        var left = angular.element(document.querySelector('#diagram-canvas')).prop('offsetLeft')
+        var top = angular.element('#diagram-canvas').prop('offsetTop');
+        var left = angular.element('#diagram-canvas').prop('offsetLeft');
         position[0] = position[0] - left;
         position[1] = position[1] - top;
 
@@ -122,7 +122,10 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
 
         }
 
-        if (element.hasClass('toolboxOperation')) {}
+        if (element.hasClass('toolboxOperation')) {
+          //Find class it was dropped on
+
+        }
 
         alertObserver();
     }

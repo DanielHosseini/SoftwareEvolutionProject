@@ -1,5 +1,5 @@
 <div ng-repeat="class in classes"
-    ng-controller="canvasController"
+    ng-controller="CanvasController"
     draggable="true"
     dnd-type="'classObject'"
     dnd-draggable="class"
@@ -19,7 +19,7 @@
         <input class="edittext" ng-style="{ display: class.editMode === false ? 'none' : '' }" type="text" ng-model="class.name" ng-keyup="editNameKeyPressed(class, $event)" ng-blur="editNameLostFocus(class)"/>
     </div>
     <hr>
-    <div class="attribute-holder">
+    <div class="attribute-holder" >
         <ul dnd-list="class.attributes"
             dnd-allowed-types="['attributeObject']"
             dnd-dragover="true"
@@ -34,7 +34,8 @@
                 dnd-moved="class.attributes.splice($index, 1)"
                 draggable="true"
                 ng-dblClick="doubleClick(attribute); $event.stopPropagation()">
-                <div ng-style="{ display: attribute.editMode === true ? 'none' : '' }">{{attribute.name}}</div>
+                <div toggle-selected="selected"
+ng-style="{ display: attribute.editMode === true ? 'none' : '' }">{{attribute.name}}</div>
                 <input class="edittext" ng-style="{ display: attribute.editMode === false ? 'none' : '' }" type="text" ng-model="attribute.name" ng-keyup="editNameKeyPressed(attribute, $event); $event.stopPropagation()" ng-blur="editNameLostFocus(attribute)">
             </li>
         </ul>
@@ -55,7 +56,7 @@
                 dnd-moved="class.operations.splice($index, 1)"
                 draggable="true"
                 ng-dblClick="doubleClick(operation); $event.stopPropagation()">
-                <div ng-style="{ display: operation.editMode === true ? 'none' : '' }">{{operation.name}}</div>
+                <div toggle-selected="selected" ng-style="{ display: operation.editMode === true ? 'none' : '' }">{{operation.name}}</div>
                 <input class="edittext" ng-style="{ display: operation.editMode === false ? 'none' : '' }" type="text" ng-model="operation.name" ng-keyup="editNameKeyPressed(operation, $event); $event.stopPropagation()" ng-blur="editNameLostFocus(operation)">
             </li>
         </ul>

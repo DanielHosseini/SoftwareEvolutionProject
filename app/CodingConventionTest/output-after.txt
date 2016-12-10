@@ -1,0 +1,9 @@
+
+D:\SourceTree_SEP\app\services\diagramService.js
+  1:1  error  You should prefer the factory() method instead of service()  angular/no-service-method
+
+D:\SourceTree_SEP\app\services\idGenerator.js
+  1:1  error  You should prefer the factory() method instead of service()  angular/no-service-method
+
+✖ 2 problems (2 errors, 0 warnings)
+
