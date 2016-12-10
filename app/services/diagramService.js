@@ -1,5 +1,5 @@
-var myApp = angular.module('myApp');
-myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
+angular.module('myApp')
+.service('diagramService', ['$rootScope', 'classObject', 'packageObject', function($rootScope, classObject, packageObject) {
     var DiagramService = this;
     DiagramService.diagram = {
         'classCount': 0,
@@ -12,10 +12,22 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
     
 
     $rootScope.$on('class:addedToPackage', function(event, classId) {
-        for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
-            if (DiagramService.diagram.classes[i].id === classId) {
-                DiagramService.removeClassAt(i);
-                break;
+        if (classId === -1) {
+            // This means that a new class has been dropped on a package,
+            // but had been added before that to the diagram on the canvas,
+            // so we remove the last class here
+            setTimeout(function() {
+                DiagramService.removeClassAt(DiagramService.diagram.classes.length - 1);
+                $rootScope.$digest();
+            }, 100);
+        } else {
+            // This means that a class that was on the canvas was added to a package,
+            // so find it and remove it from the classes without packages
+            for (i = 0; i < DiagramService.diagram.classes.length; i++) { 
+                if (DiagramService.diagram.classes[i].id === classId) {
+                    DiagramService.removeClassAt(i);
+                    break;
+                }
             }
         }
     });
@@ -91,29 +103,29 @@ myApp.service('diagramService', ['$rootScope', 'classObject', 'packageObject', f
     }
 
     DiagramService.addElement = function(element, position) {
-        var top = angular.element(document.querySelector('#diagram-canvas')).prop('offsetTop')
-        var left = angular.element(document.querySelector('#diagram-canvas')).prop('offsetLeft')
+        var top = angular.element('#diagram-canvas').prop('offsetTop');
+        var left = angular.element('#diagram-canvas').prop('offsetLeft');
         position[0] = position[0] - left;
         position[1] = position[1] - top;
 
         if (element.hasClass('toolboxClass')) {
             DiagramService.addClass(new classObject('Class', position));
-            console.log("diagramService last class position", DiagramService.getClasses()[DiagramService.getClasses().length - 1].position);
         }
 
         if (element.hasClass('toolboxPackage')) {
             DiagramService.addPackage(new packageObject('Package', position));
-            console.log("diagramService last package position", DiagramService.getPackages()[DiagramService.getPackages().length - 1].position);
         }
 
         if (element.hasClass('toolboxAttribute')) {
           //Find class it was dropped on
 
 
-          console.log("Dropped random attribute");
         }
 
-        if (element.hasClass('toolboxOperation')) {}
+        if (element.hasClass('toolboxOperation')) {
+          //Find class it was dropped on
+
+        }
 
         alertObserver();
     }

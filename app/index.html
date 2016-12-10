@@ -12,7 +12,6 @@
     <title>WebUML</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css"> -->
     <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
     <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <link rel="stylesheet" href="app.css">
@@ -68,8 +67,8 @@
                     <td>
                         <div id="helpblock" style="display: none;">
                         </div>
-                        <img src="images/doc.png" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: hand">
-                        <img src="images/note.png" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: hand">
+                        <img src="images/doc.png" alt="Show task" onclick="swapTask()" id="task-button" style="border: 2px solid black; height: 50px; cursor: pointer;">
+                        <img src="images/note.png" alt="Send feedback" id="question-button" ng-click="showFeedback()" style="border: 2px solid black; height: 50px; cursor: pointer">
                     </td>
                 </tr>
             </tbody>
@@ -78,14 +77,23 @@
             <div ng-show="toolbox" id="toolbox">
                 <h1 class="title">UML Elements</h1>
                 <hr class="seperator">
-                <div plumb-menu-item ng-controller="ClassController" class="toolboxClass">
-                    <class-directive></class-directive>
-                </div>
-                <ul ng-controller="AttributeController" class="toolboxAttribute">
-                    <li dnd-draggable="attributeTemplate" draggable="true" dnd-type="attributeObject" class="attribute ui-sortable-handle">{{attributeTemplate.name}}</li>
+                <ul ng-controller="ClassController" style="list-style-type: none;">
+                    <li dnd-draggable="classTemplate" draggable="true" dnd-type="'classObject'" class="class ui-sortable-handle" dnd-dragend="newClassDragEndHandler(event, classTemplate)">
+                        <div class="ep" id="jsPlumb_1_12">➜</div>
+                        <h1 class="heading" ng-model='name'>{{classTemplate.name}}</h1>
+                        <hr>
+                        <div style="min-height: 30px;">
+                        </div>
+                        <hr>
+                        <div style="min-height: 30px;">
+                        </div>
+                    </li>
                 </ul>
-                <ul ng-controller="OperationController" class="toolboxOperation">
-                    <li dnd-draggable="operationTemplate" draggable="true" dnd-type="operationObject" class="operation ui-sortable-handle">{{operationTemplate.name}}</li>
+                <ul ng-controller="AttributeController" class="toolboxAttribute" style="margin-top: 50px;">
+                    <li dnd-draggable="attributeTemplate" draggable="true" dnd-type="'attributeObject'" class="attribute ui-sortable-handle">{{attributeTemplate.name}}</li>
+                </ul>
+                <ul ng-controller="OperationController" class="toolboxOperation" style="margin-top: 50px;">
+                    <li dnd-draggable="operationTemplate" draggable="true" dnd-type="'operationObject'" class="operation ui-sortable-handle">{{operationTemplate.name}}</li>
                 </ul>
                 <div plumb-menu-item ng-controller="PackageController" class="toolboxPackage">
                     <package-directive></package-directive>
@@ -103,7 +111,7 @@
                     <img id="avatar" width="100px" src="../images/DaveAvatar.png" alt="DaveAvatar">
                 </div>
             </div>
-            <div diagram-holder id="diagram-canvas" style="position: relative;" ng-controller="canvasController">
+            <div diagram-holder ng-click="canvasClicked()" id="diagram-canvas" style="position: relative;" ng-controller="CanvasController">
                 <key-hint></key-hint>
                 <div>
                     <canvas-classes-directive></canvas-classes-directive>
@@ -116,9 +124,6 @@
         <p>Please enter your xml code</p>
         <textarea id="xmi-input"></textarea>
     </div>
-    <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="lib/angular-drag-and-drop-lists.min.js"></script>

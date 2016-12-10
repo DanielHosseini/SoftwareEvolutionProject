@@ -1,6 +1,5 @@
-'use strict';
-var myApp = angular.module('myApp');
-myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
+angular.module('myApp')
+.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', function($rootScope, idGenerator, classObject) {
 
     // Instantiate the package object
     var packageObject = function(name, position) {
@@ -12,17 +11,29 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         this.editMode = false;
     };
 
-    packageObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
+    packageObject.prototype.onElementDropped = function(event, index, item) {
         if (item.type === "class") {
+            // Notify listeners so the canvas can remove the class from its classes array
+            $rootScope.$broadcast('class:addedToPackage', item.id);
             var newElement = new classObject(item.name, item.position);
             newElement.attributes = item.attributes;
             newElement.operations = item.operations;
-            this.addClass(newElement, index);
 
-            // Notify listeners so the canvas can remove the class from its classes array
-            $rootScope.$broadcast('class:addedToPackage', item.id);
+            if (item.id === -1) {
+                // Element coming from toolbox so add the new element
+                this.addClassAt(newElement, index);
+
+                return true; 
+            } else {
+                return newElement;
+            }
         }
 
+        return false;
+    };
+
+    packageObject.prototype.dragoverCallback = function(event, index, external, type) {
+        console.log(event, type);
         return true;
     };
 
@@ -50,8 +61,16 @@ myApp.factory('packageObject', ['$rootScope', 'idGenerator', 'classObject', func
         this.classes.push(newClass);
     };
 
+    packageObject.prototype.addClassAt = function(newClass, index) {
+        this.classes.splice(index, 0, newClass);
+    };
+
     packageObject.prototype.getClasses = function() {
         return this.classes;
+    };
+
+    packageObject.prototype.deleteClassAt = function(index) {
+        this.classes.splice(index, 1);
     };
 
     packageObject.prototype.deleteClass = function(deletedClass) {

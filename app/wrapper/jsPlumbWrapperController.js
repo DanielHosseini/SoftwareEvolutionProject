@@ -1,9 +1,7 @@
-var myApp = angular.module('myApp');
-
-//TODO: Fix observerService
-myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function($scope, diagramService) {
-    $scope.printClasses = function() {
-        console.log(diagramService.getPackages());
+angular.module('myApp')
+.controller('jsPlumbWrapperController', ['$scope', 'diagramService', function(scope) {
+    var vm = this;
+    scope.printClasses = function() {
     };
     jsPlumb.importDefaults({
         Endpoint: ["Dot", { radius: 2 }],
@@ -11,7 +9,6 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("contextmenu", function(c, e) {
-        console.log("contextmenu");
         var isMac = e.metaKey && window.navigator.platform === "MacIntel"
         var isWin = e.ctrlKey && window.navigator.platform === "Win32"
         if ((isMac || isWin) && c.getOverlay("directedAssociation")) {
@@ -34,52 +31,48 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
     });
 
     jsPlumb.bind("connection", function() {
-        //observerService.addLogEntry('CREATE', 'ASSOCIATION', 'NULL', info.sourceId, info.targetId);
     });
 
     jsPlumb.bind("click", function(c, e) {
-        console.log("clicked");
         if (e.altKey || e.keyCode === 18) {
-            e.preventDefault();
-            //observerService.addLogEntry('REMOVE', 'ASSOCIATION', 'NULL', c.sourceId, c.targetId);
+            e.preventDefault();            
             jsPlumb.detach(c);
         }
     });
 
     jsPlumb.bind("dblclick", function(c, e) {
-        console.log("dblclick");
         var connector = c;
         if (connector.getOverlay("label") === null) {
             connector.addOverlay(["Label", { label: "label", id: "label", cssClass: "connectionLabel" }]);
         }
         var name = connector.getOverlay("label").getLabel();
-        angular.element(name).bind("click", function() { console.log('click') });
-        $elm = connector.getOverlay("label");
+        angular.element(name).bind("click", function() {});
+        var $elm = connector.getOverlay("label");
         $elm.hide();
         var theelm = $elm.getElement();
         var par = theelm.parentElement;
         angular.element(par).append("<input id=\"label-edit\" type=\"text\" size=\"10\" value=\"" + name + "\">");
-        angular.element(document.getElementById("label-edit")).css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
-        angular.element(document.getElementById("label-edit")).focus();
-        angular.element(document.getElementById("label-edit")).on("keypress blur", function(e) {
+        angular.element("#label-edit").css({ position: 'absolute', top: angular.element(theelm).css("top"), left: angular.element(theelm).css("left") });
+        angular.element("#label-edit").focus();
+        angular.element("#label-edit").on("keypress blur", function(e) {
             if (e.keyCode === 13 || !e.keyCode) {
-                connector.getOverlay("label").setLabel(angular.element(this).val());
+                connector.getOverlay("label").setLabel(angular.element(vm).val());
                 $elm.show();
-                angular.element(document.getElementById("label-edit")).remove();
+                angular.element("#label-edit").remove();
             }
         });
 
         e.preventDefault();
 
     });
-    initTargets = function() {
+    scope.initTargets = function() {
         jsPlumb.makeTarget(jsPlumb.getSelector(".class"), {
             dropOptions: { hoverClass: "dragHover" },
             anchor: "Continuous"
         });
     };
 
-    initEndpoints = function(nextColour, curved) {
+    scope.initEndpoints = function(nextColour, curved) {
         angular.element(".ep").each(function(i, e) {
             var p = angular.element(e).parent();
             if (angular.element(e).attr('id') === undefined) { //check if endpoint already exsists [toolbox-demo]
@@ -94,7 +87,7 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
         });
     };
 
-    changeEndShape = function(c, type) {
+    scope.changeEndShape = function(c, type) {
         // Right click to change between association types: Undirected association => Directed association => Aggregation => Composition => Inheritance and Realization
         var connector = c;
         if (connector.getOverlay("directedAssociation") || type === "aggregate") {
@@ -147,29 +140,27 @@ myApp.controller('jsPlumbWrapperController', ['$scope', 'diagramService', functi
             }]);
         }
     };
-    $scope.init = function() {
+    scope.init = function() {
         jsPlumb.bind("ready", function() {
-            console.log("Set up jsPlumb listeners (should be only done once)");
             jsPlumb.bind("connection", function() {
-                $scope.$apply(function() {
-                    console.log("Possibility to push connection into array");
+                scope.$apply(function() {
                 });
             });
         });
     };
-}]);
+}])
 
-myApp.directive('plumbNonDraggable', ['diagramService', function(diagramService) {
+.directive('plumbNonDraggable', ['diagramService', function() {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
-        link: function(scope, element, attrs) {
+        link: function(scope, element) {
             jsPlumb.setDraggable(element, false);
         }
     };
-}]);
+}])
 
-myApp.directive('plumbItem', ['diagramService', function(diagramService) {
+.directive('plumbItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -178,17 +169,17 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
                 anchor: 'Continuous',
             });
             jsPlumb.draggable(element, {
-                start: function(event) {
+                start: function() {
                 },
                 stop: function(event) {
-                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvas = angular.element('#diagram-canvas');
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
 
                     var elementLeft = event.pos[0] < canvasLeft ? canvasLeft : event.pos[0];
                     var elementTop = event.pos[1] < canvasTop ? canvasTop : event.pos[1];
 
-                    droppedEl = angular.element(event.el);
+                    var droppedEl = angular.element(event.el);
                     var elementId = event.el.attributes['data-id'].value;
                     diagramService.updateElementPosition(droppedEl, elementId, [elementLeft, elementTop]);
 
@@ -197,9 +188,9 @@ myApp.directive('plumbItem', ['diagramService', function(diagramService) {
             });
         }
     };
-}]);
+}])
 
-myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
+.directive('plumbMenuItem', ['diagramService', function(diagramService) {
     return {
         replace: true,
         controller: 'jsPlumbWrapperController',
@@ -210,7 +201,7 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                 stop: function(event) {
                     element[0].style.cssText = "";
 
-                    var canvas = angular.element(document.getElementById('diagram-canvas'));
+                    var canvas = angular.element('#diagram-canvas');
                     var canvasLeft = canvas.prop('offsetLeft');
                     var canvasTop = canvas.prop('offsetTop');
 
@@ -238,7 +229,7 @@ myApp.directive('plumbMenuItem', ['diagramService', function(diagramService) {
                     service.updateSoemthing()
                     }
                     */
-                    droppedEl = angular.element(event.el);
+                    var droppedEl = angular.element(event.el);
                     diagramService.addElement(droppedEl, [elementLeft, elementTop]);
                 },
                 containment: false

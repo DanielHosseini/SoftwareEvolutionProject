@@ -1,6 +1,5 @@
-'use strict';
-var myApp = angular.module('myApp');
-myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
+angular.module('myApp')
+.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject', function(idGenerator, attributeObject, operationObject) {
 
     // Instantiate the class object
     var classObject = function(name, position) {
@@ -11,31 +10,71 @@ myApp.factory('classObject', ['idGenerator', 'attributeObject', 'operationObject
         this.operations = [];
         this.position = position;
         this.editMode = false;
+        this.selected = false;
         this.allowedAttributeTypes = ['attributeObject'];
     };
 
     classObject.prototype.onElementDropped = function(event, index, item, external, type, allowedType) {
         if (item.type === "attribute") {
             var newElement = new attributeObject(item.name);
-            if (allowedType === "attributeObject") {
-                this.addAttribute(newElement, index);
-            } else{
-                this.attributes.push(newElement);
-                alert("Attributes are placed in the upper part of a class element");
-            }
-        }
-        if (item.type === "operation") {
-            var newElement = new operationObject(item.name);
-            if (allowedType === "operationObject") {
-                this.addOperation(newElement, index);
+            if (item.id === -1) {
+                if (allowedType === "attributeObject") {
+                    this.addAttribute(newElement, index);
+                } else{
+                    this.attributes.push(newElement);
+                    alert("Attributes are placed in the upper part of a class element");
+                }
+
+                return true;
             } else {
-                this.operations.push(newElement);
-                alert("Operations are placed in the lower part of a class element");
+                if (allowedType !== "attributeObject") {
+                    this.attributes.push(newElement);
+                    alert("Attributes are placed in the upper part of a class element");
+                    return true;
+                }
+
+                return newElement;
             }
         }
 
-        return true;
+        if (item.type === "operation") {
+            var newElement = new operationObject(item.name);
+            if (item.id === -1) {
+                if (allowedType === "operationObject") {
+                    this.addOperation(newElement, index);
+                } else {
+                    this.operations.push(newElement);
+                    alert("Operations are placed in the lower part of a class element");
+                }
+
+                return true;
+            } else {
+                if (allowedType !== "operationObject") {
+                    this.operations.push(newElement);
+                    alert("Operations are placed in the lower part of a class element");
+                    return true;
+                }
+
+                return newElement;
+            }
+        }
+
+        return false;
     };
+
+    classObject.prototype.toggleSelected = function () {
+      /*if (this.selected) {
+        this.selected = false;
+
+      }
+      else{this.selected = true}*/
+      console.log("Toggle Class");
+
+    };
+
+    classObject.prototype.getSelected = function(){
+      return this.selected;
+    }
 
     classObject.prototype.getId = function() {
         return this.id;

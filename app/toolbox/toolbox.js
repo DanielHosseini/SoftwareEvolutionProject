@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('myApp.toolBox', ['ngRoute'])
 
 //Don't really need routing do we since it is not separate pages
@@ -13,6 +11,5 @@ angular.module('myApp.toolBox', ['ngRoute'])
 .controller('ToolboxController', [function() {
 
 //Start DragEvent?
-
 
 }]);
